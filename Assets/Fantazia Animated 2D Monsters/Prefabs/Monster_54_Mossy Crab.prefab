@@ -1,0 +1,302 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1182771549335590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4919550006235766}
+  - component: {fileID: 33739630047035770}
+  - component: {fileID: 23525908284228440}
+  - component: {fileID: 114908092461268014}
+  - component: {fileID: 4242940964359037260}
+  - component: {fileID: 8376422782412993676}
+  - component: {fileID: -3752907101511096054}
+  m_Layer: 0
+  m_Name: Monster_54_Mossy Crab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4919550006235766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182771549335590}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &33739630047035770
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182771549335590}
+  m_Mesh: {fileID: 0}
+--- !u!23 &23525908284228440
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182771549335590}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 191277a4d27a9de47bcc83919276ac73, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &114908092461268014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182771549335590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonDataAsset: {fileID: 11400000, guid: c38ca7ba6cf5e9542bdca033f634fcb5, type: 2}
+  initialSkinName: V2
+  initialFlipX: 0
+  initialFlipY: 0
+  updateWhenInvisible: 3
+  separatorSlotNames: []
+  zSpacing: 0
+  useClipping: 1
+  immutableTriangles: 0
+  pmaVertexColors: 1
+  clearStateOnDisable: 0
+  tintBlack: 0
+  singleSubmesh: 0
+  fixDrawOrder: 0
+  addNormals: 0
+  calculateTangents: 0
+  maskInteraction: 0
+  maskMaterials:
+    materialsMaskDisabled: []
+    materialsInsideMask: []
+    materialsOutsideMask: []
+  disableRenderingOnOverride: 1
+  _animationName: Idle
+  loop: 1
+  timeScale: 1
+--- !u!114 &4242940964359037260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182771549335590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751d9e3c57d142746adf44d06e289eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  petId: 54
+  petName: Dark4_1
+  prefabRef: {fileID: 1182771549335590}
+  levels:
+  - level: 1
+    baseHP: 190
+    armor: 25
+    baseMana: 60
+    baseRage: 12
+    baseAttack: 0
+    critRate: 55
+    critDamage: 155
+    weakness: Light
+    attackType: 0
+  - level: 2
+    baseHP: 240
+    armor: 30
+    baseMana: 70
+    baseRage: 14
+    baseAttack: 0
+    critRate: 6
+    critDamage: 16
+    weakness: Light
+    attackType: 0
+  - level: 3
+    baseHP: 290
+    armor: 35
+    baseMana: 80
+    baseRage: 16
+    baseAttack: 0
+    critRate: 65
+    critDamage: 165
+    weakness: Light
+    attackType: 0
+  - level: 4
+    baseHP: 340
+    armor: 40
+    baseMana: 90
+    baseRage: 18
+    baseAttack: 0
+    critRate: 7
+    critDamage: 17
+    weakness: Light
+    attackType: 0
+  - level: 5
+    baseHP: 390
+    armor: 45
+    baseMana: 100
+    baseRage: 20
+    baseAttack: 0
+    critRate: 75
+    critDamage: 175
+    weakness: Light
+    attackType: 0
+  - level: 6
+    baseHP: 440
+    armor: 50
+    baseMana: 110
+    baseRage: 22
+    baseAttack: 0
+    critRate: 8
+    critDamage: 18
+    weakness: Light
+    attackType: 0
+  - level: 7
+    baseHP: 490
+    armor: 55
+    baseMana: 120
+    baseRage: 24
+    baseAttack: 0
+    critRate: 85
+    critDamage: 185
+    weakness: Light
+    attackType: 0
+  - level: 8
+    baseHP: 540
+    armor: 60
+    baseMana: 130
+    baseRage: 26
+    baseAttack: 0
+    critRate: 9
+    critDamage: 19
+    weakness: Light
+    attackType: 0
+  - level: 9
+    baseHP: 590
+    armor: 65
+    baseMana: 140
+    baseRage: 28
+    baseAttack: 0
+    critRate: 95
+    critDamage: 195
+    weakness: Light
+    attackType: 0
+  - level: 10
+    baseHP: 640
+    armor: 70
+    baseMana: 150
+    baseRage: 30
+    baseAttack: 0
+    critRate: 1
+    critDamage: 2
+    weakness: Light
+    attackType: 0
+  selectedLevel: 8
+--- !u!61 &8376422782412993676
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182771549335590}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &-3752907101511096054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182771549335590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e5210469e7ecc4d9cb322dd2e47b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  petPrefab: {fileID: 1182771549335590}
+  choosePetUI: {fileID: 0}
