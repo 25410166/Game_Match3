@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 6384949348195071644}
   - component: {fileID: 8859813135661725065}
   - component: {fileID: 9139088078749205526}
-  m_Layer: 0
+  - component: {fileID: 7717751270209752021}
+  m_Layer: 3
   m_Name: Monster_22_Skeleton King
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 9e06f3af611860d439d9ff166dbad05c, type: 2}
-  initialSkinName: V3
+  initialSkinName: V2
   initialFlipX: 0
   initialFlipY: 0
   updateWhenInvisible: 3
@@ -298,5 +299,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95e5210469e7ecc4d9cb322dd2e47b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  petPrefab: {fileID: 1111748603430822}
-  choosePetUI: {fileID: 0}
+  button: {fileID: 0}
+  previewRoot: {fileID: 0}
+  txtPetLevel: {fileID: 0}
+  previewLocalScale: {x: 1, y: 1, z: 1}
+  idleAnimationName: Idle
+  previewSortingLayerName: UI
+  previewSortingOrder: 11
+--- !u!114 &7717751270209752021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111748603430822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9bbb99693b190346bd73ad8ffa34737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingLayerName: UI
+  sortingOrder: 11
+  includeInactive: 1
+  applyDeferredOnEnable: 1
+  setUnityLayer: 0
+  unityLayerName: Default

@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 5981622049335574106}
   - component: {fileID: 3488379087155917536}
   - component: {fileID: -2029794245312149014}
-  m_Layer: 0
+  - component: {fileID: 8311907319768870685}
+  m_Layer: 3
   m_Name: Monster_42_Green Bat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,5 +299,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95e5210469e7ecc4d9cb322dd2e47b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  petPrefab: {fileID: 1456330738337020}
-  choosePetUI: {fileID: 0}
+  button: {fileID: 0}
+  previewRoot: {fileID: 0}
+  txtPetLevel: {fileID: 0}
+  previewLocalScale: {x: 1, y: 1, z: 1}
+  idleAnimationName: Idle
+  previewSortingLayerName: UI
+  previewSortingOrder: 11
+--- !u!114 &8311907319768870685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456330738337020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9bbb99693b190346bd73ad8ffa34737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingLayerName: UI
+  sortingOrder: 11
+  includeInactive: 1
+  setUnityLayer: 0
+  unityLayerName: Default

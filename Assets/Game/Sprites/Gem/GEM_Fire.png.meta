@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 407ef9f336d55a542bd62bb8f621a696
+guid: b44eb046946e5744988048f71e491175
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,7 +95,112 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: gem_fire 1_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 73
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b66f089e62c6dbc4b87559255191ddac
+      internalID: 1755836467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gem_fire 1_1
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 2
+        width: 74
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0437d3231e917545946da4bece7a8e2
+      internalID: -1808312597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gem_fire 1_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 3
+        width: 97
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f31a360a869837144ac420b5112ac040
+      internalID: 803764078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gem_fire 1_3
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 1
+        width: 103
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfd0311c17afc5942806978b7c871504
+      internalID: 219686853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gem_fire 1_5
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 1
+        width: 81
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8302c589a8c66a42800f3f944a5cc89
+      internalID: -29338285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +211,13 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      gem_fire 1_0: 1755836467
+      gem_fire 1_1: -1808312597
+      gem_fire 1_2: 803764078
+      gem_fire 1_3: 219686853
+      gem_fire 1_4: 280041865
+      gem_fire 1_5: -29338285
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -76,8 +76,8 @@ public class PetSheetImporter : EditorWindow
             return;
         }
 
-        // normalize line endings and split
-        string[] lines = csv.Replace("\r\n", "\n").Replace("\r", "\n").Split(new[] { '\n' }, System.StringSplitOptions.None);
+        // parse full CSV into rows (handles quoted newlines)
+        List<List<string>> rows = ParseCsvTable(csv);
 
         // load hoặc tạo mới database
         PetDatabase db = AssetDatabase.LoadAssetAtPath<PetDatabase>(databasePath);
@@ -89,15 +89,16 @@ public class PetSheetImporter : EditorWindow
         }
 
         db.pets.Clear();
+        int nextId = 1;
 
-        if (lines.Length == 0)
+        if (rows.Count == 0)
         {
             Debug.LogError("CSV không có dòng nào.");
             return;
         }
 
         // parse header
-        List<string> headerFields = ParseCsvLine(lines[0]);
+        List<string> headerFields = rows[0];
         // normalize header names -> dùng dictionary map từ normalized -> canonical field name
         var headerMap = new Dictionary<string, string>(); // normalized header -> canonical
 
@@ -135,8 +136,15 @@ public class PetSheetImporter : EditorWindow
             { "attack_type", "AttackType" },
             { "attacktype", "AttackType" },
 
+            { "nameprefab", "PrefabName" },
+            { "prefabname", "PrefabName" },
+            { "name_prefab", "PrefabName" },
+            { "prefab_name", "PrefabName" },
+
             { "baseattack", "BaseAttack" },
-            { "attack", "BaseAttack" }
+            { "attack", "BaseAttack" },
+            { "skillid", "Skill_ID" },
+            { "idskill", "Skill_ID" }
         };
 
         // build header index mapping canonical -> index
@@ -161,16 +169,24 @@ public class PetSheetImporter : EditorWindow
         Debug.Log("Mapped columns: " + string.Join(", ", headerIndex.Select(kv => kv.Key + "->" + kv.Value)));
 
         // parse each data row
-        for (int i = 1; i < lines.Length; i++)
+        for (int i = 1; i < rows.Count; i++)
         {
-            string line = lines[i];
-            if (string.IsNullOrWhiteSpace(line)) continue;
-
-            List<string> cols = ParseCsvLine(line);
+            List<string> cols = rows[i];
+            if (cols == null || cols.Count == 0) continue;
+            bool allEmpty = true;
+            for (int c = 0; c < cols.Count; c++)
+            {
+                if (!string.IsNullOrWhiteSpace(cols[c]))
+                {
+                    allEmpty = false;
+                    break;
+                }
+            }
+            if (allEmpty) continue;
 
             // create pet entry
             PetDataAsset pet = new PetDataAsset();
-            pet.id = i; // dòng index (bạn có thể đổi cách gán id)
+            pet.id = nextId++; // id tự tăng
             // helper to get value by canonical name
             string GetStr(string canonical)
             {
@@ -181,7 +197,7 @@ public class PetSheetImporter : EditorWindow
             }
 
             pet.petName = StripQuotes(GetStr("PetName"));
-            pet.element = StripQuotes(GetStr("Element"));
+            pet.element = NormalizeElement(StripQuotes(GetStr("Element")));
             pet.level = SafeParseInt(StripQuotes(GetStr("Level")));
             pet.baseHP = SafeParseInt(StripQuotes(GetStr("HP")));
             pet.armor = SafeParseInt(StripQuotes(GetStr("Armor")));
@@ -192,20 +208,87 @@ public class PetSheetImporter : EditorWindow
             pet.critDamage = SafeParseFloat(StripQuotes(GetStr("CritDamage")));
             pet.weakness = StripQuotes(GetStr("Weakness"));
             pet.petId = SafeParseInt(StripQuotes(GetStr("Pet_ID")));
+            pet.prefabName = StripQuotes(GetStr("PrefabName"));
+pet.skillId = SafeParseInt(StripQuotes(GetStr("Skill_ID")));
+            if (!string.IsNullOrEmpty(pet.prefabName))
+            {
+                GameObject foundPrefab = FindPrefabByName(pet.prefabName);
+                if (foundPrefab != null)
+                    pet.prefab = foundPrefab;
+            }
             string attackTypeStr = StripQuotes(GetStr("AttackType")).ToLower();
 
-            if (attackTypeStr.Contains("ranged")) pet.attackType = AttackType.Ranged;
+            if (attackTypeStr.Contains("range")) pet.attackType = AttackType.Range;
             else pet.attackType = AttackType.Melee;
 
             // add to db
             db.pets.Add(pet);
         }
 
+        int unknownElementCount = db.pets.Count(p => string.IsNullOrEmpty(p.element));
+        int missingPrefabCount = db.pets.Count(p => p.prefab == null || string.IsNullOrEmpty(p.prefabName));
+        if (unknownElementCount > 0)
+            Debug.LogWarning($"[PetSheetImporter] {unknownElementCount} pets have unknown/empty element values.");
+        if (missingPrefabCount > 0)
+            Debug.LogWarning($"[PetSheetImporter] {missingPrefabCount} pets missing prefab assignment (Name_Prefab missing or not found).");
+
         EditorUtility.SetDirty(db);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
         Debug.Log($"✅ Import thành công {db.pets.Count} pets từ Google Sheet");
+    }
+
+    // CSV table parser supporting quoted fields and quoted newlines
+    private List<List<string>> ParseCsvTable(string csv)
+    {
+        var rows = new List<List<string>>();
+        if (string.IsNullOrEmpty(csv)) return rows;
+
+        var row = new List<string>();
+        var cur = new StringBuilder();
+        bool inQuotes = false;
+
+        for (int i = 0; i < csv.Length; i++)
+        {
+            char ch = csv[i];
+
+            if (ch == '"')
+            {
+                if (inQuotes && i + 1 < csv.Length && csv[i + 1] == '"')
+                {
+                    cur.Append('"');
+                    i++;
+                }
+                else
+                {
+                    inQuotes = !inQuotes;
+                }
+            }
+            else if (ch == ',' && !inQuotes)
+            {
+                row.Add(cur.ToString());
+                cur.Length = 0;
+            }
+            else if ((ch == '\n' || ch == '\r') && !inQuotes)
+            {
+                if (ch == '\r' && i + 1 < csv.Length && csv[i + 1] == '\n')
+                    i++;
+
+                row.Add(cur.ToString());
+                cur.Length = 0;
+                rows.Add(row);
+                row = new List<string>();
+            }
+            else
+            {
+                cur.Append(ch);
+            }
+        }
+
+        row.Add(cur.ToString());
+        rows.Add(row);
+        return rows;
     }
 
     // CSV line parser supporting quoted fields and double quotes inside quoted
@@ -293,6 +376,55 @@ public class PetSheetImporter : EditorWindow
         if (float.TryParse(cleaned, NumberStyles.Float, CultureInfo.InvariantCulture, out fv))
             return fv;
         return 0f;
+    }
+
+    // Normalize element names to canonical list
+    private string NormalizeElement(string raw)
+    {
+        if (string.IsNullOrWhiteSpace(raw)) return string.Empty;
+        string[] elements = { "Dark", "Earth", "Fire", "Light", "Metal", "Water", "Wood" };
+        string cleaned = raw.Trim();
+        for (int i = 0; i < elements.Length; i++)
+        {
+            if (string.Equals(cleaned, elements[i], System.StringComparison.OrdinalIgnoreCase))
+                return elements[i];
+        }
+
+        for (int i = 0; i < elements.Length; i++)
+        {
+            if (cleaned.IndexOf(elements[i], System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return elements[i];
+        }
+
+        return string.Empty;
+    }
+
+    private GameObject FindPrefabByName(string prefabName)
+    {
+        if (string.IsNullOrWhiteSpace(prefabName)) return null;
+        string name = prefabName.Trim();
+
+        string[] guids = AssetDatabase.FindAssets(name + " t:GameObject");
+        foreach (var g in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(g);
+            var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (go == null) continue;
+            if (string.Equals(go.name, name, System.StringComparison.OrdinalIgnoreCase))
+                return go;
+        }
+
+        guids = AssetDatabase.FindAssets("t:GameObject");
+        foreach (var g in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(g);
+            var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (go == null) continue;
+            if (go.name.IndexOf(name, System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return go;
+        }
+
+        return null;
     }
 }
 #endif

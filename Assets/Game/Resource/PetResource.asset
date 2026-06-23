@@ -15,11 +15,19 @@ MonoBehaviour:
   pets:
   - id: 0
     petName: Monster_1_Salamander
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1867911510170808, guid: e0dc5b9c5a1759b4983be5f02a62649c, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -27,11 +35,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 1
     petName: Monster_2_Skulled Salamander
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1024655841117016, guid: a1188405d2541df40a1d9520d61b68c2, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -39,11 +55,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 2
     petName: Monster_3_Charged Salamander
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1047054723868898, guid: 7253769246ce6444abea384dc4a21761, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -51,11 +75,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 3
     petName: Monster_4_Armored Salamander
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1323216486124236, guid: 10750a68cc032594e85dd9a7dbf2e439, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -63,11 +95,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 4
     petName: Monster_5_Yeti
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1057701989084014, guid: e306e19206531d247b708261851c2d8a, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -75,11 +115,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 5
     petName: Monster_6_Beast Yeti
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1961134719360472, guid: 69f40f8d04da76943bdd353548fc3894, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -87,11 +135,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 6
     petName: Monster_7_Chained Yeti
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1006212429830780, guid: 3284c2a16d253f04d9ee5698f0ffd5ad, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -99,11 +155,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 7
     petName: Monster_8_Slime
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1418375445147742, guid: 1c102c09daeada64fbc7985a01dc548d, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -111,11 +175,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 8
     petName: Monster_9_Evil Slime
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1721514242485638, guid: bf9070cc71aa742448b0cb9c177aace0, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -123,11 +195,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 9
     petName: Monster_10_Bird Slime
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1041003650545240, guid: 40c9d9629f879bd49ba0d0561bfa3585, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -135,11 +215,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 10
     petName: Monster_11_Pure Slime
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1481732245736456, guid: 165c405f8e726434582cbc2bf03bb773, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -147,11 +235,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 11
     petName: Monster_12_Glop Slime
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1574078517600558, guid: a15480e83990a6c438372548c7c86f76, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -159,11 +255,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 12
     petName: Monster_13_Stone Golem
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1052317940946996, guid: 727fdd4eaaa917045abd4a9ac2e81719, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -171,11 +275,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 13
     petName: Monster_14_Magma Golem
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1218476967775406, guid: 339e8a99cfee19844866ff1be94bfa3c, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -183,11 +295,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 14
     petName: Monster_15_Crystal Golem
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1572122216928650, guid: 0e0bf5b7e211f234b894b603701d4339, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -195,11 +315,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 15
     petName: Monster_16_Sword Shadow
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1625639469555934, guid: 31d7392d738c40546b71acebf59df247, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -207,11 +335,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 16
     petName: Monster_17_Mace Shadow
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1547027255766580, guid: 51c4418660e752f4f8b77ef60bec8381, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -219,11 +355,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 17
     petName: Monster_18_Axe Shadow
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1992850962502506, guid: 92852cad7fd785846901ea17f710f78a, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -231,11 +375,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 18
     petName: Monster_19_Crescent Shadow
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1402651372332534, guid: b58d4b03dcd6787449ea0d58a0829f36, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -243,11 +395,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 19
     petName: Monster_20_Saw Shadow
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1680258370376334, guid: 1fbc5734039db804a8ac5a99f018b4a4, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -255,11 +415,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 20
     petName: Monster_21_Skeleton
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1347558932553238, guid: 6bb39c8b5d3b95e4bbaca211a0ce08ca, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -267,11 +435,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 21
     petName: Monster_22_Skeleton King
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1111748603430822, guid: 38b352992cf71374584c5086c809fc06, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -279,11 +455,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 22
     petName: Monster_23_Skeleton Pirate
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1737801805421940, guid: 2ef534b24446a2943a7b5b859f32e407, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -291,11 +475,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 23
     petName: Monster_24_Floating Stone
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1927224070927922, guid: 4c6483ffb0dc3594db190f4557f962da, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -303,11 +495,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 24
     petName: Monster_25_Floating Ice
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1750367464845290, guid: 3e808fcae6115f7489a5af746a3fbff3, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -315,11 +515,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 25
     petName: Monster_26_Floating Steel
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1378754777924858, guid: 314d1aeee6d26cd4ca565a22a479cebe, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -327,11 +535,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 26
     petName: Monster_27_Fire Dragon
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1113633393750708, guid: 6bf15c32cf527a64e8aafb169cb4f3e4, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -339,11 +555,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 27
     petName: Monster_28_Dark Dragon
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1460673237210808, guid: 9c73deb5d1fedfd4cab051ef94cf1cda, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -351,11 +575,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 28
     petName: Monster_29_Grass Dragon
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1414723737418592, guid: 45a31b04a0fc79d429d0b5049a9375fe, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -363,11 +595,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 29
     petName: Monster_30_Rabbit
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1595851436696456, guid: d27fe788be431e0468ccd3f49ee0eaa2, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -375,11 +615,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 30
     petName: Monster_31_Water Rabbit
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1683131758508228, guid: 3849371b2d014184fbe033dcdb91a8d7, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -387,11 +635,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 31
     petName: Monster_32_Grass Rabbit
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1269042426238614, guid: 7e9a1fa7351a2a44c8034e0de3bacd5c, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -399,11 +655,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 32
     petName: Monster_33_Fire Rabbit
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1738822640864386, guid: d2d870e81e5ad6746831002b47ab98f6, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -411,11 +675,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 33
     petName: Monster_34_Lightning Rabbit
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1697371382139360, guid: af8565159303f6f4ebe41790de2ce73c, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -423,11 +695,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 34
     petName: Monster_35_Summer Tree
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1978496820906096, guid: b28146dafbd349a46b201a93173adcad, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -435,11 +715,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 35
     petName: Monster_36_Spring Tree
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1529572306051950, guid: ee45a6c5c7c27aa42808cbba06d1abe3, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -447,11 +735,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 36
     petName: Monster_37_Fall Tree
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1416671020753048, guid: 84d91ccde0cfde94d82f6355e23e9368, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -459,11 +755,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 37
     petName: Monster_38_Wolf
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1852391767338412, guid: c504b3c31c18db242aa3a5bdbb6b702b, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -471,11 +775,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 38
     petName: Monster_39_Polar Wolf
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1813311600966318, guid: b8dd285c38a1bbc4d8e87826b28ec04b, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -483,11 +795,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 39
     petName: Monster_40_Fire Wolf
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1609865689352420, guid: 3442179da1a9f5049a54ab5f9f093215, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -495,11 +815,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 40
     petName: Monster_41_Bat
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1173963413223136, guid: ceb68c00cf1a1ed47b5df73257d293ba, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -507,11 +835,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 41
     petName: Monster_42_Green Bat
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1456330738337020, guid: 9d95d0048a70e18428d813b08634ca86, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -519,11 +855,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 42
     petName: Monster_43_Fluffy Bat
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1700183541351260, guid: 1e82754570b5cfe45aff42c7186317cf, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -531,11 +875,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 43
     petName: Monster_44_Earth
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1779982122801032, guid: 54110ad4bd610404bb0be2586ecbab8f, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -543,11 +895,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 44
     petName: Monster_45_Moon
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1837626604580034, guid: b6ab784b01f927046a7b0b9b4b10c182, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -555,11 +915,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 45
     petName: Monster_46_Volcano
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1027414184257350, guid: 38095b6b270154d4eb62423e9a03e49b, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -567,11 +935,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 46
     petName: Monster_47_Jupiter
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1414052863295652, guid: 9a1ccdd4395defe42beeeedab6495676, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -579,11 +955,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 47
     petName: Monster_48_Purple Planet
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1529614843138134, guid: 7ff7d45b1c04ed64d9e8deca2d34d0b2, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -591,11 +975,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 48
     petName: Monster_49_Gas Planet
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1502729250572278, guid: 6b4add7d85fe24945b4dca34b0b7fecd, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -603,11 +995,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 49
     petName: Monster_50_Flower
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1292224030697910, guid: 8478378d7c761f44a8720aae7881cd9f, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -615,11 +1015,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 50
     petName: Monster_51_Dark Flower
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1983202547720554, guid: 5661936bc8a47214f94343e285552162, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -627,11 +1035,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 51
     petName: Monster_52_Cactus
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1573038753135988, guid: 1181620bde801d84ca473f4afe26e9fc, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -639,11 +1055,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 52
     petName: Monster_53_Rune Crab
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1190152509845720, guid: 14f6940e5bc0c7f459ea24e8de96e563, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -651,11 +1075,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 53
     petName: Monster_54_Mossy Crab
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1182771549335590, guid: 82334823f992d3e449b1961f4f3ec92b, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -663,11 +1095,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 54
     petName: Monster_55_Magma Crab
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1018407660699382, guid: da3c444575063364c9c1bc0200686da4, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -675,11 +1115,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 55
     petName: Monster_56_Magma Turtle
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1064137032449416, guid: e2b4bedb01b39fc489a557f32e83226d, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -687,11 +1135,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 56
     petName: Monster_57_Ice Turtle
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1939158955892734, guid: 395495ef58a80f64897eebe64b5bd692, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -699,11 +1155,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 57
     petName: Monster_58_Rock Turtle
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1094135730007002, guid: 210b8896cb20f4249a3170845a7abf10, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -711,11 +1175,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 58
     petName: Monster_59_Grass Turtle
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1186603498387190, guid: 89ef2cff74223154aa27b3fd41acbb2f, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -723,11 +1195,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 59
     petName: Monster_60_Sword Block
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1118019117831746, guid: ace972142439e0a418babf220a8164cf, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -735,11 +1215,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 60
     petName: Monster_61_Red Block
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1080664274096686, guid: 596b0351b4292a74c80ee828d83947ae, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -747,11 +1235,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 61
     petName: Monster_62_Tree Block
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1441806334204072, guid: 3dac2e426de035d4aaa0b68a6e5498e8, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -759,11 +1255,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 62
     petName: Monster_63_Axe Block
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1363183144971934, guid: 79dd860cbf2f6df42b60418234f75490, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -771,11 +1275,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 63
     petName: Monster_64_Mushroom
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 8177687174557151578, guid: 8f94fd65fa27da5429b6d185e8c3d59e, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -783,11 +1295,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 64
     petName: Monster_65_Dark Mushroom
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 6728869650136416840, guid: d421cf669bda2bd4b94078c29887f9ab, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -795,11 +1315,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 65
     petName: Monster_66_Toxic Mushroom
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1824620940781467196, guid: b6d6b72c1be81414f82129d09664e7ad, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -807,11 +1335,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 66
     petName: Monster_67_Ghost
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 5778124364085512327, guid: 8f6887a93a2bcc048864e5869da27bb4, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -819,11 +1355,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 67
     petName: Monster_68_Scythe Ghost
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 8839112494640107551, guid: 8a17bcfa706783642950c759238bc6b9, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -831,11 +1375,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 68
     petName: Monster_69_Rune Ghost
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 4712493285614995983, guid: 2f17d93d66dc3b44da356939e4a731e6, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -843,11 +1395,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 69
     petName: Monster_70_Normal Book
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 3474754154244533033, guid: eb3a2bf385d0dcd45ad7c6d24ef0db31, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -855,11 +1415,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 70
     petName: Monster_71_Blue Book
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 853637995862491489, guid: 503d524f284a10341b2d7ca9ff8ab278, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -867,11 +1435,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 71
     petName: Monster_72_Armored Book
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 354962397326851800, guid: 10972fecfa2ea0f4aac9b0f349866917, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -879,11 +1455,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 72
     petName: Monster_73_Corrupted Knight
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 259317376770690865, guid: 8cc50c59ad8b6e548a7899c23fd406b6, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -891,11 +1475,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 73
     petName: Monster_74_Corrupted Defender
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 3939708481027237870, guid: b5248495bb827f142bf9cebd1ef7a37b, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -903,11 +1495,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 74
     petName: Monster_75_Corrupted Hero
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 3865872859293136553, guid: e83debfc640fc3546b872b6a9bc7dde0, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -915,11 +1515,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 75
     petName: Monster_76_Mad Ox
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 8462639753691669572, guid: 5b6a0d80b164b3d489d1efa55cce5ee9, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -927,11 +1535,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 76
     petName: Monster_77_Evil Ox
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 298470373984704681, guid: 974003ca95c4cf24b903f1c1bad765f7, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -939,11 +1555,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 77
     petName: Monster_78_Extinct Ox
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 8415757767482923366, guid: 95ad533191fe05e428fb4de217774d8d, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -951,11 +1575,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 78
     petName: Monster_79_Zombie
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 4806799719123516262, guid: e8e2c4f402738dd45826b9fdac4c3501, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -963,11 +1595,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 79
     petName: Monster_80_Mummy
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 4287983380893299413, guid: b3c9ba15efd92dd4d9af0bc4a3fbdf28, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -975,11 +1615,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 80
     petName: Monster_81_Ghoul
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1206918134566421496, guid: 1598a60a23e701a42bb912a308ca7827, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -987,11 +1635,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 81
     petName: Monster_82_Jungle Raptor
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 6961983325489523299, guid: ef7df97d6f34ee84eaf028b871f640c1, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -999,11 +1655,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 82
     petName: Monster_83_Black Raptor
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 7412255061587598840, guid: 52bb17d4817a654468d2c63d0b96f232, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1011,11 +1675,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 83
     petName: Monster_84_Desert Raptor
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 4332521382870458387, guid: 15f08daf51ba5aa43b52857da771118b, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1023,11 +1695,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 84
     petName: Monster_85_Warrior Orc
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 27333631805264059, guid: dbc7ca6e28947024e88015d084223438, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1035,11 +1715,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 85
     petName: Monster_86_Armored Orc
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 3597078356796378108, guid: 1e5477f7cd9a6b3489544a72d597c495, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1047,11 +1735,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 86
     petName: Monster_87_TwoHeaded Orc
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 903807462653553813, guid: 506d2d580cc8025449966ea2af82d7bd, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1059,11 +1755,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 87
     petName: Monster_88_Red Snail
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 7293600320638631649, guid: 9d10bbe075e1c554c9a36977691cacbf, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1071,11 +1775,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 88
     petName: Monster_89_Sea Snail
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 4395275335771148043, guid: ee7b0947a63f410468790bb7ee52aae0, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1083,11 +1795,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 89
     petName: Monster_90_Dark Snail
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 942506129451477021, guid: e294d71c1a04b2246841c707d86434f2, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1095,11 +1815,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 90
     petName: Monster_91_Lake Shell
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 2111003488318358823, guid: cb434debb40353e4a826cf77bb5d7290, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1107,11 +1835,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 91
     petName: Monster_92_Dark Shell
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 686552729019312172, guid: f3d6ad5e6816e654daa3e4a87464fe5e, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1119,11 +1855,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 92
     petName: Monster_93_Magma Shell
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 7646288682142575722, guid: 779d4be4b346e2542be229de57224af1, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1131,11 +1875,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 93
     petName: Monster_94_Frost Lizard
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 1475031818057463424, guid: 3923fce8e72215f4199b5abcc2918537, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1143,11 +1895,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 94
     petName: Monster_95_Jungle Lizard
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 5893283217648903366, guid: e6f704dd50b11e14eaa798188eff616e, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1155,11 +1915,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 95
     petName: Monster_96_Cave Lizard
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 7008904895217257991, guid: 0a6908fe499061748bcb63555abff837, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1167,11 +1935,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 96
     petName: Monster_97_Masked Troll
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 3717867520574126689, guid: 1f171437ad6d48a489ccb308d7a535f8, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1179,11 +1955,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 97
     petName: Monster_98_Masked Iron
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 883892633529250747, guid: ad30ca5c1e95f2c40b476ff2a4202cd2, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1191,11 +1975,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 98
     petName: Monster_98_Masked Rock
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 892754086126469498, guid: 96fad73a226098e4988dcd8e256c6b46, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1203,11 +1995,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 99
     petName: Monster_100_Hamy Alquartz
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 126260312368800225, guid: 124817e6820364541ad57cc5f2780456, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1215,11 +2015,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 100
     petName: Monster_101_Hamy Alemerald
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 4956646993070173025, guid: 231c67424e6be7d448939772d234970a, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack
@@ -1227,11 +2035,19 @@ MonoBehaviour:
     deadAnim: Dead
   - id: 101
     petName: Monster_102_Hamy Alsapphire
+    element: 
+    level: 0
+    petId: 0
+    prefabName: 
     prefab: {fileID: 2998155444182964559, guid: a5d8cb61c0e3400449e7209e794c54f3, type: 3}
     baseHP: 100
+    armor: 0
     baseMana: 50
     baseRage: 20
     baseAttack: 10
+    critRate: 0
+    critDamage: 0
+    weakness: 
     attackType: 0
     idleAnim: Idle
     attackMeleeAnim: Attack

@@ -7,7 +7,8 @@ public class PetBehaviour : MonoBehaviour
     public SkeletonAnimation skeletonAnimation;
 
     private string currentAnim;
-    private PetDataAsset petData;
+    // make petData accessible so other scripts can read animation names/stats
+    public PetDataAsset petData;
 
     public void Init(PetDataAsset data)
     {

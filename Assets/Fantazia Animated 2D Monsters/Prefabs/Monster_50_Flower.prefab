@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 8878756381998356901}
   - component: {fileID: 8484177254407652363}
   - component: {fileID: 555696633168594153}
-  m_Layer: 0
+  - component: {fileID: 3422157709336575452}
+  m_Layer: 3
   m_Name: Monster_50_Flower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +35,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7257568358478608787}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &33867444464365496
@@ -141,6 +143,7 @@ MonoBehaviour:
   prefabRef: {fileID: 1292224030697910}
   levels:
   - level: 1
+    skillId: 0
     baseHP: 250
     armor: 25
     baseMana: 60
@@ -150,7 +153,11 @@ MonoBehaviour:
     critDamage: 155
     weakness: Dark
     attackType: 0
+    petScale: 1
+    bulletPrefab: {fileID: 0}
+    meleeAttackMoveX: -1.2
   - level: 2
+    skillId: 0
     baseHP: 300
     armor: 30
     baseMana: 70
@@ -160,7 +167,11 @@ MonoBehaviour:
     critDamage: 16
     weakness: Dark
     attackType: 0
+    petScale: 1
+    bulletPrefab: {fileID: 0}
+    meleeAttackMoveX: -1.2
   - level: 3
+    skillId: 0
     baseHP: 350
     armor: 35
     baseMana: 80
@@ -170,7 +181,11 @@ MonoBehaviour:
     critDamage: 165
     weakness: Dark
     attackType: 0
+    petScale: 1
+    bulletPrefab: {fileID: 0}
+    meleeAttackMoveX: -1.2
   - level: 4
+    skillId: 0
     baseHP: 400
     armor: 40
     baseMana: 90
@@ -180,7 +195,11 @@ MonoBehaviour:
     critDamage: 17
     weakness: Dark
     attackType: 0
+    petScale: 1
+    bulletPrefab: {fileID: 0}
+    meleeAttackMoveX: -1.2
   - level: 5
+    skillId: 0
     baseHP: 450
     armor: 45
     baseMana: 100
@@ -190,7 +209,11 @@ MonoBehaviour:
     critDamage: 175
     weakness: Dark
     attackType: 0
+    petScale: 1
+    bulletPrefab: {fileID: 0}
+    meleeAttackMoveX: -1.2
   - level: 6
+    skillId: 0
     baseHP: 500
     armor: 50
     baseMana: 110
@@ -200,7 +223,11 @@ MonoBehaviour:
     critDamage: 18
     weakness: Dark
     attackType: 0
+    petScale: 1
+    bulletPrefab: {fileID: 0}
+    meleeAttackMoveX: -1.2
   - level: 7
+    skillId: 0
     baseHP: 550
     armor: 55
     baseMana: 120
@@ -210,7 +237,11 @@ MonoBehaviour:
     critDamage: 185
     weakness: Dark
     attackType: 0
+    petScale: 1
+    bulletPrefab: {fileID: 0}
+    meleeAttackMoveX: -1.2
   - level: 8
+    skillId: 0
     baseHP: 600
     armor: 60
     baseMana: 130
@@ -220,7 +251,11 @@ MonoBehaviour:
     critDamage: 19
     weakness: Dark
     attackType: 0
+    petScale: 1
+    bulletPrefab: {fileID: 0}
+    meleeAttackMoveX: -1.2
   - level: 9
+    skillId: 0
     baseHP: 650
     armor: 65
     baseMana: 140
@@ -230,7 +265,11 @@ MonoBehaviour:
     critDamage: 195
     weakness: Dark
     attackType: 0
+    petScale: 1
+    bulletPrefab: {fileID: 0}
+    meleeAttackMoveX: -1.2
   - level: 10
+    skillId: 0
     baseHP: 700
     armor: 70
     baseMana: 150
@@ -240,6 +279,9 @@ MonoBehaviour:
     critDamage: 2
     weakness: Dark
     attackType: 0
+    petScale: 1
+    bulletPrefab: {fileID: 0}
+    meleeAttackMoveX: -1.2
   selectedLevel: 8
 --- !u!61 &8484177254407652363
 BoxCollider2D:
@@ -298,5 +340,112 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95e5210469e7ecc4d9cb322dd2e47b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  petPrefab: {fileID: 1292224030697910}
-  choosePetUI: {fileID: 0}
+  button: {fileID: 0}
+  previewRoot: {fileID: 0}
+  txtPetLevel: {fileID: 0}
+  previewLocalScale: {x: 1, y: 1, z: 1}
+  idleAnimationName: Idle
+  previewSortingLayerName: UI
+  previewSortingOrder: 11
+--- !u!114 &3422157709336575452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292224030697910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9bbb99693b190346bd73ad8ffa34737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingLayerName: UI
+  sortingOrder: 11
+  includeInactive: 1
+  applyDeferredOnEnable: 1
+  setUnityLayer: 0
+  unityLayerName: Default
+--- !u!1 &4161107267961412353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7257568358478608787}
+  - component: {fileID: 291651191193144933}
+  m_Layer: 0
+  m_Name: shadow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7257568358478608787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4161107267961412353}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0862, y: -0.3041997, z: 0}
+  m_LocalScale: {x: 0.5311191, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4476897238346126}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &291651191193144933
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4161107267961412353}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 118425074, guid: 655a6ac6f6ab8164ebadcf00a15842c7, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 4.98, y: 1.29}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0

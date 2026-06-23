@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55483b3a685541a47b4b09090232726a, type: 3}
+  m_Name: CardDatabase
+  m_EditorClassIdentifier: 
+  cards:
+  - id: 1
+    cardName: Heal
+    description: CardInfo1
+    mainSprite: {fileID: -183850466, guid: 0bb32a5ad341dba428be6c0ef6fb2c66, type: 3}
+    type: 1
+    subType: 0
+    levels:
+    - level: 1
+      value: 500
+      sprite: {fileID: 389380922, guid: e4e71b5cdf0a4c74bb132824711b691c, type: 3}
+      effectDesc: CardInfo1
+      priceGold: 100
+    - level: 2
+      value: 2000
+      sprite: {fileID: 206919151, guid: d09ec94f9fde03c4fb04f4f04b422819, type: 3}
+      effectDesc: CardInfo2
+      priceGold: 250
+    - level: 3
+      value: 5000
+      sprite: {fileID: -183850466, guid: 0bb32a5ad341dba428be6c0ef6fb2c66, type: 3}
+      effectDesc: CardInfo3
+      priceGold: 800
+  - id: 2
+    cardName: Mana
+    description: CardInfo4
+    mainSprite: {fileID: 1137005749, guid: 2107b43fb1fa3184b9275e54b8de1cf5, type: 3}
+    type: 3
+    subType: 0
+    levels:
+    - level: 0
+      value: 100
+      sprite: {fileID: 1137005749, guid: 2107b43fb1fa3184b9275e54b8de1cf5, type: 3}
+      effectDesc: CardInfo4
+      priceGold: 100
+    - level: 2
+      value: 200
+      sprite: {fileID: 526719299, guid: ef7b2d18f425f614daaad33ff401a681, type: 3}
+      effectDesc: CardInfo5
+      priceGold: 200
+    - level: 3
+      value: 300
+      sprite: {fileID: 704805022, guid: 2e98ebb0ca5deb44bb4313d12d708ec6, type: 3}
+      effectDesc: CardInfo6
+      priceGold: 500
+  - id: 3
+    cardName: Rage
+    description: CardInfo7
+    mainSprite: {fileID: 891063672, guid: 704daabe0879fb94b8d18430f9131b6b, type: 3}
+    type: 2
+    subType: 0
+    levels:
+    - level: 0
+      value: 50
+      sprite: {fileID: -2001199518, guid: e7944818f3df7de49a31bedeac82e328, type: 3}
+      effectDesc: CardInfo7
+      priceGold: 100
+    - level: 2
+      value: 100
+      sprite: {fileID: -890579956, guid: 55ffed5472408a84b98de19417c76553, type: 3}
+      effectDesc: CardInfo8
+      priceGold: 200
+    - level: 3
+      value: 250
+      sprite: {fileID: 891063672, guid: 704daabe0879fb94b8d18430f9131b6b, type: 3}
+      effectDesc: CardInfo9
+      priceGold: 500
+  - id: 4
+    cardName: Attack1
+    description: CardInfo10
+    mainSprite: {fileID: 46101316, guid: 133a5b89d8754394eb35fb9e28ecc24d, type: 3}
+    type: 0
+    subType: 1
+    levels:
+    - level: 0
+      value: 1
+      sprite: {fileID: 46101316, guid: 133a5b89d8754394eb35fb9e28ecc24d, type: 3}
+      effectDesc: CardInfo10
+      priceGold: 500
+  - id: 5
+    cardName: Imortal
+    description: CardInfo11
+    mainSprite: {fileID: 21300000, guid: a5c357f46d3178b4fb193a8f554bf32b, type: 3}
+    type: 4
+    subType: 0
+    levels:
+    - level: 0
+      value: 1
+      sprite: {fileID: 21300000, guid: a5c357f46d3178b4fb193a8f554bf32b, type: 3}
+      effectDesc: CardInfo11
+      priceGold: 500

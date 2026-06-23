@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 8554439397864903224}
   - component: {fileID: -8293382634302167317}
   - component: {fileID: -4661966010202990935}
-  m_Layer: 0
+  - component: {fileID: -1244935122308787078}
+  m_Layer: 3
   m_Name: Monster_67_Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,5 +299,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95e5210469e7ecc4d9cb322dd2e47b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  petPrefab: {fileID: 5778124364085512327}
-  choosePetUI: {fileID: 0}
+  button: {fileID: 0}
+  previewRoot: {fileID: 0}
+  txtPetLevel: {fileID: 0}
+  previewLocalScale: {x: 1, y: 1, z: 1}
+  idleAnimationName: Idle
+  previewSortingLayerName: UI
+  previewSortingOrder: 11
+--- !u!114 &-1244935122308787078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5778124364085512327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9bbb99693b190346bd73ad8ffa34737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingLayerName: UI
+  sortingOrder: 11
+  includeInactive: 1
+  setUnityLayer: 0
+  unityLayerName: Default

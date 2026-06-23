@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteItems:
   - id: 0
-    sprite: {fileID: 21300000, guid: 5e755baafc07e3f46a423ec4944c626b, type: 3}
+    sprite: {fileID: 832583133, guid: 602972c9d2a296d4c896d4b06bef1398, type: 3}
   - id: 1
-    sprite: {fileID: 21300000, guid: fad64867b067d9d42b8609a5b3eaa9dc, type: 3}
+    sprite: {fileID: -313432465, guid: 602972c9d2a296d4c896d4b06bef1398, type: 3}
   - id: 2
-    sprite: {fileID: 21300000, guid: 45aef19cb6c91ec419f92a7b5b08fcbf, type: 3}
+    sprite: {fileID: -109172236, guid: 602972c9d2a296d4c896d4b06bef1398, type: 3}
   - id: 3
-    sprite: {fileID: 21300000, guid: f514767d254f0694eb530702d983641a, type: 3}
+    sprite: {fileID: -1353274933, guid: 602972c9d2a296d4c896d4b06bef1398, type: 3}
   - id: 4
-    sprite: {fileID: 21300000, guid: dfc9bb98aab568b49891cfee0c882b80, type: 3}
+    sprite: {fileID: -1569554922, guid: 602972c9d2a296d4c896d4b06bef1398, type: 3}
+  - id: 5
+    sprite: {fileID: 948041920, guid: 602972c9d2a296d4c896d4b06bef1398, type: 3}

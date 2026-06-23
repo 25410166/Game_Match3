@@ -3,11 +3,12 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System;
 
 public class PetDatabaseBuilder
 {
-    [MenuItem("Tools/Assign Prefabs To Pets (Sequential)")]
-    public static void AssignPrefabsSequential()
+    [MenuItem("Tools/Assign Prefabs To Pets (By Name_Prefab)")]
+    public static void AssignPrefabsByName()
     {
         var db = Selection.activeObject as PetDatabase;
         if (db == null)
@@ -35,27 +36,66 @@ public class PetDatabaseBuilder
                 prefabs.Add(prefab);
         }
 
-        // 👉 Sort theo số trong tên (Monster_1, Monster_2, ..., Monster_10, ...)
-        prefabs.Sort((a, b) =>
-        {
-            int numA = ExtractNumber(a.name);
-            int numB = ExtractNumber(b.name);
-            return numA.CompareTo(numB);
-        });
-
         if (prefabs.Count == 0)
         {
             Debug.LogError("❌ Không có prefab hợp lệ nào.");
             return;
         }
 
-        int countAssigned = 0;
+        Dictionary<string, GameObject> prefabMap = new Dictionary<string, GameObject>(StringComparer.OrdinalIgnoreCase);
+        foreach (var prefab in prefabs)
+        {
+            if (prefab != null && !prefabMap.ContainsKey(prefab.name))
+            {
+                prefabMap[prefab.name] = prefab;
+            }
+        }
 
-        // Gán tuần tự: 10 pet trong db xài chung 1 prefab
+        int countAssigned = 0;
+        int countMissing = 0;
+
+        // Gán theo đúng tên prefab từ cột Name_Prefab
         for (int i = 0; i < db.pets.Count; i++)
         {
-            int prefabIndex = (i / 10) % prefabs.Count;
-            db.pets[i].prefab = prefabs[prefabIndex];
+            var pet = db.pets[i];
+            if (pet == null)
+                continue;
+
+            string prefabName = string.IsNullOrWhiteSpace(pet.prefabName) ? string.Empty : pet.prefabName.Trim();
+            if (string.IsNullOrEmpty(prefabName))
+            {
+                countMissing++;
+                Debug.LogWarning($"⚠️ Pet id={pet.id} ({pet.petName}) chưa có Name_Prefab.");
+                continue;
+            }
+
+            if (prefabName.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase))
+            {
+                prefabName = prefabName.Substring(0, prefabName.Length - 7);
+            }
+
+            if (!prefabMap.TryGetValue(prefabName, out GameObject prefab))
+            {
+                string[] exactGuids = AssetDatabase.FindAssets($"{prefabName} t:Prefab", new[] { prefabPath });
+                if (exactGuids != null && exactGuids.Length > 0)
+                {
+                    string foundPath = AssetDatabase.GUIDToAssetPath(exactGuids[0]);
+                    prefab = AssetDatabase.LoadAssetAtPath<GameObject>(foundPath);
+                    if (prefab != null && !prefabMap.ContainsKey(prefab.name))
+                    {
+                        prefabMap[prefab.name] = prefab;
+                    }
+                }
+            }
+
+            if (prefab == null)
+            {
+                countMissing++;
+                Debug.LogWarning($"⚠️ Không tìm thấy prefab '{prefabName}' cho pet id={pet.id} ({pet.petName}).");
+                continue;
+            }
+
+            pet.prefab = prefab;
             countAssigned++;
         }
 
@@ -63,7 +103,7 @@ public class PetDatabaseBuilder
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log($"✅ Đã gán prefab cho {countAssigned} pets (theo thứ tự số Monster_1 -> Monster_70).");
+        Debug.Log($"✅ Đã gán prefab theo Name_Prefab: {countAssigned} pets, thiếu {countMissing} pets.");
     }
 
     private static int ExtractNumber(string name)

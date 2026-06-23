@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c284541d373f33a4d9b868b4d5fe91a1, type: 3}
+  m_Name: 117
+  m_EditorClassIdentifier: 
+  area: 2
+  mapId: 117
+  mapName: Map_Name_17
+  reqUserLevel: 5
+  petIdSpawn: 167
+  petLevelSpawn: 7
+  idGuadiant: 0
+  levelGuadiant: 1
+  rewardPetId: 161
+  rewardGuardiantId: -1
+  reqWinsPet: 3
+  rewards:
+  - mapId: 117
+    rewardType: 0
+    rewardId: Currency
+    gemElementId: -1
+    gemLevel: 1
+    amountMin: 1478
+    amountMax: 1806
+    weight: 100
+  - mapId: 117
+    rewardType: 3
+    rewardId: Currency
+    gemElementId: -1
+    gemLevel: 1
+    amountMin: 20
+    amountMax: 30
+    weight: 100
+  - mapId: 117
+    rewardType: 1
+    rewardId: User_Exp
+    gemElementId: -1
+    gemLevel: 1
+    amountMin: 328
+    amountMax: 328
+    weight: 100
+  - mapId: 117
+    rewardType: 2
+    rewardId: Wood_1
+    gemElementId: 6
+    gemLevel: 1
+    amountMin: 1
+    amountMax: 6
+    weight: 30
+  - mapId: 117
+    rewardType: 2
+    rewardId: Wood_2
+    gemElementId: 6
+    gemLevel: 2
+    amountMin: 1
+    amountMax: 6
+    weight: 40
+  - mapId: 117
+    rewardType: 2
+    rewardId: Wood_3
+    gemElementId: 6
+    gemLevel: 3
+    amountMin: 1
+    amountMax: 6
+    weight: 20
+  - mapId: 117
+    rewardType: 2
+    rewardId: Wood_4
+    gemElementId: 6
+    gemLevel: 4
+    amountMin: 1
+    amountMax: 2
+    weight: 9
+  - mapId: 117
+    rewardType: 2
+    rewardId: Wood_5
+    gemElementId: 6
+    gemLevel: 5
+    amountMin: 1
+    amountMax: 1
+    weight: 1

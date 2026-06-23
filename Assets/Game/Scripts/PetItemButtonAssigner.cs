@@ -37,9 +37,7 @@ public class PetItemButtonAssigner
             if (button == null)
                 button = prefab.AddComponent<PetItemButton>();
 
-            // --- Gán giá trị ---
-            button.petPrefab = prefab;
-            button.choosePetUI = choosePetUI;
+            // Giữ lại component để cấu hình trong prefab UI item.
 
             // Đánh dấu thay đổi
             EditorUtility.SetDirty(prefab);

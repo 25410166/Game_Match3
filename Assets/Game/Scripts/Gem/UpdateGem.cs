@@ -1,500 +1,911 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class UpdateGem : MonoBehaviour
 {
-    [SerializeField] private GameObject _gemlvl1;
-    [SerializeField] private GameObject _gemlvl2;
-    [SerializeField] private GameObject _gemlvl3;
-    [SerializeField] private GameObject _gemlvl4;
-    [SerializeField] private GameObject _gemlvl5;
-    [SerializeField] private GameObject _gemCell1;
-    [SerializeField] private GameObject _gemCell2;
-    [SerializeField] private GameObject _gemCell3;
-    [SerializeField] private GameObject _txtPercent;
-    [SerializeField] private GemCollection gemCollection; // Tham chiếu đến GemCollection
-    [SerializeField] private GameObject _popupGem; // Popup Gem
-    [SerializeField] private GameObject _gemUpdate; // Hiển thị gem level mới
-    [SerializeField] private Button _gemUpdateButton; // Button để gọi hàm nâng cấp
+    [Header("Home -> Forge Popup")]
+    [SerializeField] private Button openFromHomeButton;
+    [SerializeField] private GameObject forgePopupRoot;
+    [SerializeField] private Button closeForgePopupButton;
 
-    private const int MAX_GEM_LEVEL = 5; // Tối đa cấp đá là 5
-    private string currentElementId; // Lưu id (chỉ số) của hệ (0-6)
-    private int[] selectedGemLevels = new int[3]; // 3 ô chứa cấp độ đá (1-5)
+    [Header("Forge Tabs")]
+    [SerializeField] private Button tabUpgradeGemButton;
+    [SerializeField] private GameObject tabUpgradeGemRoot;
 
-    private TextMeshProUGUI percentText; // Tham chiếu đến TextMeshProUGUI
+    [Header("Element Tabs (7)")]
+    [SerializeField] private Button[] elementButtons = new Button[7];
 
-    // Danh sách button cho các hệ
-    [SerializeField] private Button[] elementButtons = new Button[7]; // 7 button cho 7 hệ
+    [Header("Gem Inventory List")]
+    [SerializeField] private Transform gemListContent;
+    [SerializeField] private GemInventoryItemButton gemItemPrefab;
 
-    // Start is called before the first frame update
-    void Start()
+    [Header("Slots")]
+    [SerializeField] private Button[] slotButtons = new Button[3];
+    [SerializeField] private Image[] slotIcons = new Image[3];
+    [SerializeField] private TextMeshProUGUI[] slotLevelTexts = new TextMeshProUGUI[3];
+    [SerializeField] private Button clearSlotsButton;
+
+    [Header("Actions")]
+    [SerializeField] private Button upgradeButton;
+    [SerializeField] private TextMeshProUGUI txtSuccessRate;
+    [SerializeField] private TextMeshProUGUI txtResult;
+
+    [Header("Visual")]
+    [SerializeField] private Color slotNormalColor = Color.white;
+    [SerializeField] private Color slotSelectedColor = Color.green;
+    [SerializeField] private float resultFloatY = 40f;
+    [SerializeField] private float resultAnimDuration = 3f;
+    [SerializeField] private GameObject upgradeFxPrefab;
+    [SerializeField] private Vector3 upgradeFxLocalOffset = Vector3.zero;
+    [SerializeField] private Vector3 upgradeFxLocalScale = Vector3.one;
+    [SerializeField] private float upgradeFxSeconds = 2f;
+
+    [Header("Data")]
+    [SerializeField] private GemCollection gemCollection;
+
+    private readonly List<GemInventoryItemButton> spawnedItems = new List<GemInventoryItemButton>();
+    private readonly SlotGem[] selectedSlots = new SlotGem[3];
+    private readonly List<GameObject> spawnedUpgradeFx = new List<GameObject>();
+
+    private int activeElementTab = 0;
+    private int lockedElement = -1;
+    private int selectedSlotIndex = 0;
+    private Vector2 resultStartAnchoredPos;
+    private Tween resultMoveTween;
+    private Tween resultFadeTween;
+    private CanvasGroup resultCanvasGroup;
+    private Coroutine upgradeRoutine;
+
+    private struct SlotGem
     {
-        _popupGem.SetActive(false);
-        // Khởi tạo các ô đá
-        for (int i = 0; i < selectedGemLevels.Length; i++)
-        {
-            selectedGemLevels[i] = 0; // Mặc định 0, chưa chọn đá
-        }
-
-        // Lấy tham chiếu đến TextMeshProUGUI
-        percentText = _txtPercent?.GetComponent<TextMeshProUGUI>();
-        if (percentText == null && _txtPercent != null)
-        {
-            Debug.LogError("TextMeshProUGUI component missing on _txtPercent!");
-        }
-        else if (_txtPercent == null)
-        {
-            Debug.LogWarning("_txtPercent is not assigned!");
-        }
-
-        // Gán sự kiện click cho các viên đá
-        AddClickListeners();
-        // Gán sự kiện click để xóa đá từ các ô cell
-        AddCellClickListeners();
-        // Gán sự kiện click cho các button hệ
-        AddElementButtonListeners();
-        // Gán sự kiện click cho button nâng cấp
-        if (_gemUpdateButton != null)
-        {
-            _gemUpdateButton.onClick.RemoveAllListeners();
-            _gemUpdateButton.onClick.AddListener(() => { UpgradeGem(); });
-            Debug.Log("Upgrade button event assigned.");
-        }
-        else
-        {
-            Debug.LogWarning("_gemUpdateButton is not assigned!");
-        }
+        public int elementId;
+        public int level;
+        public bool IsValid => elementId >= 0 && level >= 1 && level <= 5;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        // Cập nhật hiển thị phần trăm
-        UpdatePercentDisplay();
-        // Cập nhật hiển thị các ô cell
-        UpdateGemCells();
+        EnsureGemCollectionReference();
+        InitializeResultFeedback();
+        BindButtons();
+        ResetSlots();
+        RefreshElementButtonIcons();
+        UpdateSlotSelectionVisual();
+
+        if (forgePopupRoot != null)
+            forgePopupRoot.SetActive(false);
+
+        if (tabUpgradeGemRoot != null)
+            tabUpgradeGemRoot.SetActive(true);
+
+        UpdateRateText();
     }
 
-    // Chọn hệ với id (chỉ số 0-6)
-    public void SelectElement(string id)
+    private void OnEnable()
     {
-        currentElementId = id;
-        Debug.Log($"SelectElement called with id: {currentElementId}"); // Debug id nhận được
-        if (gemCollection == null || string.IsNullOrEmpty(currentElementId) || !int.TryParse(currentElementId, out int elementIndex) || elementIndex < 0 || elementIndex >= (gemCollection?.elements?.Length ?? 0))
-        {
-            Debug.LogWarning($"Invalid element selection for id: {currentElementId}");
-            if (_popupGem != null)
-            {
-                _popupGem.SetActive(false); // Tắt popup nếu không thành công
-            }
-            return;
-        }
-        UpdateGemDisplay();
+        if (PlayerManager.Instance != null)
+            PlayerManager.Instance.OnPlayerDataChanged += HandlePlayerDataChanged;
     }
 
-    // Cập nhật hiển thị các viên đá theo id hệ
-    private void UpdateGemDisplay()
+    private void OnDisable()
     {
-        if (gemCollection == null || string.IsNullOrEmpty(currentElementId))
-        {
-            Debug.LogWarning("gemCollection is null or currentElementId is empty!");
-            if (_popupGem != null)
-            {
-                _popupGem.SetActive(false); // Tắt popup nếu không thành công
-            }
-            return;
-        }
+        if (PlayerManager.Instance != null)
+            PlayerManager.Instance.OnPlayerDataChanged -= HandlePlayerDataChanged;
 
-        if (gemCollection.elements == null)
-        {
-            Debug.LogError("gemCollection.elements is null!");
-            if (_popupGem != null)
-            {
-                _popupGem.SetActive(false); // Tắt popup nếu không thành công
-            }
-            return;
-        }
-
-        if (int.TryParse(currentElementId, out int elementIndex) && elementIndex >= 0 && elementIndex < gemCollection.elements.Length)
-        {
-            GemCollection.GemElementData elementData = gemCollection.elements[elementIndex];
-            SetGemSprite(_gemlvl1, 0, elementData);
-            SetGemSprite(_gemlvl2, 1, elementData);
-            SetGemSprite(_gemlvl3, 2, elementData);
-            SetGemSprite(_gemlvl4, 3, elementData);
-            SetGemSprite(_gemlvl5, 4, elementData);
-            if (_popupGem != null) _popupGem.SetActive(true);
-        }
-        else
-        {
-            Debug.LogWarning($"⚠️ Không tìm thấy id {currentElementId} trong GemCollection!");
-            if (_popupGem != null)
-            {
-                _popupGem.SetActive(false); // Tắt popup nếu không thành công
-            }
-        }
+        KillResultTweens();
+        ClearSpawnedUpgradeFx();
     }
 
-    private void SetGemSprite(GameObject gemObject, int levelIndex, GemCollection.GemElementData elementData)
+    private void BindButtons()
     {
-        if (gemObject != null)
+        if (openFromHomeButton != null)
         {
-            Image image = gemObject.GetComponent<Image>();
-            if (image != null && elementData.gemLevels != null && levelIndex < elementData.gemLevels.Length)
-            {
-                image.sprite = elementData.gemLevels[levelIndex].sprite;
-            }
-            else
-            {
-                Debug.LogWarning($"Image or sprite missing for {gemObject.name} at level {levelIndex + 1}");
-            }
+            openFromHomeButton.onClick.RemoveAllListeners();
+            openFromHomeButton.onClick.AddListener(OpenForgePopup);
         }
-    }
 
-    // Thêm sự kiện click cho các viên đá
-    private void AddClickListeners()
-    {
-        AddClickListener(_gemlvl1, 1);
-        AddClickListener(_gemlvl2, 2);
-        AddClickListener(_gemlvl3, 3);
-        AddClickListener(_gemlvl4, 4);
-        AddClickListener(_gemlvl5, 5);
-    }
-
-    private void AddClickListener(GameObject gemObject, int level)
-    {
-        if (gemObject != null)
+        if (closeForgePopupButton != null)
         {
-            Button button = gemObject.GetComponent<Button>();
-            if (button != null)
-            {
-                button.onClick.RemoveAllListeners();
-                button.onClick.AddListener(() => OnGemClick(level));
-            }
-            else
-            {
-                Image image = gemObject.GetComponent<Image>();
-                if (image != null)
-                {
-                    UnityEngine.EventSystems.EventTrigger trigger = gemObject.GetComponent<UnityEngine.EventSystems.EventTrigger>();
-                    if (trigger == null)
-                    {
-                        trigger = gemObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
-                    }
-                    UnityEngine.EventSystems.EventTrigger.Entry entry = new UnityEngine.EventSystems.EventTrigger.Entry();
-                    entry.eventID = UnityEngine.EventSystems.EventTriggerType.PointerClick;
-                    entry.callback.AddListener((data) => { OnGemClick(level); });
-                    trigger.triggers.Add(entry);
-                }
-                else
-                {
-                    Debug.LogWarning($"Button or Image component missing on {gemObject.name}. Add an Image or Button component to enable clicking.");
-                }
-            }
+            closeForgePopupButton.onClick.RemoveAllListeners();
+            closeForgePopupButton.onClick.AddListener(CloseForgePopup);
         }
-    }
 
-    // Thêm sự kiện click để xóa đá từ các ô cell
-    private void AddCellClickListeners()
-    {
-        AddCellClickListener(_gemCell1, 0); // Ô 1
-        AddCellClickListener(_gemCell2, 1); // Ô 2
-        AddCellClickListener(_gemCell3, 2); // Ô 3
-    }
-
-    private void AddCellClickListener(GameObject cellObject, int slotIndex)
-    {
-        if (cellObject != null)
+        if (tabUpgradeGemButton != null)
         {
-            Button button = cellObject.GetComponent<Button>();
-            if (button != null)
-            {
-                button.onClick.RemoveAllListeners();
-                button.onClick.AddListener(() => OnCellClick(slotIndex));
-            }
-            else
-            {
-                Image image = cellObject.GetComponent<Image>();
-                if (image != null)
-                {
-                    UnityEngine.EventSystems.EventTrigger trigger = cellObject.GetComponent<UnityEngine.EventSystems.EventTrigger>();
-                    if (trigger == null)
-                    {
-                        trigger = cellObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
-                    }
-                    UnityEngine.EventSystems.EventTrigger.Entry entry = new UnityEngine.EventSystems.EventTrigger.Entry();
-                    entry.eventID = UnityEngine.EventSystems.EventTriggerType.PointerClick;
-                    entry.callback.AddListener((data) => { OnCellClick(slotIndex); });
-                    trigger.triggers.Add(entry);
-                }
-                else
-                {
-                    Debug.LogWarning($"Button or Image component missing on {cellObject.name}. Add a Button or Image component to enable clicking.");
-                }
-            }
+            tabUpgradeGemButton.onClick.RemoveAllListeners();
+            tabUpgradeGemButton.onClick.AddListener(OpenUpgradeGemTab);
         }
-    }
 
-    // Thêm sự kiện click cho các button hệ
-    private void AddElementButtonListeners()
-    {
-        string[] elements = { "Dark", "Earth", "Fire", "Light", "Metal", "Water", "Wood" };
+        if (clearSlotsButton != null)
+        {
+            clearSlotsButton.onClick.RemoveAllListeners();
+            clearSlotsButton.onClick.AddListener(OnClickClearSlots);
+        }
+
+        if (upgradeButton != null)
+        {
+            upgradeButton.onClick.RemoveAllListeners();
+            upgradeButton.onClick.AddListener(OnClickUpgrade);
+        }
+
         for (int i = 0; i < elementButtons.Length; i++)
         {
-            if (elementButtons[i] != null)
-            {
-                int index = i; // Capture index for the lambda
-                elementButtons[i].onClick.RemoveAllListeners();
-                elementButtons[i].onClick.AddListener(() => SelectElement(index.ToString()));
-                // Gán text cho button (nếu có Text component)
-                TextMeshProUGUI buttonText = elementButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-                if (buttonText != null)
-                {
-                    buttonText.text = elements[i];
-                }
-            }
-            else
-            {
-                Debug.LogWarning($"Element button at index {i} is not assigned!");
-            }
+            Button btn = elementButtons[i];
+            if (btn == null)
+                continue;
+
+            int elementIndex = i;
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() => OnClickElementTab(elementIndex));
+        }
+
+        for (int i = 0; i < slotButtons.Length; i++)
+        {
+            Button btn = slotButtons[i];
+            if (btn == null)
+                continue;
+
+            int slotIndex = i;
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() => OnClickSlot(slotIndex));
         }
     }
 
-    // Xử lý khi click vào viên đá
-    private void OnGemClick(int gemLevel)
+    private void OpenForgePopup()
     {
-        int emptySlot = -1;
-        for (int i = 0; i < selectedGemLevels.Length; i++)
+        if (forgePopupRoot != null)
+            forgePopupRoot.SetActive(true);
+
+        OpenUpgradeGemTab();
+    }
+
+    private void CloseForgePopup()
+    {
+        if (forgePopupRoot != null)
+            forgePopupRoot.SetActive(false);
+    }
+
+    private void OpenUpgradeGemTab()
+    {
+        if (tabUpgradeGemRoot != null)
+            tabUpgradeGemRoot.SetActive(true);
+
+        RebuildGemList();
+    }
+
+    private void OnClickElementTab(int elementIndex)
+    {
+        if (elementIndex < 0)
+            return;
+
+        if (lockedElement >= 0 && lockedElement != elementIndex)
         {
-            if (selectedGemLevels[i] == 0)
-            {
-                emptySlot = i;
-                break;
-            }
+            SetResultLocalized("forge_gem_element_locked", "Element b? kh�a theo gem d?u ti�n.");
+            return;
         }
 
-        if (emptySlot >= 0)
+        activeElementTab = elementIndex;
+        RebuildGemList();
+    }
+
+    private void OnClickSlot(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= selectedSlots.Length)
+            return;
+
+        if (!CanSelectSlot(slotIndex))
         {
-            selectedGemLevels[emptySlot] = gemLevel;
-            Debug.Log($"Đặt đá cấp {gemLevel} vào ô trống {emptySlot + 1}");
+            SetResultLocalized("forge_gem_select_slot_order", "H�y ch?n gem ? slot tru?c tru?c khi m? slot n�y.");
+            return;
+        }
+
+        selectedSlotIndex = slotIndex;
+        UpdateSlotSelectionVisual();
+    }
+
+    private void OnClickClearSlots()
+    {
+        ResetSlots();
+        RebuildGemList();
+        UpdateRateText();
+        SetResult(string.Empty);
+    }
+
+    private void OnClickUpgrade()
+    {
+        if (upgradeRoutine != null)
+            return;
+
+        if (clearSlotsButton != null)
+            clearSlotsButton.interactable = false;
+
+        upgradeRoutine = StartCoroutine(UpgradeRoutine());
+    }
+
+    private IEnumerator UpgradeRoutine()
+    {
+        List<SlotGem> selected = GetSelectedGems();
+        if (selected.Count < 2 || selected.Count > 3)
+        {
+            SetResultLocalized("forge_gem_need_two_or_three", "C?n ch?n 2-3 gem.");
+            if (clearSlotsButton != null)
+                clearSlotsButton.interactable = true;
+            upgradeRoutine = null;
+            yield break;
+        }
+
+        int element = selected[0].elementId;
+        int[] levels = new int[selected.Count];
+        List<GemDataV2> input = new List<GemDataV2>();
+
+        for (int i = 0; i < selected.Count; i++)
+        {
+            levels[i] = selected[i].level;
+            input.Add(new GemDataV2 { Level = selected[i].level });
+        }
+
+        if (PlayerManager.Instance == null || !PlayerManager.Instance.ConsumeOwnedGems(element, levels))
+        {
+            SetResultLocalized("forge_gem_not_enough", "Kh�ng d? gem d? upgrade.");
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayUpgradeGemFailedSound();
+
+            if (clearSlotsButton != null)
+                clearSlotsButton.interactable = true;
+            upgradeRoutine = null;
+            yield break;
+        }
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayUpgradeGemProcessingSound();
+
+        yield return StartCoroutine(PlayHammerEffectRoutine());
+
+        GemUpgradeResultV2 result = GemUpgradeServiceV2.Upgrade(input);
+
+        if (result.Success)
+        {
+            PlayerManager.Instance.AddOrUpdateOwnedGem(element, result.NewGemLevel, 1);
+            string criticalFormat = GetLocalizedText("forge_gem_upgrade_critical", "Th�nh c�ng ch� m?ng! Gem Lv.{0}");
+            string successFormat = GetLocalizedText("forge_gem_upgrade_success", "N�ng c?p th�nh c�ng! Gem Lv.{0}");
+            SetResult(string.Format(result.IsCritical ? criticalFormat : successFormat, result.NewGemLevel));
+
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayUpgradeGemSuccessSound();
         }
         else
         {
-            selectedGemLevels[0] = gemLevel; // Thay thế ô đầu tiên
-            Debug.Log($"Thay thế đá cấp {gemLevel} vào ô 1 (trước đó có đá)");
-        }
-
-        // Gán _gemUpdate về null khi chọn gem mới
-        if (_gemUpdate != null)
-        {
-            Image updateImage = _gemUpdate.GetComponent<Image>();
-            if (updateImage != null)
+            // Check what type of failure and show appropriate message
+            if (result.Message == "Target gem is max level")
             {
-                updateImage.sprite = null;
-                _gemUpdate.SetActive(false);
+                SetResultLocalized("forge_gem_target_max_level", "Gem d� ? m?c t?i da (Lv.5).");
             }
-        }
-
-        UpdateGemCells();
-        UpdatePercentDisplay();
-    }
-
-    // Xử lý khi click vào ô cell để xóa đá
-    private void OnCellClick(int slotIndex)
-    {
-        if (slotIndex >= 0 && slotIndex < selectedGemLevels.Length)
-        {
-            selectedGemLevels[slotIndex] = 0; // Xóa đá
-            Debug.Log($"Xóa đá khỏi ô {slotIndex + 1}");
-            UpdateGemCells();
-            UpdatePercentDisplay();
-        }
-        else
-        {
-            Debug.LogWarning($"Invalid slot index: {slotIndex}");
-        }
-    }
-
-    // Cập nhật hiển thị các ô cell
-    private void UpdateGemCells()
-    {
-        Image[] cellImages = { _gemCell1?.GetComponent<Image>(), _gemCell2?.GetComponent<Image>(), _gemCell3?.GetComponent<Image>() };
-        for (int i = 0; i < selectedGemLevels.Length; i++)
-        {
-            if (cellImages[i] != null)
+            else if (result.Message == "Invalid input")
             {
-                if (selectedGemLevels[i] > 0)
-                {
-                    if (int.TryParse(currentElementId, out int elementIndex) && elementIndex >= 0 && elementIndex < (gemCollection?.elements?.Length ?? 0))
-                    {
-                        GemCollection.GemElementData elementData = gemCollection.elements[elementIndex];
-                        if (selectedGemLevels[i] - 1 < (elementData.gemLevels?.Length ?? 0))
-                        {
-                            cellImages[i].sprite = elementData.gemLevels[selectedGemLevels[i] - 1].sprite;
-                            cellImages[i].enabled = true;
-                        }
-                        else
-                        {
-                            Debug.LogWarning($"Cannot find sprite for level {selectedGemLevels[i]} in id {currentElementId}");
-                        }
-                    }
-                }
-                else
-                {
-                    cellImages[i].sprite = null;
-                    cellImages[i].enabled = false;
-                }
-            }
-        }
-    }
-
-    // Cập nhật hiển thị phần trăm
-    private void UpdatePercentDisplay()
-    {
-        if (percentText != null)
-        {
-            int gemCount = 0;
-            int sameLevel = -1;
-            for (int i = 0; i < selectedGemLevels.Length; i++)
-            {
-                if (selectedGemLevels[i] > 0 && selectedGemLevels[i] <= MAX_GEM_LEVEL)
-                {
-                    gemCount++;
-                    if (sameLevel == -1) sameLevel = selectedGemLevels[i];
-                    else if (sameLevel != selectedGemLevels[i]) sameLevel = -1; // Không cùng cấp
-                }
-            }
-
-            if (gemCount == 3 && sameLevel != -1)
-            {
-                float successRate = CalculateSuccessRate(sameLevel);
-                percentText.text = $"Tỉ lệ: {successRate:F0}%";
+                SetResultLocalized("forge_gem_invalid_input", "�?u v�o kh�ng h?p l?.");
             }
             else
             {
-                percentText.text = "Tỉ lệ: -";
+                // Regular failure - return gems
+                for (int i = 0; i < result.RemainGems.Count; i++)
+                {
+                    GemDataV2 gem = result.RemainGems[i];
+                    if (gem == null) continue;
+                    PlayerManager.Instance.AddOrUpdateOwnedGem(element, gem.Level, 1);
+                }
+                SetResultLocalized("forge_gem_upgrade_fail_return", "N�ng c?p th?t b?i - tr? l?i ng?u nhi�n 1-2 gem.");
             }
+
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayUpgradeGemFailedSound();
+        }
+
+        PlayerManager.Instance.SaveData();
+
+        ResetSlots();
+        RebuildGemList();
+        UpdateRateText();
+
+        if (clearSlotsButton != null)
+            clearSlotsButton.interactable = true;
+
+        upgradeRoutine = null;
+    }
+
+    private IEnumerator PlayHammerEffectRoutine()
+    {
+        ClearSpawnedUpgradeFx();
+
+        if (upgradeFxPrefab != null)
+        {
+            for (int i = 0; i < selectedSlots.Length; i++)
+            {
+                if (!selectedSlots[i].IsValid)
+                    continue;
+
+                Transform slotRoot = GetSlotVisualRoot(i);
+                if (slotRoot == null)
+                    continue;
+
+                GameObject fxInstance = Instantiate(upgradeFxPrefab, slotRoot);
+                fxInstance.transform.localPosition = upgradeFxLocalOffset;
+                fxInstance.transform.localRotation = Quaternion.identity;
+                fxInstance.transform.localScale = upgradeFxLocalScale;
+                fxInstance.SetActive(true);
+                spawnedUpgradeFx.Add(fxInstance);
+            }
+        }
+
+        float wait = Mathf.Max(0.1f, upgradeFxSeconds);
+        yield return new WaitForSeconds(wait);
+
+        ClearSpawnedUpgradeFx();
+    }
+
+    private Transform GetSlotVisualRoot(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= slotIcons.Length)
+            return transform;
+
+        Image icon = slotIcons[slotIndex];
+        if (icon != null)
+            return icon.transform;
+
+        Button btn = slotButtons[slotIndex];
+        if (btn != null)
+            return btn.transform;
+
+        return transform;
+    }
+
+    private void ClearSpawnedUpgradeFx()
+    {
+        for (int i = 0; i < spawnedUpgradeFx.Count; i++)
+        {
+            if (spawnedUpgradeFx[i] != null)
+                Destroy(spawnedUpgradeFx[i]);
+        }
+
+        spawnedUpgradeFx.Clear();
+    }
+
+    private void OnClickGemInventoryItem(int level)
+    {
+        int element = lockedElement >= 0 ? lockedElement : activeElementTab;
+        if (element < 0)
+            return;
+
+        int slot = selectedSlotIndex;
+        if (slot < 0 || slot >= selectedSlots.Length)
+            slot = 0;
+
+        if (!CanSelectSlot(slot))
+        {
+            SetResultLocalized("forge_gem_select_slot_order", "H�y ch?n gem ? slot tru?c tru?c khi m? slot n�y.");
+            return;
+        }
+
+        int owned = PlayerManager.Instance != null ? PlayerManager.Instance.GetOwnedGemQuantity(element, level) : 0;
+        int used = CountUsedGem(element, level);
+        if (selectedSlots[slot].IsValid && selectedSlots[slot].elementId == element && selectedSlots[slot].level == level)
+            used = Mathf.Max(0, used - 1);
+
+        if (used >= owned)
+        {
+            SetResultLocalized("forge_gem_not_enough_level_qty", "Kh�ng d? s? lu?ng gem level n�y.");
+            return;
+        }
+
+        selectedSlots[slot] = new SlotGem { elementId = element, level = level };
+        if (lockedElement < 0)
+            lockedElement = element;
+
+        if (slot < selectedSlots.Length - 1 && CanSelectSlot(slot + 1))
+            selectedSlotIndex = slot + 1;
+
+        RefreshSlotsUI();
+        UpdateSlotSelectionVisual();
+        RebuildGemList();
+        UpdateRateText();
+        SetResult(string.Empty);
+    }
+
+    private void RebuildGemList()
+    {
+        ClearGemListItems();
+
+        if (gemListContent == null || gemItemPrefab == null || PlayerManager.Instance == null)
+            return;
+
+        EnsureGemCollectionReference();
+        if (gemCollection == null || gemCollection.elements == null)
+            return;
+
+        int element = lockedElement >= 0 ? lockedElement : activeElementTab;
+        if (element < 0 || element >= gemCollection.elements.Length)
+            return;
+
+        for (int level = 1; level <= 5; level++)
+        {
+            int ownedQty = PlayerManager.Instance.GetOwnedGemQuantity(element, level);
+            int usedQty = CountUsedGem(element, level);
+            int availableQty = Mathf.Max(0, ownedQty - usedQty);
+            if (availableQty <= 0)
+                continue;
+
+            Sprite icon = GetGemSprite(element, level);
+            GemInventoryItemButton item = Instantiate(gemItemPrefab, gemListContent);
+            item.Setup(level, availableQty, icon, OnClickGemInventoryItem);
+            spawnedItems.Add(item);
         }
     }
 
-    // Hàm nâng cấp đá
-    public bool UpgradeGem()
+    private void RefreshSlotsUI()
     {
-        int gemCount = 0;
-        int sameLevel = -1;
-        for (int i = 0; i < selectedGemLevels.Length; i++)
+        for (int i = 0; i < selectedSlots.Length; i++)
         {
-            if (selectedGemLevels[i] > 0 && selectedGemLevels[i] <= MAX_GEM_LEVEL)
-            {
-                gemCount++;
-                if (sameLevel == -1)
-                    sameLevel = selectedGemLevels[i];
-                else if (sameLevel != selectedGemLevels[i])
-                    return false; // Cần 3 viên cùng cấp
-            }
-        }
+            SlotGem slot = selectedSlots[i];
 
-        if (gemCount != 3 || sameLevel == -1)
-        {
-            Debug.LogWarning("Cần chọn đúng 3 viên đá cùng cấp!");
-            return false;
-        }
-
-        float successRate = CalculateSuccessRate(sameLevel);
-        float roll = Random.Range(0f, 100f);
-        if (roll <= successRate)
-        {
-            int newGemLevel = Mathf.Min(sameLevel + 1, MAX_GEM_LEVEL); // Tăng 1 cấp, tối đa 5
-            // Xóa sprite và tắt hiển thị của các ô cell
-            Image[] cellImages = { _gemCell1?.GetComponent<Image>(), _gemCell2?.GetComponent<Image>(), _gemCell3?.GetComponent<Image>() };
-            for (int i = 0; i < cellImages.Length; i++)
+            if (i < slotIcons.Length && slotIcons[i] != null)
             {
-                if (cellImages[i] != null)
+                if (slot.IsValid)
                 {
-                    cellImages[i].sprite = null;
-                    cellImages[i].enabled = false;
-                }
-            }
-            // Xóa 3 viên cũ trong mảng
-            for (int i = 0; i < selectedGemLevels.Length; i++)
-            {
-                selectedGemLevels[i] = 0;
-            }
-
-            // Hiển thị ảnh gem level mới trên _gemUpdate
-            if (_gemUpdate != null && int.TryParse(currentElementId, out int elementIndex) && elementIndex >= 0 && elementIndex < (gemCollection?.elements?.Length ?? 0))
-            {
-                GemCollection.GemElementData elementData = gemCollection.elements[elementIndex];
-                if (elementData.gemLevels != null && newGemLevel - 1 < elementData.gemLevels.Length)
-                {
-                    Image updateImage = _gemUpdate.GetComponent<Image>();
-                    if (updateImage != null)
-                    {
-                        updateImage.sprite = elementData.gemLevels[newGemLevel - 1].sprite;
-                        _gemUpdate.SetActive(true); // Hiển thị _gemUpdate
-                    }
-                    else
-                    {
-                        Debug.LogWarning("_gemUpdate missing Image component!");
-                    }
+                    slotIcons[i].sprite = GetGemSprite(slot.elementId, slot.level);
+                    slotIcons[i].enabled = slotIcons[i].sprite != null;
                 }
                 else
                 {
-                    Debug.LogWarning($"Cannot find sprite for new level {newGemLevel} in id {currentElementId}");
+                    slotIcons[i].sprite = null;
+                    slotIcons[i].enabled = false;
                 }
             }
 
-            // Cập nhật text thành "Thành công"
-            if (percentText != null)
-            {
-                percentText.text = "Thành công";
-            }
+            if (i < slotLevelTexts.Length && slotLevelTexts[i] != null)
+                slotLevelTexts[i].text = slot.IsValid ? ("Lv. " + slot.level) : string.Empty;
+        }
+    }
 
-            Debug.Log($"Nâng cấp thành công! Đá cấp {sameLevel} → Đá cấp {newGemLevel}, Tỉ lệ: {successRate}%, Roll: {roll}%");
+    private void UpdateRateText()
+    {
+        if (txtSuccessRate == null)
+            return;
+
+        List<SlotGem> selected = GetSelectedGems();
+        if (selected.Count < 2)
+        {
+            txtSuccessRate.text = "0%";
+            return;
+        }
+
+        List<GemDataV2> input = new List<GemDataV2>();
+        for (int i = 0; i < selected.Count; i++)
+            input.Add(new GemDataV2 { Level = selected[i].level });
+
+        float rate = GemUpgradeServiceV2.CalculateSuccessRate(input);
+        txtSuccessRate.text = $"{rate * 100f:F0}%";
+    }
+
+    private int CountUsedGem(int element, int level)
+    {
+        int used = 0;
+        for (int i = 0; i < selectedSlots.Length; i++)
+        {
+            SlotGem slot = selectedSlots[i];
+            if (!slot.IsValid)
+                continue;
+
+            if (slot.elementId == element && slot.level == level)
+                used++;
+        }
+
+        return used;
+    }
+
+    private int GetFirstEmptySlot()
+    {
+        for (int i = 0; i < selectedSlots.Length; i++)
+        {
+            if (!selectedSlots[i].IsValid)
+                return i;
+        }
+
+        return -1;
+    }
+
+    private int GetSelectedCount()
+    {
+        int count = 0;
+        for (int i = 0; i < selectedSlots.Length; i++)
+        {
+            if (selectedSlots[i].IsValid)
+                count++;
+        }
+
+        return count;
+    }
+
+    private List<SlotGem> GetSelectedGems()
+    {
+        List<SlotGem> result = new List<SlotGem>();
+        for (int i = 0; i < selectedSlots.Length; i++)
+        {
+            if (selectedSlots[i].IsValid)
+                result.Add(selectedSlots[i]);
+        }
+
+        return result;
+    }
+
+    private void ResetSlots()
+    {
+        for (int i = 0; i < selectedSlots.Length; i++)
+            selectedSlots[i] = default(SlotGem);
+
+        lockedElement = -1;
+        selectedSlotIndex = 0;
+        RefreshSlotsUI();
+        UpdateSlotSelectionVisual();
+    }
+
+    private void HandlePlayerDataChanged()
+    {
+        RebuildGemList();
+        UpdateRateText();
+        RefreshElementButtonIcons();
+    }
+
+    private Sprite GetGemSprite(int element, int level)
+    {
+        EnsureGemCollectionReference();
+        if (gemCollection == null || gemCollection.elements == null)
+            return null;
+
+        if (element < 0 || element >= gemCollection.elements.Length)
+            return null;
+
+        GemCollection.GemElementData elementData = gemCollection.elements[element];
+        if (elementData == null || elementData.gemLevels == null)
+            return null;
+
+        int index = level - 1;
+        if (index < 0 || index >= elementData.gemLevels.Length)
+            return null;
+
+        GemCollection.GemLevelData levelData = elementData.gemLevels[index];
+        return levelData != null ? levelData.sprite : null;
+    }
+
+    private void EnsureGemCollectionReference()
+    {
+        if (gemCollection != null)
+            return;
+
+        if (GameDataManager.Instance != null)
+            gemCollection = GameDataManager.Instance.GemCollectionObject as GemCollection;
+    }
+
+    private void ClearGemListItems()
+    {
+        for (int i = 0; i < spawnedItems.Count; i++)
+        {
+            GemInventoryItemButton item = spawnedItems[i];
+            if (item != null)
+                Destroy(item.gameObject);
+        }
+
+        spawnedItems.Clear();
+    }
+
+    private void SetResult(string text)
+    {
+        if (txtResult == null)
+            return;
+
+        txtResult.text = text;
+
+        if (string.IsNullOrEmpty(text))
+        {
+            if (resultCanvasGroup != null)
+                resultCanvasGroup.alpha = 0f;
+            return;
+        }
+
+        PlayResultAnimation();
+    }
+
+    private void SetResultLocalized(string id, string fallbackVi)
+    {
+        SetResult(GetLocalizedText(id, fallbackVi));
+    }
+
+    private bool CanSelectSlot(int slotIndex)
+    {
+        if (slotIndex <= 0)
             return true;
-        }
-        else
+
+        for (int i = 0; i < slotIndex; i++)
         {
-            Debug.Log($"Nâng cấp thất bại! Đá cấp {sameLevel}, Tỉ lệ: {successRate}%, Roll: {roll}%");
-            // Cập nhật text thành "Thất bại"
-            if (percentText != null)
+            if (!selectedSlots[i].IsValid)
+                return false;
+        }
+
+        return true;
+    }
+
+    private void UpdateSlotSelectionVisual()
+    {
+        for (int i = 0; i < slotButtons.Length; i++)
+        {
+            Button btn = slotButtons[i];
+            if (btn == null)
+                continue;
+
+            Image img = btn.GetComponent<Image>();
+            if (img != null)
+                img.color = (i == selectedSlotIndex) ? slotSelectedColor : slotNormalColor;
+        }
+    }
+
+    private void RefreshElementButtonIcons()
+    {
+        EnsureGemCollectionReference();
+        if (gemCollection == null || gemCollection.elements == null)
+            return;
+
+        for (int i = 0; i < elementButtons.Length; i++)
+        {
+            Button btn = elementButtons[i];
+            if (btn == null)
+                continue;
+
+            if (i < 0 || i >= gemCollection.elements.Length)
+                continue;
+
+            GemCollection.GemElementData elementData = gemCollection.elements[i];
+            if (elementData == null || elementData.gemLevels == null || elementData.gemLevels.Length == 0)
+                continue;
+
+            Sprite icon = elementData.gemLevels[0] != null ? elementData.gemLevels[0].sprite : null;
+            Image buttonImage = btn.GetComponent<Image>();
+            if (buttonImage != null && icon != null)
+                buttonImage.sprite = icon;
+        }
+    }
+
+    private void InitializeResultFeedback()
+    {
+        if (txtResult == null)
+            return;
+
+        RectTransform rt = txtResult.GetComponent<RectTransform>();
+        if (rt != null)
+            resultStartAnchoredPos = rt.anchoredPosition;
+
+        resultCanvasGroup = txtResult.GetComponent<CanvasGroup>();
+        if (resultCanvasGroup == null)
+            resultCanvasGroup = txtResult.gameObject.AddComponent<CanvasGroup>();
+
+        resultCanvasGroup.alpha = 0f;
+    }
+
+    private void PlayResultAnimation()
+    {
+        if (txtResult == null)
+            return;
+
+        RectTransform rt = txtResult.GetComponent<RectTransform>();
+        if (rt == null)
+            return;
+
+        KillResultTweens();
+
+        rt.anchoredPosition = resultStartAnchoredPos;
+        if (resultCanvasGroup != null)
+            resultCanvasGroup.alpha = 1f;
+
+        float duration = Mathf.Max(0.1f, resultAnimDuration);
+        resultMoveTween = rt.DOAnchorPosY(resultStartAnchoredPos.y + resultFloatY, duration).SetEase(Ease.OutQuad);
+        if (resultCanvasGroup != null)
+        {
+            resultFadeTween = resultCanvasGroup.DOFade(0f, duration).SetEase(Ease.OutQuad);
+            resultFadeTween.OnComplete(() =>
             {
-                percentText.text = "Thất bại";
-            }
-            return false;
+                rt.anchoredPosition = resultStartAnchoredPos;
+            });
         }
     }
 
-    // Tính tỷ lệ thành công cho nâng cấp đá
-    private float CalculateSuccessRate(int currentLevel)
+    private void KillResultTweens()
     {
-        if (currentLevel == 4) // 3 viên cấp 4 lên cấp 5
+        if (resultMoveTween != null)
         {
-            return 80f; // Tỷ lệ 80%
+            resultMoveTween.Kill();
+            resultMoveTween = null;
         }
-        else if (currentLevel < 4) // 3 viên cánh 1, 2, 3 lên cấp tiếp theo
+
+        if (resultFadeTween != null)
         {
-            return 100f; // Tỷ lệ 100%
+            resultFadeTween.Kill();
+            resultFadeTween = null;
         }
-        return 10f; // Mặc định tối thiểu 10% (dự phòng)
     }
 
-    // Đặt cấp độ cho ô đá (gọi từ UI hoặc script khác)
-    public void SetGemLevel(int slotIndex, int level)
+    private string GetLocalizedText(string id, string fallback)
     {
-        if (slotIndex >= 0 && slotIndex < selectedGemLevels.Length && level >= 0 && level <= MAX_GEM_LEVEL)
-        {
-            selectedGemLevels[slotIndex] = level;
-            Debug.Log($"Đặt đá cấp {level} vào ô {slotIndex + 1}");
-            UpdateGemCells();
-            UpdatePercentDisplay();
-        }
-        else
-        {
-            Debug.LogWarning("Ô hoặc cấp độ không hợp lệ!");
-        }
+        if (LocalizationManager.Instance != null && LocalizationManager.Instance.IsLoaded)
+            return LocalizationManager.Instance.GetText(id, fallback);
+
+        return fallback;
     }
 }
+
+public class GemDataV2
+{
+    public int Level;
+}
+
+public class GemUpgradeResultV2
+{
+    public bool Success;
+    public bool IsCritical;
+    public float SuccessRate;
+    public float Roll;
+    public int TargetLevel;
+    public int NewGemLevel;
+    public string Message;
+    public readonly List<GemDataV2> RemainGems = new List<GemDataV2>();
+}
+
+public static class GemUpgradeConfigV2
+{
+    public static float GetBaseRate(int level)
+    {
+        switch (level)
+        {
+            case 1: return 0.80f;
+            case 2: return 0.70f;
+            case 3: return 0.55f;
+            case 4: return 0.40f;
+            default: return 0f;
+        }
+    }
+
+    public const float MAX_RATE = 0.90f;
+    public const float MIN_RATE = 0.05f;
+    public const float CRIT_RATE = 0.05f;
+}
+
+public static class GemUpgradeServiceV2
+{
+    public static float CalculateSuccessRate(List<GemDataV2> gems)
+    {
+        if (!ValidateInput(gems))
+            return 0f;
+
+        int targetIndex = GetTargetIndex(gems, false);
+        if (targetIndex < 0)
+            return 0f;
+
+        GemDataV2 target = gems[targetIndex];
+        if (target.Level >= 5)
+            return 0f;
+
+        float baseRate = GemUpgradeConfigV2.GetBaseRate(target.Level);
+        float bonus = 0f;
+
+        for (int i = 0; i < gems.Count; i++)
+        {
+            if (i == targetIndex)
+                continue;
+
+            int delta = gems[i].Level - target.Level;
+            if (delta >= 0) bonus += 0.10f;
+            else if (delta == -1) bonus += 0.05f;
+            else if (delta == -2) bonus += 0f;
+            else bonus -= 0.10f;
+        }
+
+        bool sameLevel = gems.All(g => g.Level == target.Level);
+        if (sameLevel)
+            bonus += 0.10f;
+
+        if (gems.Count == 3)
+            bonus += 0.05f;
+
+        return Mathf.Clamp(baseRate + bonus, GemUpgradeConfigV2.MIN_RATE, GemUpgradeConfigV2.MAX_RATE);
+    }
+
+    public static GemUpgradeResultV2 Upgrade(List<GemDataV2> gems)
+    {
+        GemUpgradeResultV2 result = new GemUpgradeResultV2();
+        if (!ValidateInput(gems))
+        {
+            result.Success = false;
+            result.Message = "Invalid input";
+            return result;
+        }
+
+        int targetIndex = GetTargetIndex(gems, true);
+        GemDataV2 target = gems[targetIndex];
+        result.TargetLevel = target.Level;
+
+        if (target.Level >= 5)
+        {
+            result.Success = false;
+            result.Message = "Target gem is max level";
+            return result;
+        }
+
+        result.SuccessRate = CalculateSuccessRate(gems);
+        result.Roll = Random.value;
+
+        if (result.Roll <= result.SuccessRate)
+        {
+            int newLevel = target.Level + 1;
+            if (Random.value <= GemUpgradeConfigV2.CRIT_RATE)
+            {
+                newLevel += 1;
+                result.IsCritical = true;
+            }
+
+            result.NewGemLevel = Mathf.Min(newLevel, 5);
+            result.Success = true;
+            result.Message = result.IsCritical ? "Critical success" : "Success";
+            return result;
+        }
+
+        result.Success = false;
+        result.Message = "Fail";
+
+        int returnCount = Random.Range(1, 3);
+        List<GemDataV2> shuffled = gems.OrderBy(x => Random.value).ToList();
+        for (int i = 0; i < returnCount && i < shuffled.Count; i++)
+            result.RemainGems.Add(new GemDataV2 { Level = shuffled[i].Level });
+
+        return result;
+    }
+
+    private static bool ValidateInput(List<GemDataV2> gems)
+    {
+        if (gems == null || gems.Count < 2 || gems.Count > 3)
+            return false;
+
+        for (int i = 0; i < gems.Count; i++)
+        {
+            if (gems[i] == null || gems[i].Level < 1 || gems[i].Level > 5)
+                return false;
+        }
+
+        return true;
+    }
+
+    private static int GetTargetIndex(List<GemDataV2> gems, bool randomOnTie)
+    {
+        int maxLevel = gems.Max(g => g.Level);
+        List<int> candidates = new List<int>();
+        for (int i = 0; i < gems.Count; i++)
+        {
+            if (gems[i].Level == maxLevel)
+                candidates.Add(i);
+        }
+
+        if (candidates.Count == 0)
+            return -1;
+
+        if (!randomOnTie || candidates.Count == 1)
+            return candidates[0];
+
+        return candidates[Random.Range(0, candidates.Count)];
+    }
+}
+
+
+
+
+
+

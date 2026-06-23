@@ -91,6 +91,7 @@ public class CardDatabase : ScriptableObject
         public int value;                        // sát thương / hồi máu / mana / rage
         public Sprite sprite;                    // sprite riêng cho cấp này
         public string effectDesc;                // mô tả ngắn
+        public int priceGold;                    // giá vàng trong shop
     }
 
     public enum CardType
@@ -98,7 +99,8 @@ public class CardDatabase : ScriptableObject
         Attack,
         Heal,
         Rage,
-        Mana
+        Mana,
+        Immortal
     }
 
     public enum AttackSubType

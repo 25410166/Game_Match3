@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 8744727479385107971}
   - component: {fileID: -3662784077135405325}
   - component: {fileID: 6817076888452975760}
-  m_Layer: 0
+  - component: {fileID: -3574828929077479791}
+  m_Layer: 3
   m_Name: Monster_78_Extinct Ox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,5 +209,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95e5210469e7ecc4d9cb322dd2e47b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  petPrefab: {fileID: 8415757767482923366}
-  choosePetUI: {fileID: 0}
+  button: {fileID: 0}
+  previewRoot: {fileID: 0}
+  txtPetLevel: {fileID: 0}
+  previewLocalScale: {x: 1, y: 1, z: 1}
+  idleAnimationName: Idle
+  previewSortingLayerName: UI
+  previewSortingOrder: 11
+--- !u!114 &-3574828929077479791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8415757767482923366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9bbb99693b190346bd73ad8ffa34737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingLayerName: UI
+  sortingOrder: 11
+  includeInactive: 1
+  setUnityLayer: 0
+  unityLayerName: Default

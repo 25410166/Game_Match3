@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e892e7844bd69714e8797b0a50f1775c, type: 3}
+  m_Name: Skill_17
+  m_EditorClassIdentifier: 
+  skillId: 17
+  skillName: Name_Skill17
+  desSkill: Skill17
+  attackType: 0
+  rangeType: 1
+  typeSkill: 1
+  hitCount: 1
+  hitDelay: 0
+  damageMultiplier: 3
+  auditionSequenceLengthMin: 6
+  auditionSequenceLengthMax: 8
+  auditionRoundDuration: 5
+  auditionPerfectZoneStart: 0.78
+  auditionPerfectZoneEnd: 0.88
+  auditionPerfectMultiplier: 3
+  auditionGreatMultiplier: 2
+  auditionMissMultiplier: 1
+  effect: 7
+  roundEffect: 3
+  animationPlayCount: 1
+  fxPlayCount: 1
+  skillSprite: {fileID: 21300000, guid: 2c005eb6a9a1c0c46b0b33c330f907d1, type: 3}
+  fxPrefab: {fileID: 1205384544795343132, guid: fa3573109ede0a94ca5dc3f597df3ff9, type: 3}
+  projectilePrefab: {fileID: 7493796544200936264, guid: 625a5893477f7b94da52aa0c2e1eb1d8, type: 3}
+  manaCost: 50
+  rageCost: 50
+  hpCostPercent: 0
+  gemTypesAffected: 
+  boardEffectType: 0
+  animationDuration: 1.5

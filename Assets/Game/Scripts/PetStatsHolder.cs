@@ -40,6 +40,7 @@ public class PetStatsHolder : MonoBehaviour
 public class PetLevelData
 {
     public int level;
+    public int skillId;
     public int baseHP;
     public int armor;
     public int baseMana;
@@ -50,4 +51,8 @@ public class PetLevelData
     public string weakness;
     public AttackType attackType;
 
+    [Header("Pet Scale & Movement")]
+    public float petScale = 1.0f;           // Scale factor for pet (e.g., 0.6 to reduce size)
+    public GameObject bulletPrefab;         // Projectile prefab for Range attacks
+    public float meleeAttackMoveX = -1.2f;  // Movement offset for melee attacks (negative = towards enemy)
 }

@@ -23,6 +23,7 @@ public class PetDataAsset
     public int petId; // Pet_ID trong sheet
 
     [Header("Prefab")]
+    public string prefabName;
     public GameObject prefab;
 
     [Header("Stats")]
@@ -43,12 +44,14 @@ public class PetDataAsset
     [Header("Animations")]
     public string idleAnim = "Idle";
     public string attackMeleeAnim = "Attack";
-    public string attackRangedAnim = "Shoot";
+    public string attackRangedAnim = "Attack";
     public string deadAnim = "Dead";
+    [Header("Skill")]
+public int skillId;
 }
 
 public enum AttackType
 {
     Melee,
-    Ranged
+    Range
 }

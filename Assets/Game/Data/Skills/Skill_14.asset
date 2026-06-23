@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e892e7844bd69714e8797b0a50f1775c, type: 3}
+  m_Name: Skill_14
+  m_EditorClassIdentifier: 
+  skillId: 14
+  skillName: Name_Skill14
+  desSkill: Skill14
+  attackType: 1
+  rangeType: 0
+  typeSkill: 0
+  hitCount: 1
+  hitDelay: 0
+  damageMultiplier: 1
+  auditionSequenceLengthMin: 6
+  auditionSequenceLengthMax: 8
+  auditionRoundDuration: 5
+  auditionPerfectZoneStart: 0.78
+  auditionPerfectZoneEnd: 0.88
+  auditionPerfectMultiplier: 3
+  auditionGreatMultiplier: 2
+  auditionMissMultiplier: 1
+  effect: 5
+  roundEffect: 0
+  animationPlayCount: 1
+  fxPlayCount: 1
+  skillSprite: {fileID: 21300000, guid: 50c5330ad5c84cb46aede52c5aaa7be6, type: 3}
+  fxPrefab: {fileID: 2306427970195387052, guid: 410ef1ec6e8254b48b584f223daddf4d, type: 3}
+  projectilePrefab: {fileID: 6665400761954696384, guid: 8319328ea5f2d764b8c2488efd649f43, type: 3}
+  manaCost: 50
+  rageCost: 50
+  hpCostPercent: 0
+  gemTypesAffected: 05000000
+  boardEffectType: 3
+  animationDuration: 1

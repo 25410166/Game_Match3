@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c284541d373f33a4d9b868b4d5fe91a1, type: 3}
+  m_Name: 146
+  m_EditorClassIdentifier: 
+  area: 7
+  mapId: 146
+  mapName: Map_Name_46
+  reqUserLevel: 6
+  petIdSpawn: 460
+  petLevelSpawn: 10
+  idGuadiant: 5
+  levelGuadiant: 1
+  rewardPetId: 451
+  rewardGuardiantId: -1
+  reqWinsPet: 3
+  rewards:
+  - mapId: 146
+    rewardType: 0
+    rewardId: Currency
+    gemElementId: -1
+    gemLevel: 1
+    amountMin: 4712
+    amountMax: 5759
+    weight: 100
+  - mapId: 146
+    rewardType: 1
+    rewardId: User_Exp
+    gemElementId: -1
+    gemLevel: 1
+    amountMin: 1047
+    amountMax: 1047
+    weight: 100
+  - mapId: 146
+    rewardType: 3
+    rewardId: Currency
+    gemElementId: -1
+    gemLevel: 1
+    amountMin: 20
+    amountMax: 30
+    weight: 100
+  - mapId: 146
+    rewardType: 2
+    rewardId: Water_1
+    gemElementId: 5
+    gemLevel: 1
+    amountMin: 1
+    amountMax: 6
+    weight: 25
+  - mapId: 146
+    rewardType: 2
+    rewardId: Water_2
+    gemElementId: 5
+    gemLevel: 2
+    amountMin: 1
+    amountMax: 6
+    weight: 35
+  - mapId: 146
+    rewardType: 2
+    rewardId: Water_3
+    gemElementId: 5
+    gemLevel: 3
+    amountMin: 1
+    amountMax: 6
+    weight: 25
+  - mapId: 146
+    rewardType: 2
+    rewardId: Water_4
+    gemElementId: 5
+    gemLevel: 4
+    amountMin: 1
+    amountMax: 2
+    weight: 13
+  - mapId: 146
+    rewardType: 2
+    rewardId: Water_5
+    gemElementId: 5
+    gemLevel: 5
+    amountMin: 1
+    amountMax: 1
+    weight: 2

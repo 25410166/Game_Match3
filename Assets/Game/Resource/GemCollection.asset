@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae08e4c879a846d4fa1c69739b74e1be, type: 3}
+  m_Name: GemCollection
+  m_EditorClassIdentifier: 
+  elements:
+  - element: 'Dark '
+    gemLevels:
+    - level: 1
+      sprite: {fileID: -1675856147, guid: 330a38680fa2cd74d8c29a419058b2a7, type: 3}
+      priceGold: 200
+    - level: 2
+      sprite: {fileID: -1659110585, guid: 330a38680fa2cd74d8c29a419058b2a7, type: 3}
+      priceGold: 800
+    - level: 3
+      sprite: {fileID: -217968529, guid: 330a38680fa2cd74d8c29a419058b2a7, type: 3}
+      priceGold: 2200
+    - level: 4
+      sprite: {fileID: -47935844, guid: 330a38680fa2cd74d8c29a419058b2a7, type: 3}
+      priceGold: 8000
+    - level: 5
+      sprite: {fileID: -1803285311, guid: 330a38680fa2cd74d8c29a419058b2a7, type: 3}
+      priceGold: 32000
+  - element: 'Earth '
+    gemLevels:
+    - level: 1
+      sprite: {fileID: -1938096782, guid: 947a33c1ccec75f4baf9ea2192e7565a, type: 3}
+      priceGold: 100
+    - level: 2
+      sprite: {fileID: 1229749921, guid: 947a33c1ccec75f4baf9ea2192e7565a, type: 3}
+      priceGold: 500
+    - level: 3
+      sprite: {fileID: 1629006346, guid: 947a33c1ccec75f4baf9ea2192e7565a, type: 3}
+      priceGold: 2000
+    - level: 4
+      sprite: {fileID: -2003585384, guid: 947a33c1ccec75f4baf9ea2192e7565a, type: 3}
+      priceGold: 7000
+    - level: 5
+      sprite: {fileID: -1927442269, guid: 947a33c1ccec75f4baf9ea2192e7565a, type: 3}
+      priceGold: 30000
+  - element: Fire
+    gemLevels:
+    - level: 1
+      sprite: {fileID: 1755836467, guid: b44eb046946e5744988048f71e491175, type: 3}
+      priceGold: 100
+    - level: 2
+      sprite: {fileID: -1808312597, guid: b44eb046946e5744988048f71e491175, type: 3}
+      priceGold: 500
+    - level: 3
+      sprite: {fileID: 803764078, guid: b44eb046946e5744988048f71e491175, type: 3}
+      priceGold: 2000
+    - level: 4
+      sprite: {fileID: 219686853, guid: b44eb046946e5744988048f71e491175, type: 3}
+      priceGold: 7000
+    - level: 5
+      sprite: {fileID: -29338285, guid: b44eb046946e5744988048f71e491175, type: 3}
+      priceGold: 30000
+  - element: 'Light '
+    gemLevels:
+    - level: 1
+      sprite: {fileID: 1841023218, guid: e3524ae70d71fc44ca0395ef25cf3203, type: 3}
+      priceGold: 200
+    - level: 2
+      sprite: {fileID: 264046170, guid: e3524ae70d71fc44ca0395ef25cf3203, type: 3}
+      priceGold: 800
+    - level: 3
+      sprite: {fileID: -7138986, guid: e3524ae70d71fc44ca0395ef25cf3203, type: 3}
+      priceGold: 2200
+    - level: 4
+      sprite: {fileID: 1855385718, guid: e3524ae70d71fc44ca0395ef25cf3203, type: 3}
+      priceGold: 8000
+    - level: 5
+      sprite: {fileID: -174089214, guid: e3524ae70d71fc44ca0395ef25cf3203, type: 3}
+      priceGold: 32000
+  - element: Metal
+    gemLevels:
+    - level: 1
+      sprite: {fileID: 1988305980, guid: a06232f4a8f055e4a94c5bc6ec96d4c0, type: 3}
+      priceGold: 100
+    - level: 2
+      sprite: {fileID: -129677124, guid: a06232f4a8f055e4a94c5bc6ec96d4c0, type: 3}
+      priceGold: 500
+    - level: 3
+      sprite: {fileID: 304640225, guid: a06232f4a8f055e4a94c5bc6ec96d4c0, type: 3}
+      priceGold: 2000
+    - level: 4
+      sprite: {fileID: 194264993, guid: a06232f4a8f055e4a94c5bc6ec96d4c0, type: 3}
+      priceGold: 7000
+    - level: 5
+      sprite: {fileID: 275381509, guid: a06232f4a8f055e4a94c5bc6ec96d4c0, type: 3}
+      priceGold: 30000
+  - element: 'Water '
+    gemLevels:
+    - level: 1
+      sprite: {fileID: -1029874812, guid: 45d2effcc0638c84396cf8a2bea621f6, type: 3}
+      priceGold: 100
+    - level: 2
+      sprite: {fileID: 1258000167, guid: 45d2effcc0638c84396cf8a2bea621f6, type: 3}
+      priceGold: 500
+    - level: 3
+      sprite: {fileID: 504504623, guid: 45d2effcc0638c84396cf8a2bea621f6, type: 3}
+      priceGold: 2000
+    - level: 4
+      sprite: {fileID: 905128138, guid: 45d2effcc0638c84396cf8a2bea621f6, type: 3}
+      priceGold: 7000
+    - level: 5
+      sprite: {fileID: -358331935, guid: 45d2effcc0638c84396cf8a2bea621f6, type: 3}
+      priceGold: 30000
+  - element: Wood
+    gemLevels:
+    - level: 1
+      sprite: {fileID: 432921608, guid: 1de5c7b5cc90fe34a8c822988c6a344b, type: 3}
+      priceGold: 100
+    - level: 2
+      sprite: {fileID: 1291297701, guid: 1de5c7b5cc90fe34a8c822988c6a344b, type: 3}
+      priceGold: 500
+    - level: 3
+      sprite: {fileID: -266655867, guid: 1de5c7b5cc90fe34a8c822988c6a344b, type: 3}
+      priceGold: 2000
+    - level: 4
+      sprite: {fileID: -1740744236, guid: 1de5c7b5cc90fe34a8c822988c6a344b, type: 3}
+      priceGold: 7000
+    - level: 5
+      sprite: {fileID: 161047027, guid: 1de5c7b5cc90fe34a8c822988c6a344b, type: 3}
+      priceGold: 30000

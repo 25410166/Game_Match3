@@ -8,10 +8,10 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Pet
   - Water
   - UI
-  - 
+  - FX
   - 
   - 
   - 
@@ -40,4 +40,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 1965345275
+    locked: 0
+  - name: Pet
+    uniqueID: 3456814977
+    locked: 0
+  - name: FX
+    uniqueID: 1744662363
     locked: 0

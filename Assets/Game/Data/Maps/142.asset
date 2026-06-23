@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c284541d373f33a4d9b868b4d5fe91a1, type: 3}
+  m_Name: 142
+  m_EditorClassIdentifier: 
+  area: 6
+  mapId: 142
+  mapName: Map_Name_42
+  reqUserLevel: 6
+  petIdSpawn: 418
+  petLevelSpawn: 7
+  idGuadiant: 0
+  levelGuadiant: 1
+  rewardPetId: 411
+  rewardGuardiantId: -1
+  reqWinsPet: 2
+  rewards:
+  - mapId: 142
+    rewardType: 0
+    rewardId: Currency
+    gemElementId: -1
+    gemLevel: 1
+    amountMin: 3876
+    amountMax: 4738
+    weight: 100
+  - mapId: 142
+    rewardType: 1
+    rewardId: User_Exp
+    gemElementId: -1
+    gemLevel: 1
+    amountMin: 861
+    amountMax: 861
+    weight: 100
+  - mapId: 142
+    rewardType: 3
+    rewardId: Currency
+    gemElementId: -1
+    gemLevel: 1
+    amountMin: 20
+    amountMax: 30
+    weight: 100
+  - mapId: 142
+    rewardType: 2
+    rewardId: Dark_1
+    gemElementId: 0
+    gemLevel: 1
+    amountMin: 1
+    amountMax: 4
+    weight: 30
+  - mapId: 142
+    rewardType: 2
+    rewardId: Dark_2
+    gemElementId: 0
+    gemLevel: 2
+    amountMin: 1
+    amountMax: 4
+    weight: 50
+  - mapId: 142
+    rewardType: 2
+    rewardId: Dark_3
+    gemElementId: 0
+    gemLevel: 3
+    amountMin: 1
+    amountMax: 4
+    weight: 20
