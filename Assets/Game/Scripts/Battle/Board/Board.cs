@@ -80,8 +80,15 @@ public class Board : MonoBehaviour
             reel.InitializeItems();
         }
 
+        List<Items> orderedItems = GetAllBoardItemsOrdered();
+        for (int i = 0; i < orderedItems.Count; i++)
+        {
+            if (orderedItems[i] != null)
+                AssignRandomIdAvoidMatch(orderedItems[i]);
+        }
+
         EnsureBoardHasPotentialMove(true);
-        Debug.Log($"[Board] InitializeBoard complete. Spawned items: {itemList.Count}");
+        Debug.Log($"[Board] InitializeBoard complete. Spawned items: {itemList.Count} | initialMatches={GetAllMatches().Count}");
     }
     public void SetPresentationVisible(bool visible)
     {
