@@ -1,10 +1,16 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TutorialPopupView : MonoBehaviour
 {
+    public enum LayoutMode
+    {
+        Above = 0,
+        LeftArrowRightText = 1
+    }
+
     [Header("Root")]
     [SerializeField] private GameObject root;
     [SerializeField] private Image darkOverlay;
@@ -13,9 +19,13 @@ public class TutorialPopupView : MonoBehaviour
     [SerializeField] private Button skipButton;
     [SerializeField] private RectTransform arrowRoot;
 
-    [Header("Placement")]
+    [Header("Placement Above")]
     [SerializeField] private Vector2 textOffset = new Vector2(0f, 140f);
     [SerializeField] private Vector2 arrowOffset = new Vector2(0f, 70f);
+
+    [Header("Placement Left/Right")]
+    [SerializeField] private Vector2 sideArrowOffset = new Vector2(-140f, 0f);
+    [SerializeField] private Vector2 sideTextOffset = new Vector2(110f, 0f);
 
     [Header("Arrow Animation")]
     [SerializeField] private float arrowMoveDistance = 18f;
@@ -26,6 +36,7 @@ public class TutorialPopupView : MonoBehaviour
     private Tween arrowTween;
     private Vector2 arrowBasePosition;
     private LocalizedText localizedMessageText;
+    private LayoutMode currentLayoutMode = LayoutMode.Above;
 
     private void Awake()
     {
@@ -50,9 +61,10 @@ public class TutorialPopupView : MonoBehaviour
             skipButton.onClick.RemoveListener(HandleSkipClicked);
     }
 
-    public void Show(string messageKey, RectTransform target, System.Action onSkip)
+    public void Show(string messageKey, RectTransform target, System.Action onSkip, LayoutMode layoutMode = LayoutMode.Above)
     {
         skipCallback = onSkip;
+        currentLayoutMode = layoutMode;
         ApplyMessage(messageKey);
 
         if (root != null)
@@ -77,13 +89,16 @@ public class TutorialPopupView : MonoBehaviour
             uiCamera = rootCanvas.worldCamera;
 
         Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(uiCamera, target.position);
+        Vector2 nextTextOffset = currentLayoutMode == LayoutMode.LeftArrowRightText ? sideTextOffset : textOffset;
+        Vector2 nextArrowOffset = currentLayoutMode == LayoutMode.LeftArrowRightText ? sideArrowOffset : arrowOffset;
 
         if (textPopupRoot != null)
-            PositionRect(textPopupRoot, screenPoint + textOffset, uiCamera);
+            PositionRect(textPopupRoot, screenPoint + nextTextOffset, uiCamera);
 
         if (arrowRoot != null)
         {
-            PositionRect(arrowRoot, screenPoint + arrowOffset, uiCamera);
+            PositionRect(arrowRoot, screenPoint + nextArrowOffset, uiCamera);
+            arrowRoot.localEulerAngles = currentLayoutMode == LayoutMode.LeftArrowRightText ? new Vector3(0f, 0f, -90f) : Vector3.zero;
             arrowBasePosition = arrowRoot.anchoredPosition;
             PlayArrowAnimation();
         }
@@ -95,7 +110,10 @@ public class TutorialPopupView : MonoBehaviour
         arrowTween?.Kill();
 
         if (arrowRoot != null)
+        {
             arrowRoot.anchoredPosition = arrowBasePosition;
+            arrowRoot.localEulerAngles = Vector3.zero;
+        }
 
         if (root != null)
             root.SetActive(false);
@@ -128,6 +146,16 @@ public class TutorialPopupView : MonoBehaviour
 
         arrowTween?.Kill();
         arrowRoot.anchoredPosition = arrowBasePosition;
+
+        if (currentLayoutMode == LayoutMode.LeftArrowRightText)
+        {
+            arrowTween = arrowRoot.DOAnchorPosX(arrowBasePosition.x + arrowMoveDistance, Mathf.Max(0.05f, arrowMoveDuration))
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetUpdate(true);
+            return;
+        }
+
         arrowTween = arrowRoot.DOAnchorPosY(arrowBasePosition.y + arrowMoveDistance, Mathf.Max(0.05f, arrowMoveDuration))
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo)

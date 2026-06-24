@@ -58,6 +58,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip soundUpgradePetFailed;
     [SerializeField] private AudioClip soundPurchaseSuccess;
     [SerializeField] private AudioClip soundPurchaseFailed;
+    [SerializeField] private AudioClip soundBattleCharacterSkill;
+    [SerializeField] private AudioClip soundBattleGainHp;
+    [SerializeField] private AudioClip soundBattleGainMana;
+    [SerializeField] private AudioClip soundBattleGainRage;
+    [SerializeField] private AudioClip soundBattleGainArmor;
+    [SerializeField] private AudioClip soundBattleRain;
+    [SerializeField] private List<AudioClip> listSoundMatch = new List<AudioClip>();
 
     [Header("Scene Music")]
     [SerializeField] private string battleSceneName = "SceneBattle";
@@ -270,6 +277,61 @@ public class AudioManager : MonoBehaviour
     public void PlayPurchaseFailedSound()
     {
         PlaySound(soundPurchaseFailed);
+    }
+
+    public void PlayBattleCharacterSkillSound()
+    {
+        PlaySound(soundBattleCharacterSkill);
+    }
+
+    public void PlayBattleGainHpSound()
+    {
+        PlaySound(soundBattleGainHp);
+    }
+
+    public void PlayBattleGainManaSound()
+    {
+        PlaySound(soundBattleGainMana);
+    }
+
+    public void PlayBattleGainRageSound()
+    {
+        PlaySound(soundBattleGainRage);
+    }
+
+    public void PlayBattleGainArmorSound()
+    {
+        PlaySound(soundBattleGainArmor);
+    }
+
+    public void PlayBattleRainSound()
+    {
+        PlaySound(soundBattleRain);
+    }
+
+    public void PlayRandomMatchSound()
+    {
+        if (listSoundMatch == null || listSoundMatch.Count == 0)
+            return;
+
+        List<AudioClip> validClips = null;
+        for (int i = 0; i < listSoundMatch.Count; i++)
+        {
+            AudioClip clip = listSoundMatch[i];
+            if (clip == null)
+                continue;
+
+            if (validClips == null)
+                validClips = new List<AudioClip>();
+
+            validClips.Add(clip);
+        }
+
+        if (validClips == null || validClips.Count == 0)
+            return;
+
+        int randomIndex = Random.Range(0, validClips.Count);
+        PlaySound(validClips[randomIndex]);
     }
 
     /// <summary>

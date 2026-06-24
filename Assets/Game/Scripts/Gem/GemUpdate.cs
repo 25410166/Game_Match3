@@ -43,6 +43,14 @@ public class GemUpdate : MonoBehaviour
     private int activeSlotIndex = -1;
     private bool isInteractionLocked = false;
 
+    public Button FirstSlotButton => slotButton1;
+    public Button FirstPopupGemButton => spawnedPopupItems != null && spawnedPopupItems.Count > 0 ? spawnedPopupItems[0].GetButton() : null;
+    public bool IsPopupOpen => popupGemRoot != null && popupGemRoot.activeSelf;
+    public bool ForceFirstTutorialUpgradeSuccess { get; set; }
+    public event System.Action OnPopupOpened;
+    public event System.Action OnPopupClosed;
+    public event System.Action OnGemSelected;
+
     public bool HasUpgradeFxPrefab => upgradeFxPrefab != null;
     public float UpgradeFxSeconds => Mathf.Max(0f, upgradeFxSeconds);
     public bool IsInteractionLocked => isInteractionLocked;
@@ -190,7 +198,8 @@ public class GemUpdate : MonoBehaviour
             return false;
         }
 
-        bool result = PetUpgradeService.TryUpgrade(currentPetLevel, levels, out float successRate, out float roll);
+        bool result = ForceFirstTutorialUpgradeSuccess || PetUpgradeService.TryUpgrade(currentPetLevel, levels, out float successRate, out float roll);
+        ForceFirstTutorialUpgradeSuccess = false;
 
         if (result)
             currentPetLevel = Mathf.Min(currentPetLevel + 1, MAX_LEVEL);
@@ -231,6 +240,7 @@ public class GemUpdate : MonoBehaviour
         RebuildGemPopupItems();
         if (popupGemRoot != null)
             popupGemRoot.SetActive(true);
+        OnPopupOpened?.Invoke();
     }
 
     private void CloseGemPopup()
@@ -238,6 +248,7 @@ public class GemUpdate : MonoBehaviour
         if (popupGemRoot != null)
             popupGemRoot.SetActive(false);
         activeSlotIndex = -1;
+        OnPopupClosed?.Invoke();
     }
 
     private void RebuildGemPopupItems()
@@ -318,6 +329,7 @@ public class GemUpdate : MonoBehaviour
         UpdateGemCells();
         UpdatePercentDisplay();
         CloseGemPopup();
+        OnGemSelected?.Invoke();
     }
 
     private int GetFirstEmptySlot()

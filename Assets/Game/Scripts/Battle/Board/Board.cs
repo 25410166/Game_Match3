@@ -10,6 +10,7 @@ public class Board : MonoBehaviour
 {
 
 
+    public event Action OnBoardInitialized;
     public event Action OnSuccessfulPlayerSwapResolved;
     public static Board Instance;
 
@@ -89,6 +90,7 @@ public class Board : MonoBehaviour
 
         EnsureBoardHasPotentialMove(true);
         Debug.Log($"[Board] InitializeBoard complete. Spawned items: {itemList.Count} | initialMatches={GetAllMatches().Count}");
+        OnBoardInitialized?.Invoke();
     }
     public void SetPresentationVisible(bool visible)
     {
@@ -169,13 +171,13 @@ public class Board : MonoBehaviour
 
 
 
-    // Reels g?i hï¿½m nï¿½y d? Board qu?n lï¿½ item m?i
+    // Reels g?i hÃƒÂ¯Ã‚Â¿Ã‚Â½m nÃƒÂ¯Ã‚Â¿Ã‚Â½y d? Board qu?n lÃƒÂ¯Ã‚Â¿Ã‚Â½ item m?i
     public void RegisterItem(GameObject item)
     {
         if (!itemList.Contains(item)) itemList.Add(item);
     }
 
-    // ========== Qu?n lï¿½ selection ==========
+    // ========== Qu?n lÃƒÂ¯Ã‚Â¿Ã‚Â½ selection ==========
 
     public int RollGemValueForCurrentTurn()
     {
@@ -205,6 +207,8 @@ public class Board : MonoBehaviour
         if (selectedItem != null)
         {
             selectedItem.SetSelectedVisual(true);
+            if (TutorialProgressManager.Instance != null)
+                TutorialProgressManager.Instance.NotifyBattleBoardItemSelected(selectedItem);
         }
     }
 
@@ -360,7 +364,7 @@ public class Board : MonoBehaviour
         fx.transform.position = position;
 
         Image img = fx.AddComponent<Image>();
-        img.color = new Color(1f, 0.8f, 0f, 0.8f); // vï¿½ng cam
+        img.color = new Color(1f, 0.8f, 0f, 0.8f); // vÃƒÂ¯Ã‚Â¿Ã‚Â½ng cam
 
         RectTransform rect = fx.GetComponent<RectTransform>();
         if (rect != null)
@@ -411,7 +415,7 @@ public class Board : MonoBehaviour
         tarTrans.position = endTarPos;
     }
 
-    // Tru?c khi swap, luu v? trï¿½ g?c d? revert n?u khï¿½ng cï¿½ match
+    // Tru?c khi swap, luu v? trÃƒÂ¯Ã‚Â¿Ã‚Â½ g?c d? revert n?u khÃƒÂ¯Ã‚Â¿Ã‚Â½ng cÃƒÂ¯Ã‚Â¿Ã‚Â½ match
     public void SwapItems(Items targetItem)
     {
         if (selectedItem == null || targetItem == null || selectedItem == targetItem)
@@ -453,22 +457,22 @@ public class Board : MonoBehaviour
         selTrans.SetParent(tarReel.transform, true);
         tarTrans.SetParent(selReel.transform, true);
 
-        // d?i giï¿½ tr? row/column trong Items
+        // d?i giÃƒÂ¯Ã‚Â¿Ã‚Â½ tr? row/column trong Items
         selectedItem.column = tarColOrig;
         selectedItem.row = tarRowOrig;
         targetItem.column = selColOrig;
         targetItem.row = selRowOrig;
 
-        // Animate swap positions thay vï¿½ set tr?c ti?p
+        // Animate swap positions thay vÃƒÂ¯Ã‚Â¿Ã‚Â½ set tr?c ti?p
         StartCoroutine(AnimateSwap(selTrans, tarTrans, selPos, tarPos, tarPos, selPos, swapDuration));
 
-        // KH?I ch?y ki?m tra match SAU khi animate hoï¿½n t?t
+        // KH?I ch?y ki?m tra match SAU khi animate hoÃƒÂ¯Ã‚Â¿Ã‚Â½n t?t
         StartCoroutine(CheckAndDestroyMatchesAfterSwap(selectedItem, targetItem, selColOrig, selRowOrig, tarColOrig, tarRowOrig));
 
         ResetSelection();
     }
 
-    // ï¿½?i animation swap hoï¿½n t?t tru?c khi check match
+    // ÃƒÂ¯Ã‚Â¿Ã‚Â½?i animation swap hoÃƒÂ¯Ã‚Â¿Ã‚Â½n t?t tru?c khi check match
     private IEnumerator CheckAndDestroyMatchesAfterSwap(
       Items selected, Items target,
       int selColOrig, int selRowOrig,
@@ -486,7 +490,7 @@ public class Board : MonoBehaviour
     {
         yield return new WaitForEndOfFrame(); // d?i layout ?n d?nh
 
-        // reset danh sï¿½ch destroyed ids cho l?n swap nï¿½y
+        // reset danh sÃƒÂ¯Ã‚Â¿Ã‚Â½ch destroyed ids cho l?n swap nÃƒÂ¯Ã‚Â¿Ã‚Â½y
         destroyedIdsThisTurn = new List<int>();
         effectEntriesThisTurn = new List<GemEffectMatchEntry>();
 
@@ -501,9 +505,10 @@ public class Board : MonoBehaviour
 
         if (itemsToDestroy.Count > 0)
         {
+            AudioManager.Instance?.PlayRandomMatchSound();
             CollectEffectEntries(itemsToDestroy, 1);
 
-            // phï¿½ h?y ï¿½ tru?c khi Destroy thï¿½ luu id vï¿½ spawn explosion
+            // phÃƒÂ¯Ã‚Â¿Ã‚Â½ h?y ÃƒÂ¯Ã‚Â¿Ã‚Â½ tru?c khi Destroy thÃƒÂ¯Ã‚Â¿Ã‚Â½ luu id vÃƒÂ¯Ã‚Â¿Ã‚Â½ spawn explosion
             foreach (GameObject it in itemsToDestroy)
             {
                 if (it != null)
@@ -514,7 +519,7 @@ public class Board : MonoBehaviour
                         AddDestroyedGemValue(comp);
                     }
 
-                    // Spawn explosion effect t?i v? trï¿½ gem tru?c khi destroy
+                    // Spawn explosion effect t?i v? trÃƒÂ¯Ã‚Â¿Ã‚Â½ gem tru?c khi destroy
                     SpawnExplosionFx(it.transform.position);
 
                     itemList.Remove(it);
@@ -524,14 +529,14 @@ public class Board : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
 
-            // d?n vï¿½ refill
+            // d?n vÃƒÂ¯Ã‚Â¿Ã‚Â½ refill
             yield return StartCoroutine(CollapseAndRefill());
 
-            // sau khi d?n xong, x? lï¿½ chain-match (n?u cï¿½)
+            // sau khi d?n xong, x? lÃƒÂ¯Ã‚Â¿Ã‚Â½ chain-match (n?u cÃƒÂ¯Ã‚Â¿Ã‚Â½)
             yield return StartCoroutine(ResolveChainMatches(2));
 
-            // Sau khi x? lï¿½ chain xong, g?i EndTurn vï¿½ truy?n destroyedIdsThisTurn d? UIManager hi?n th? trong EndTurn
-            List<int> idsToSend = new List<int>(destroyedIdsThisTurn); // copy d? an toï¿½n
+            // Sau khi x? lÃƒÂ¯Ã‚Â¿Ã‚Â½ chain xong, g?i EndTurn vÃƒÂ¯Ã‚Â¿Ã‚Â½ truy?n destroyedIdsThisTurn d? UIManager hi?n th? trong EndTurn
+            List<int> idsToSend = new List<int>(destroyedIdsThisTurn); // copy d? an toÃƒÂ¯Ã‚Â¿Ã‚Â½n
             List<GemEffectMatchEntry> effectsToSend = new List<GemEffectMatchEntry>(effectEntriesThisTurn);
             destroyedIdsThisTurn = null;
             effectEntriesThisTurn = null;
@@ -540,7 +545,7 @@ public class Board : MonoBehaviour
         }
         else
         {
-            // khï¿½ng cï¿½ match -> revert swap (tr? v? v? trï¿½ ban d?u)
+            // khÃƒÂ¯Ã‚Â¿Ã‚Â½ng cÃƒÂ¯Ã‚Â¿Ã‚Â½ match -> revert swap (tr? v? v? trÃƒÂ¯Ã‚Â¿Ã‚Â½ ban d?u)
             yield return new WaitForSeconds(0.3f);
 
             Transform selTrans = selected.transform;
@@ -565,16 +570,16 @@ public class Board : MonoBehaviour
             target.column = tarColOrig;
             target.row = tarRowOrig;
 
-            // Swap sai -> tr? v? v? trï¿½ cu vï¿½ ti?p t?c lu?t hi?n t?i
+            // Swap sai -> tr? v? v? trÃƒÂ¯Ã‚Â¿Ã‚Â½ cu vÃƒÂ¯Ã‚Â¿Ã‚Â½ ti?p t?c lu?t hi?n t?i
             if (GameManager.Instance != null)
                 GameManager.Instance.ResumePlayerTurnAfterInvalidSwap();
         }
     }
 
-    // ========== Collapse & Refill (IEnumerator: g?i vï¿½ d?i hoï¿½n t?t) ==========
+    // ========== Collapse & Refill (IEnumerator: g?i vÃƒÂ¯Ã‚Â¿Ã‚Â½ d?i hoÃƒÂ¯Ã‚Â¿Ã‚Â½n t?t) ==========
     private IEnumerator CollapseAndRefill()
     {
-        // Kho?ng cï¿½ch t?i da c?n roi (tï¿½nh d? ch? animation)
+        // Kho?ng cÃƒÂ¯Ã‚Â¿Ã‚Â½ch t?i da c?n roi (tÃƒÂ¯Ã‚Â¿Ã‚Â½nh d? ch? animation)
         float maxDistance = 0f;
         float minSpeed = float.MaxValue;
 
@@ -584,7 +589,7 @@ public class Board : MonoBehaviour
             Reels reel = reelsArray[col];
             if (reel == null) continue;
 
-            // thu th?p item cï¿½n l?i trong reel (l?y t? transform.children d? trï¿½nh d? li?u cu)
+            // thu th?p item cÃƒÂ¯Ã‚Â¿Ã‚Â½n l?i trong reel (l?y t? transform.children d? trÃƒÂ¯Ã‚Â¿Ã‚Â½nh d? li?u cu)
             List<Items> remaining = new List<Items>();
             foreach (Transform child in reel.transform)
             {
@@ -592,7 +597,7 @@ public class Board : MonoBehaviour
                 if (it != null) remaining.Add(it);
             }
 
-            // sort theo row hi?n t?i (bottom -> top). N?u row khï¿½ng tin c?y, cï¿½ th? sort theo anchoredPosition.y
+            // sort theo row hi?n t?i (bottom -> top). N?u row khÃƒÂ¯Ã‚Â¿Ã‚Â½ng tin c?y, cÃƒÂ¯Ã‚Â¿Ã‚Â½ th? sort theo anchoredPosition.y
             remaining = remaining.OrderBy(x => x.row).ToList();
 
             // di chuy?n t?n t?i xu?ng t? row 0..n-1
@@ -614,24 +619,24 @@ public class Board : MonoBehaviour
                 // c?p nh?t ch? s? row
                 it.row = r;
 
-                // tï¿½nh distance/speed d? bi?t ph?i ch? bao lï¿½u
+                // tÃƒÂ¯Ã‚Â¿Ã‚Â½nh distance/speed d? bi?t ph?i ch? bao lÃƒÂ¯Ã‚Â¿Ã‚Â½u
                 maxDistance = Mathf.Max(maxDistance, Mathf.Abs(currentY - targetY));
                 minSpeed = Mathf.Min(minSpeed, reel.fallSpeed);
             }
 
-            // spawn thï¿½m n?u thi?u
+            // spawn thÃƒÂ¯Ã‚Â¿Ã‚Â½m n?u thi?u
             int missing = reel.itemCount - remaining.Count;
             for (int i = 0; i < missing; i++)
             {
                 int targetRow = remaining.Count + i;
-                reel.SpawnNewItemAtRow(targetRow, false); // spawn trï¿½n cao r?i roi
-                // spawnOffset lï¿½ distance mï¿½ item m?i roi
+                reel.SpawnNewItemAtRow(targetRow, false); // spawn trÃƒÂ¯Ã‚Â¿Ã‚Â½n cao r?i roi
+                // spawnOffset lÃƒÂ¯Ã‚Â¿Ã‚Â½ distance mÃƒÂ¯Ã‚Â¿Ã‚Â½ item m?i roi
                 maxDistance = Mathf.Max(maxDistance, reel.spawnOffset);
                 minSpeed = Mathf.Min(minSpeed, reel.fallSpeed);
             }
         }
 
-        // n?u khï¿½ng cï¿½ item di chuy?n thï¿½ khï¿½ng c?n ch? lï¿½u
+        // n?u khÃƒÂ¯Ã‚Â¿Ã‚Â½ng cÃƒÂ¯Ã‚Â¿Ã‚Â½ item di chuy?n thÃƒÂ¯Ã‚Â¿Ã‚Â½ khÃƒÂ¯Ã‚Â¿Ã‚Â½ng c?n ch? lÃƒÂ¯Ã‚Â¿Ã‚Â½u
         float waitTime = 0.6f;
         if (minSpeed > 0f && maxDistance > 0f) waitTime = (maxDistance / minSpeed) + 0.05f;
         yield return new WaitForSeconds(waitTime);
@@ -650,7 +655,7 @@ public class Board : MonoBehaviour
         rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, targetY);
     }
 
-    // ========== Chain resolution: tï¿½m t?t c? match trï¿½n b?ng, destroy vï¿½ refill l?p d?n khi h?t ==========
+    // ========== Chain resolution: tÃƒÂ¯Ã‚Â¿Ã‚Â½m t?t c? match trÃƒÂ¯Ã‚Â¿Ã‚Â½n b?ng, destroy vÃƒÂ¯Ã‚Â¿Ã‚Â½ refill l?p d?n khi h?t ==========
     private IEnumerator ResolveChainMatches(int startingComboIndex)
     {
         int comboIndex = Mathf.Max(1, startingComboIndex);
@@ -662,6 +667,7 @@ public class Board : MonoBehaviour
             List<GameObject> allMatches = GetAllMatches();
             if (allMatches.Count == 0) break;
 
+            AudioManager.Instance?.PlayRandomMatchSound();
             CollectEffectEntries(allMatches, comboIndex);
             comboIndex++;
 
@@ -669,7 +675,7 @@ public class Board : MonoBehaviour
             {
                 if (it != null)
                 {
-                    // luu id tru?c khi destroy (n?u dang trong m?t l?n swap x? lï¿½)
+                    // luu id tru?c khi destroy (n?u dang trong m?t l?n swap x? lÃƒÂ¯Ã‚Â¿Ã‚Â½)
                     Items comp = it.GetComponent<Items>();
                     if (comp != null)
                     {
@@ -677,7 +683,7 @@ public class Board : MonoBehaviour
                         AddDestroyedGemValue(comp);
                     }
 
-                    // Spawn explosion effect t?i v? trï¿½ gem tru?c khi destroy
+                    // Spawn explosion effect t?i v? trÃƒÂ¯Ã‚Â¿Ã‚Â½ gem tru?c khi destroy
                     SpawnExplosionFx(it.transform.position);
 
                     itemList.Remove(it);
@@ -690,7 +696,7 @@ public class Board : MonoBehaviour
             EnsureBoardHasPotentialMove(true);
         }
 
-        // khi hï¿½ng chu?i k?t thï¿½c, khï¿½ng g?i EndTurn ? dï¿½y (Board s? g?i EndTurn sau khi ResolveChainMatches tr? v?)
+        // khi hÃƒÂ¯Ã‚Â¿Ã‚Â½ng chu?i k?t thÃƒÂ¯Ã‚Â¿Ã‚Â½c, khÃƒÂ¯Ã‚Â¿Ã‚Â½ng g?i EndTurn ? dÃƒÂ¯Ã‚Â¿Ã‚Â½y (Board s? g?i EndTurn sau khi ResolveChainMatches tr? v?)
     }
 
     private void CollectEffectEntries(List<GameObject> matchedItems, int comboIndex)
@@ -726,7 +732,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    // L?y t?t c? match hi?n cï¿½ (scan toï¿½n b? grid)
+    // L?y t?t c? match hi?n cÃƒÂ¯Ã‚Â¿Ã‚Â½ (scan toÃƒÂ¯Ã‚Â¿Ã‚Â½n b? grid)
     private List<GameObject> GetAllMatches()
     {
         List<GameObject> matches = new List<GameObject>();
@@ -741,7 +747,7 @@ public class Board : MonoBehaviour
         return matches.Distinct().ToList();
     }
 
-    // ========== Ki?m tra match ngang / d?c (gi? nguyï¿½n logic cu) ==========
+    // ========== Ki?m tra match ngang / d?c (gi? nguyÃƒÂ¯Ã‚Â¿Ã‚Â½n logic cu) ==========
     private List<GameObject> CheckHorizontalMatches(int col, int row)
     {
         List<GameObject> matches = new List<GameObject>();
@@ -1491,7 +1497,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    // L?y item theo col,row (dï¿½ng itemList do Reels dang kï¿½)
+    // L?y item theo col,row (dÃƒÂ¯Ã‚Â¿Ã‚Â½ng itemList do Reels dang kÃƒÂ¯Ã‚Â¿Ã‚Â½)
     public bool TryGetSuggestedSwap(out Items first, out Items second)
     {
         SwapCandidate candidate = FindBestSwapCandidate(null);

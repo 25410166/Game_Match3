@@ -83,6 +83,9 @@ public class UIManager : MonoBehaviour
     [Header("Skill Button Settings")]
     [SerializeField] private PetSkillButtonUI petSkillButton;
 
+    [Header("Player Skill UI Fx")]
+    [SerializeField] private BattleCharacterSkillUIFx playerSkillUIFx;
+
     [Header("Turn Banner")]
     [SerializeField] private BattleTurnBannerUI turnBannerUI;
     [Header("Audition Mini Game")]
@@ -95,6 +98,14 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         InitializeStatSliders();
+
+        if (GameManager.Instance != null && turnBannerUI != null)
+            turnBannerUI.ShowTurn(GameManager.Instance.currentTurn);
+    }
+
+    public void PlayPlayerSkillUIFx()
+    {
+        playerSkillUIFx?.Play();
     }
 
     public void InitializeStatSliders()
@@ -127,7 +138,7 @@ public class UIManager : MonoBehaviour
             UpdateAllAIStats();
             HandlePlayerImmortalStateChanged(player != null && player.IsImmortalActive);
             HandleAIImmortalStateChanged(ai != null && ai.IsImmortalActive);
-            CheckSkillRequirements(); // Kiểm tra nút skill ngay khi vào trận
+            CheckSkillRequirements(); // Kiá»ƒm tra nÃºt skill ngay khi vÃ o tráº­n
             // Update displayed pet names and elements (localized)
             UpdatePetNames();
             UpdateElementIcons(); // Display element icons for player and AI pets
@@ -234,6 +245,9 @@ public class UIManager : MonoBehaviour
 
         if (GameManager.Instance != null && turnBannerUI != null)
             turnBannerUI.ShowTurn(GameManager.Instance.currentTurn);
+
+        if (TutorialProgressManager.Instance != null && GameManager.Instance != null)
+            TutorialProgressManager.Instance.NotifyBattleTurnChanged(GameManager.Instance.currentTurn);
     }
 
     public void UpdatePlayerStat(string statType, int current, int max)
@@ -428,7 +442,7 @@ public class UIManager : MonoBehaviour
             CanvasGroup cg = icon.GetComponent<CanvasGroup>();
             if (cg == null) cg = icon.AddComponent<CanvasGroup>();
 
-            // Chỉ hiển thị visual, không xử lý gameplay/effect tại UI layer.
+            // Chá»‰ hiá»ƒn thá»‹ visual, khÃ´ng xá»­ lÃ½ gameplay/effect táº¡i UI layer.
             int id = keys[i];
             if (GameManager.Instance != null)
             {
@@ -489,7 +503,7 @@ public class UIManager : MonoBehaviour
                 yield return null;
             }
 
-            // Tắt hiệu ứng khi item biến mất
+            // Táº¯t hiá»‡u á»©ng khi item biáº¿n máº¥t
             if (GameManager.Instance != null)
             {
                 if (GameManager.Instance.currentTurn == GameManager.Turn.Player)
@@ -568,7 +582,7 @@ public class UIManager : MonoBehaviour
     {
         if (time == null || imgTime == null || imgTime.Length < 10)
         {
-            Debug.LogWarning("Chưa gán time GameObject hoặc imgTime không đủ 10 sprite!");
+            Debug.LogWarning("ChÆ°a gÃ¡n time GameObject hoáº·c imgTime khÃ´ng Ä‘á»§ 10 sprite!");
             yield return new WaitForSeconds(duration);
             yield break;
         }
@@ -576,7 +590,7 @@ public class UIManager : MonoBehaviour
         Image timeImage = time.GetComponent<Image>();
         if (timeImage == null)
         {
-            Debug.LogWarning("GameObject time không có Image component!");
+            Debug.LogWarning("GameObject time khÃ´ng cÃ³ Image component!");
             yield return new WaitForSeconds(duration);
             yield break;
         }
@@ -590,7 +604,7 @@ public class UIManager : MonoBehaviour
         time.SetActive(true);
         float timeLeft = duration;
 
-        // Giả sử imgTime[0] là sprite số 9, imgTime[1] là số 8, ..., imgTime[9] là số 0
+        // Giáº£ sá»­ imgTime[0] lÃ  sprite sá»‘ 9, imgTime[1] lÃ  sá»‘ 8, ..., imgTime[9] lÃ  sá»‘ 0
         while (timeLeft > 0)
         {
             int spriteIndex = Mathf.Clamp(Mathf.CeilToInt(timeLeft) - 1, 0, 9);
@@ -617,7 +631,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Giảm HP của player (gây sát thương)
+    /// Giáº£m HP cá»§a player (gÃ¢y sÃ¡t thÆ°Æ¡ng)
     /// </summary>
     public void DecreasePlayerHP(int amount)
     {
@@ -629,7 +643,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Tăng HP của player (hồi máu)
+    /// TÄƒng HP cá»§a player (há»“i mÃ¡u)
     /// </summary>
     public void IncreasePlayerHP(int amount)
     {
@@ -647,7 +661,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Tăng Mana của player
+    /// TÄƒng Mana cá»§a player
     /// </summary>
     public void IncreasePlayerMana(int amount)
     {
@@ -664,7 +678,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Tăng Rage của player
+    /// TÄƒng Rage cá»§a player
     /// </summary>
     public void IncreasePlayerRage(int amount)
     {
@@ -744,7 +758,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Giảm HP của AI (gây sát thương)
+    /// Giáº£m HP cá»§a AI (gÃ¢y sÃ¡t thÆ°Æ¡ng)
     /// </summary>
     public void DecreaseAIHP(int amount)
     {
@@ -756,7 +770,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Tăng HP của AI (hồi máu)
+    /// TÄƒng HP cá»§a AI (há»“i mÃ¡u)
     /// </summary>
     public void IncreaseAIHP(int amount)
     {
@@ -768,7 +782,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Tăng Mana của AI
+    /// TÄƒng Mana cá»§a AI
     /// </summary>
     public void IncreaseAIMana(int amount)
     {
@@ -780,7 +794,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Tăng Rage của AI
+    /// TÄƒng Rage cá»§a AI
     /// </summary>
     public void IncreaseAIRage(int amount)
     {

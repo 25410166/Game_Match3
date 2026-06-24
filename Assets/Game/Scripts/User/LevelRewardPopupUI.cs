@@ -30,7 +30,7 @@ public class LevelRewardPopupUI : MonoBehaviour
     [SerializeField] private CanvasGroup popupCanvasGroup;
     [SerializeField] private Button closeButton;
     [SerializeField] private float fadeDuration = 0.2f;
-    [SerializeField] private float showDelay = 0.2f;
+    [SerializeField] private float showDelay = 0.05f;
 
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI titleText;
@@ -55,6 +55,11 @@ public class LevelRewardPopupUI : MonoBehaviour
     private int currentRewardLevel = -1;
     private bool isShowing;
     private bool isClaiming;
+
+    public Button ContinueButton => closeButton;
+    public bool IsOpen => popupRoot != null && popupRoot.activeSelf;
+    public event Action OnOpened;
+    public event Action OnRewardClaimed;
 
     private void Awake()
     {
@@ -163,6 +168,7 @@ public class LevelRewardPopupUI : MonoBehaviour
         }
 
         SetVisible(false, false);
+        OnRewardClaimed?.Invoke();
         yield return new WaitForSecondsRealtime(Mathf.Max(0.01f, fadeDuration));
 
         isClaiming = false;
@@ -271,6 +277,7 @@ public class LevelRewardPopupUI : MonoBehaviour
         if (popupRoot == null || popupCanvasGroup == null)
             return;
 
+        bool wasOpen = popupRoot.activeSelf;
         isShowing = visible;
         popupTween?.Kill();
 
@@ -280,6 +287,9 @@ public class LevelRewardPopupUI : MonoBehaviour
             popupCanvasGroup.alpha = instant ? 1f : 0f;
             popupCanvasGroup.blocksRaycasts = true;
             popupCanvasGroup.interactable = true;
+
+            if (!wasOpen)
+                OnOpened?.Invoke();
 
             if (!instant)
                 popupTween = popupCanvasGroup.DOFade(1f, fadeDuration).SetUpdate(true);
@@ -304,7 +314,6 @@ public class LevelRewardPopupUI : MonoBehaviour
             }
         }
     }
-
     private LevelRewardDefinition GetRewardDefinition(int level)
     {
         for (int i = 0; i < rewardsByLevel.Count; i++)

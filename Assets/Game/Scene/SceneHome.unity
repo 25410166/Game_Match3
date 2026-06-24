@@ -7575,13 +7575,23 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3cdc289192b0a6045a4921d2d4477c24, type: 3}
   - {fileID: 8300000, guid: 27d31e5c7ccd42b4892303b562211ef1, type: 3}
   soundButtonClick: {fileID: 8300000, guid: 74693c8ccdb686c43a7d70b928b8e641, type: 3}
-  soundUpgradeGemProcessing: {fileID: 0}
+  soundUpgradeGemProcessing: {fileID: 8300000, guid: b06d303426aabe64ea5230b6a6a02071, type: 3}
   soundUpgradeGemSuccess: {fileID: 8300000, guid: 0dcfade704e208949bb8eafd83299e8d, type: 3}
   soundUpgradeGemFailed: {fileID: 8300000, guid: 791d149dbded0384da484d9a35c68e0e, type: 3}
   soundUpgradePetSuccess: {fileID: 8300000, guid: 0c7a0a944fdbca1488658faee43ec093, type: 3}
   soundUpgradePetFailed: {fileID: 8300000, guid: 791d149dbded0384da484d9a35c68e0e, type: 3}
   soundPurchaseSuccess: {fileID: 8300000, guid: 0eed713691ac60e4dbd36e592e138fc3, type: 3}
   soundPurchaseFailed: {fileID: 8300000, guid: 6b873caf15b52e14c8645d1beff5de6a, type: 3}
+  soundBattleCharacterSkill: {fileID: 8300000, guid: 4f6d0466341c968498681ad2c07b44ea, type: 3}
+  soundBattleGainHp: {fileID: 8300000, guid: b06d303426aabe64ea5230b6a6a02071, type: 3}
+  soundBattleGainMana: {fileID: 8300000, guid: 20747e528b4c31a449d539c3eb0b8d8c, type: 3}
+  soundBattleGainRage: {fileID: 8300000, guid: 93a9bd7690661104982186ed36147ab1, type: 3}
+  soundBattleGainArmor: {fileID: 8300000, guid: 043354e0cde7c98439287f1a5a8db7af, type: 3}
+  soundBattleRain: {fileID: 8300000, guid: 84dd8f3c4c6a8c74d9e98dc884c9185d, type: 3}
+  listSoundMatch:
+  - {fileID: 8300000, guid: 43a0564940598244ab6f116a7cd41d1b, type: 3}
+  - {fileID: 8300000, guid: 8ac3a088f50d77b49ac4144866996bb6, type: 3}
+  - {fileID: 8300000, guid: 92cb1cae24d0a9b4abdca262ae4485b1, type: 3}
   battleSceneName: SceneBattle
   autoBindButtonClickSound: 1
   soundEffectVolume: 0.8
@@ -33151,6 +33161,13 @@ MonoBehaviour:
     tutorial1Triggered: 0
     tutorial1Completed: 0
     tutorial1Skipped: 0
+    tutorial2Triggered: 0
+    tutorial2Completed: 0
+    tutorial2Skipped: 0
+    tutorial3Triggered: 0
+    tutorial3Completed: 0
+    tutorial3Skipped: 0
+    tutorial3FirstUpgradeGuaranteedUsed: 0
     starterPetId: -1
     lastSelectedPetId: -1
     level: 10
@@ -50476,7 +50493,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 37.75
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -51539,8 +51556,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 126.42, y: -341.33}
-  m_SizeDelta: {x: 1178.7, y: 253.14}
+  m_AnchoredPosition: {x: 126.42, y: -409.27008}
+  m_SizeDelta: {x: 1178.7, y: 389.02}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1090811690
 MonoBehaviour:
@@ -68572,7 +68589,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 37.75
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -70184,7 +70201,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 37.75
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -78712,6 +78729,12 @@ MonoBehaviour:
   tutorial1Triggered: 0
   tutorial1Completed: 0
   tutorial1Skipped: 0
+  tutorial2Triggered: 0
+  tutorial2Completed: 0
+  tutorial2Skipped: 0
+  tutorial3Triggered: 0
+  tutorial3Completed: 0
+  tutorial3Skipped: 0
 --- !u!4 &1660619651
 Transform:
   m_ObjectHideFlags: 0

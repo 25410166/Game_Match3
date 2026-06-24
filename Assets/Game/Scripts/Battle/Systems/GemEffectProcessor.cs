@@ -126,6 +126,7 @@ public static class GemEffectProcessor
         int ragePerGem = ElementResourceGainConfig.GetRagePerGem(element);
         int rageGain = Mathf.Max(0, safeMatchCount * ragePerGem);
         attacker.GainRage(rageGain);
+        AudioManager.Instance?.PlayBattleGainRageSound();
         Debug.Log($"[GemEffect] {actor} Rage | match={safeMatchCount}, element={element}, formula=gemCount*{ragePerGem}, gain={rageGain}");
     }
 
@@ -136,6 +137,7 @@ public static class GemEffectProcessor
         int ragePerGem = ElementResourceGainConfig.GetRagePerGem(element);
         int rageGain = Mathf.Max(0, safeMatchCount * ragePerGem);
         attacker.GainRage(rageGain);
+        AudioManager.Instance?.PlayBattleGainRageSound();
         Debug.Log($"[GemEffect] {actor} Rage | match={safeMatchCount}, element={element}, formula=gemCount*{ragePerGem}, gain={rageGain}");
     }
 
@@ -146,6 +148,7 @@ public static class GemEffectProcessor
         int manaPerGem = ElementResourceGainConfig.GetManaPerGem(element);
         int manaGain = Mathf.Max(0, safeMatchCount * manaPerGem);
         attacker.GainMana(manaGain);
+        AudioManager.Instance?.PlayBattleGainManaSound();
         Debug.Log($"[GemEffect] {actor} Mana | match={safeMatchCount}, element={element}, formula=gemCount*{manaPerGem}, gain={manaGain}");
     }
 
@@ -156,6 +159,7 @@ public static class GemEffectProcessor
         int manaPerGem = ElementResourceGainConfig.GetManaPerGem(element);
         int manaGain = Mathf.Max(0, safeMatchCount * manaPerGem);
         attacker.GainMana(manaGain);
+        AudioManager.Instance?.PlayBattleGainManaSound();
         Debug.Log($"[GemEffect] {actor} Mana | match={safeMatchCount}, element={element}, formula=gemCount*{manaPerGem}, gain={manaGain}");
     }
 
@@ -164,6 +168,7 @@ public static class GemEffectProcessor
         int safeMatchCount = Mathf.Max(1, matchCount);
         int healAmount = Mathf.Max(0, Mathf.RoundToInt(attacker.maxHP * 0.02f * safeMatchCount));
         attacker.Heal(healAmount);
+        AudioManager.Instance?.PlayBattleGainHpSound();
         Debug.Log($"[GemEffect] {actor} Heal | match={safeMatchCount}, formula=2%*maxHP*gemCount, heal={healAmount}");
     }
 
@@ -172,6 +177,7 @@ public static class GemEffectProcessor
         int safeMatchCount = Mathf.Max(1, matchCount);
         int healAmount = Mathf.Max(0, Mathf.RoundToInt(attacker.maxHealth * 0.02f * safeMatchCount));
         attacker.Heal(healAmount);
+        AudioManager.Instance?.PlayBattleGainHpSound();
         Debug.Log($"[GemEffect] {actor} Heal | match={safeMatchCount}, formula=2%*maxHP*gemCount, heal={healAmount}");
     }
 
@@ -180,6 +186,7 @@ public static class GemEffectProcessor
         float shieldPercent = GetShieldPercentByMatchCount(matchCount);
         int shieldAmount = Mathf.Max(0, Mathf.RoundToInt(attacker.HP * shieldPercent * comboMultiplier));
         attacker.AddShield(shieldAmount, 2);
+        AudioManager.Instance?.PlayBattleGainArmorSound();
         Debug.Log($"[GemEffect] {actor} Shield | match={matchCount}, combo={comboMultiplier:0.##}, shield={shieldAmount}");
     }
 
@@ -188,6 +195,7 @@ public static class GemEffectProcessor
         float shieldPercent = GetShieldPercentByMatchCount(matchCount);
         int shieldAmount = Mathf.Max(0, Mathf.RoundToInt(attacker.Health * shieldPercent * comboMultiplier));
         attacker.AddShield(shieldAmount, 2);
+        AudioManager.Instance?.PlayBattleGainArmorSound();
         Debug.Log($"[GemEffect] {actor} Shield | match={matchCount}, combo={comboMultiplier:0.##}, shield={shieldAmount}");
     }
 
@@ -206,6 +214,7 @@ public static class GemEffectProcessor
         attacker.Heal(hpDone);
         attacker.GainMana(manaDone);
         attacker.GainRage(rageDone);
+        AudioManager.Instance?.PlayBattleRainSound();
 
         Debug.Log($"[GemEffect] Player Drain | match={matchCount}, hp%={hpPercent * 100f:0.#}, mana%={manaPercent * 100f:0.#}, rage%={ragePercent * 100f:0.#}, hp={hpDone}, mana={manaDone}, rage={rageDone}");
     }
@@ -225,6 +234,7 @@ public static class GemEffectProcessor
         attacker.Heal(hpDone);
         attacker.GainMana(manaDone);
         attacker.GainRage(rageDone);
+        AudioManager.Instance?.PlayBattleRainSound();
 
         Debug.Log($"[GemEffect] AI Drain | match={matchCount}, hp%={hpPercent * 100f:0.#}, mana%={manaPercent * 100f:0.#}, rage%={ragePercent * 100f:0.#}, hp={hpDone}, mana={manaDone}, rage={rageDone}");
     }

@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     private bool isSkillActionInProgress = false; // Player is executing a skill/card action
     private bool gameEnded = false;
     private bool battleResultHandled = false;
+    private bool isTutorialTimerPaused = false;
     private int turnIndex = 0;
     public int CurrentTurnIndex => turnIndex;
 
@@ -144,7 +145,7 @@ public class GameManager : MonoBehaviour
         isPlayerInteracting = false;
         isBoardActionInProgress = false;
 
-        if (!isProcessing)
+        if (!isProcessing && !isTutorialTimerPaused)
         {
             if (turnTimerCoroutine != null)
                 StopCoroutine(turnTimerCoroutine);
@@ -243,8 +244,11 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("[GameManager] StartTurn: cardManager is NULL, card UI will not refresh.");
         }
-        if (turnTimerCoroutine != null) StopCoroutine(turnTimerCoroutine);
-        turnTimerCoroutine = StartCoroutine(TurnTimer());
+        if (!isTutorialTimerPaused)
+        {
+            if (turnTimerCoroutine != null) StopCoroutine(turnTimerCoroutine);
+            turnTimerCoroutine = StartCoroutine(TurnTimer());
+        }
     }
 
 
@@ -253,7 +257,19 @@ public class GameManager : MonoBehaviour
         if (gameEnded)
             return;
 
+        isTutorialTimerPaused = true;
         StopTurnTimerInternal();
+    }
+
+    public void ResumeTurnTimerAfterTutorial()
+    {
+        if (gameEnded)
+            return;
+
+        isTutorialTimerPaused = false;
+
+        if (currentTurn == Turn.Player && !isProcessing && turnTimerCoroutine == null)
+            turnTimerCoroutine = StartCoroutine(TurnTimer());
     }
     private void StopTurnTimerInternal()
     {
@@ -511,7 +527,8 @@ public class GameManager : MonoBehaviour
         if (turnTimerCoroutine != null)
             StopCoroutine(turnTimerCoroutine);
 
-        turnTimerCoroutine = StartCoroutine(TurnTimer());
+        if (!isTutorialTimerPaused)
+            turnTimerCoroutine = StartCoroutine(TurnTimer());
 
         if (UIManager.Instance != null)
             UIManager.Instance.CheckSkillRequirements();

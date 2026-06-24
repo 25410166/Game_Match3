@@ -45,7 +45,7 @@ MonoBehaviour:
     rewardId: User_Exp
     gemElementId: -1
     gemLevel: 1
-    amountMin: 345
+    amountMin: 287
     amountMax: 345
     weight: 100
   - mapId: 118

@@ -1,5 +1,4 @@
-using System;
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,13 +48,17 @@ public class GemInventoryItemButton : MonoBehaviour
             if (AudioManager.Instance != null)
                 AudioManager.Instance.RegisterButtonClick(button);
         }
-
     }
 
     private void OnDestroy()
     {
         if (button != null)
             button.onClick.RemoveListener(OnClickButton);
+    }
+
+    public Button GetButton()
+    {
+        return button;
     }
 
     private void OnClickButton()

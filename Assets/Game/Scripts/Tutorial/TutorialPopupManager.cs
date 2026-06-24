@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TutorialPopupManager : MonoBehaviour
 {
@@ -34,7 +34,7 @@ public class TutorialPopupManager : MonoBehaviour
         currentView = view;
     }
 
-    public void ShowStep(string message, RectTransform target, System.Action onSkip)
+    public void ShowStep(string message, RectTransform target, System.Action onSkip, TutorialPopupView.LayoutMode layoutMode = TutorialPopupView.LayoutMode.Above)
     {
         ResolveView();
         if (currentView == null)
@@ -43,7 +43,7 @@ public class TutorialPopupManager : MonoBehaviour
             return;
         }
 
-        currentView.Show(message, target, onSkip);
+        currentView.Show(message, target, onSkip, layoutMode);
     }
 
     public void Hide()

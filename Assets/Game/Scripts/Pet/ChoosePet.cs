@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -26,7 +26,7 @@ public class ChoosePet : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _txtCritNext; // Crit Rate
     [SerializeField] private TextMeshProUGUI _txtCritDamageNext;
 
-    [Header("UI - Thông tin Pet")]
+    [Header("UI - ThÃ´ng tin Pet")]
     [SerializeField] private TextMeshProUGUI _txtPetName;
     [SerializeField] private Image _elementIcon;
     [SerializeField] private Sprite[] _elementSprite;
@@ -45,12 +45,12 @@ public class ChoosePet : MonoBehaviour
     [Header("Popup Select Pet")]
     [SerializeField] private PopupSelectPet _popupSelectPet;
 
-    [Header("V? trí spawn Pet")]
+    [Header("V? trÃ­ spawn Pet")]
     [SerializeField] private Transform _petSpawnPoint;
     [SerializeField] private string _petSortingLayerName = "UI";
     [SerializeField] private int _petSortingOrder = 10;
 
-    [Header("Nâng c?p")]
+    [Header("NÃ¢ng c?p")]
     [SerializeField] private Button _upgradeButton;
     [SerializeField] private GemUpdate gemUpdate;
     [SerializeField] private Transform _upgradeFxSpawnPoint;
@@ -77,6 +77,11 @@ public class ChoosePet : MonoBehaviour
     private Coroutine _upgradeFlowCoroutine;
     private bool _selectPetPopupOpen = false;
     private bool _isUpgradeInProgress = false;
+
+    public Button TrainingButton => _openPopupButton;
+    public Button UpgradeButton => _upgradeButton;
+    public GemUpdate GemUpdateUI => gemUpdate;
+    public bool IsTrainingPopupOpen => (_trainingPopupRoot != null ? _trainingPopupRoot.activeSelf : gameObject.activeSelf);
 
     private void Awake()
     {

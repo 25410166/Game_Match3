@@ -34,7 +34,6 @@ public class Items : MonoBehaviour, IPointerClickHandler
 
     private void OnEnable()
     {
-        // Board starts with no selected gem: force default visuals each time item is enabled.
         if (imageComponent == null)
             imageComponent = GetComponent<Image>();
 
@@ -44,7 +43,6 @@ public class Items : MonoBehaviour, IPointerClickHandler
         HideSelectFx();
     }
 
-    // Board sẽ gọi hàm này để gán id + sprite
     public void SetItem(int id, Sprite sprite, int value = 1)
     {
         itemId = id;
@@ -108,6 +106,16 @@ public class Items : MonoBehaviour, IPointerClickHandler
             HideSelectFx();
     }
 
+    public void ShowTutorialHighlight()
+    {
+        PlaySelectFx();
+    }
+
+    public void HideTutorialHighlight()
+    {
+        HideSelectFx();
+    }
+
     private void EnsureSelectFxInstance()
     {
         if (selectFxInstance != null)
@@ -116,7 +124,6 @@ public class Items : MonoBehaviour, IPointerClickHandler
         if (selectFxPrefab == null)
             return;
 
-        // Support both project prefab references and scene object references.
         if (selectFxPrefab.scene.IsValid())
         {
             selectFxInstance = selectFxPrefab;
@@ -189,6 +196,3 @@ public class Items : MonoBehaviour, IPointerClickHandler
         return GetComponent<RectTransform>();
     }
 }
-
-
-

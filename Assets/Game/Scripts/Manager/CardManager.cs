@@ -1,19 +1,19 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // nếu bạn dùng TextMeshPro
+using TMPro; // nÃƒÂ¡Ã‚ÂºÃ‚Â¿u bÃƒÂ¡Ã‚ÂºÃ‚Â¡n dÃƒÆ’Ã‚Â¹ng TextMeshPro
 using Cysharp.Threading.Tasks;
 
 public class CardManager : MonoBehaviour
 {
     [Header("Database & Target")]
-    public PlayerStats playerStats;       // Gán PlayerStats hoặc PlayerController
-    public AIStats aiStats;               // Gán AI target (nếu có)
+    public PlayerStats playerStats;       // GÃƒÆ’Ã‚Â¡n PlayerStats hoÃƒÂ¡Ã‚ÂºÃ‚Â·c PlayerController
+    public AIStats aiStats;               // GÃƒÆ’Ã‚Â¡n AI target (nÃƒÂ¡Ã‚ÂºÃ‚Â¿u cÃƒÆ’Ã‚Â³)
 
     private CardDatabase database;
     private bool isCardAttackInProgress = false;
 
-    [Header("UI Buttons (4 thẻ trên tay)")]
-    public CardSlotUI[] cardSlots = new CardSlotUI[4]; // 4 ô thẻ
+    [Header("UI Buttons (4 thÃƒÂ¡Ã‚ÂºÃ‚Â» trÃƒÆ’Ã‚Âªn tay)")]
+    public CardSlotUI[] cardSlots = new CardSlotUI[4]; // 4 ÃƒÆ’Ã‚Â´ thÃƒÂ¡Ã‚ÂºÃ‚Â»
 
     public void RefreshCardInteractables()
     {
@@ -30,7 +30,7 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
-        // Tự động lấy CardDatabase từ GameDataManager nếu chưa gán
+        // TÃƒÂ¡Ã‚Â»Ã‚Â± Ãƒâ€žÃ¢â‚¬ËœÃƒÂ¡Ã‚Â»Ã¢â€žÂ¢ng lÃƒÂ¡Ã‚ÂºÃ‚Â¥y CardDatabase tÃƒÂ¡Ã‚Â»Ã‚Â« GameDataManager nÃƒÂ¡Ã‚ÂºÃ‚Â¿u chÃƒâ€ Ã‚Â°a gÃƒÆ’Ã‚Â¡n
         if (database == null && GameDataManager.Instance != null)
         {
             database = GameDataManager.Instance.CardDatabaseObject as CardDatabase;
@@ -71,7 +71,7 @@ public class CardManager : MonoBehaviour
         ValidateSetup();
     }
 
-    // --- NẠP THẺ VÀO 4 Ô ---
+    // --- NÃƒÂ¡Ã‚ÂºÃ‚Â P THÃƒÂ¡Ã‚ÂºÃ‚Âº VÃƒÆ’Ã¢â€šÂ¬O 4 ÃƒÆ’Ã¢â‚¬Â ---
     public void LoadCardsToSlots()
     {
         if (database == null || cardSlots == null)
@@ -89,8 +89,8 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < cardSlots.Length; i++)
         {
-            var card = database.cards[i]; // hoặc Random.Range(0, database.cards.Count)
-            int randomLevel = Random.Range(1, 4); // ngẫu nhiên cấp 1-3
+            var card = database.cards[i]; // hoÃƒÂ¡Ã‚ÂºÃ‚Â·c Random.Range(0, database.cards.Count)
+            int randomLevel = Random.Range(1, 4); // ngÃƒÂ¡Ã‚ÂºÃ‚Â«u nhiÃƒÆ’Ã‚Âªn cÃƒÂ¡Ã‚ÂºÃ‚Â¥p 1-3
 
             cardSlots[i].SetCard(card, randomLevel, this);
         }
@@ -131,7 +131,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    // --- THỰC THI HIỆU ỨNG THẺ ---
+    // --- THÃƒÂ¡Ã‚Â»Ã‚Â°C THI HIÃƒÂ¡Ã‚Â»Ã¢â‚¬Â U ÃƒÂ¡Ã‚Â»Ã‚Â¨NG THÃƒÂ¡Ã‚ÂºÃ‚Âº ---
     public void UseCard(CardDatabase.Card card, int level)
     {
         // Prevent using cards when the player cannot act
@@ -153,6 +153,11 @@ public class CardManager : MonoBehaviour
             return;
         }
 
+        if (card.type == CardDatabase.CardType.Attack)
+        {
+            AudioManager.Instance?.PlayBattleCharacterSkillSound();
+            UIManager.Instance?.PlayPlayerSkillUIFx();
+        }
         var lvData = card.GetLevel(level);
         if (lvData == null)
         {

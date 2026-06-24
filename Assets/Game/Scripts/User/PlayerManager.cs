@@ -932,6 +932,13 @@ public class PlayerSaveData
     public bool tutorial1Triggered = false;
     public bool tutorial1Completed = false;
     public bool tutorial1Skipped = false;
+    public bool tutorial2Triggered = false;
+    public bool tutorial2Completed = false;
+    public bool tutorial2Skipped = false;
+    public bool tutorial3Triggered = false;
+    public bool tutorial3Completed = false;
+    public bool tutorial3Skipped = false;
+    public bool tutorial3FirstUpgradeGuaranteedUsed = false;
     public int starterPetId = -1;
     public int lastSelectedPetId = -1;
     public int level = 1;
@@ -960,6 +967,13 @@ public class PlayerSaveData
             tutorial1Triggered = false,
             tutorial1Completed = false,
             tutorial1Skipped = false,
+            tutorial2Triggered = false,
+            tutorial2Completed = false,
+            tutorial2Skipped = false,
+            tutorial3Triggered = false,
+            tutorial3Completed = false,
+            tutorial3Skipped = false,
+            tutorial3FirstUpgradeGuaranteedUsed = false,
             starterPetId = -1,
             lastSelectedPetId = -1,
             level = 1,

@@ -15,7 +15,7 @@ MonoBehaviour:
   area: 1
   mapId: 102
   mapName: Map_Name_2
-  reqUserLevel: 1
+  reqUserLevel: 2
   petIdSpawn: 12
   petLevelSpawn: 1
   idGuadiant: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
     rewardId: User_Exp
     gemElementId: -1
     gemLevel: 1
-    amountMin: 60
+    amountMin: 50
     amountMax: 60
     weight: 100
   - mapId: 102
