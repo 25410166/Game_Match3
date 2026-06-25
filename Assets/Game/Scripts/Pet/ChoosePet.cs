@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -26,7 +26,7 @@ public class ChoosePet : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _txtCritNext; // Crit Rate
     [SerializeField] private TextMeshProUGUI _txtCritDamageNext;
 
-    [Header("UI - ThÃ´ng tin Pet")]
+    [Header("UI - ThÃƒÂ´ng tin Pet")]
     [SerializeField] private TextMeshProUGUI _txtPetName;
     [SerializeField] private Image _elementIcon;
     [SerializeField] private Sprite[] _elementSprite;
@@ -45,13 +45,19 @@ public class ChoosePet : MonoBehaviour
     [Header("Popup Select Pet")]
     [SerializeField] private PopupSelectPet _popupSelectPet;
 
-    [Header("V? trÃ­ spawn Pet")]
+    [Header("V? trÃƒÂ­ spawn Pet")]
     [SerializeField] private Transform _petSpawnPoint;
     [SerializeField] private string _petSortingLayerName = "UI";
     [SerializeField] private int _petSortingOrder = 10;
 
-    [Header("NÃ¢ng c?p")]
+    [Header("NÃƒÂ¢ng c?p")]
     [SerializeField] private Button _upgradeButton;
+    [SerializeField] private Button _upgradeGoldButton;
+    [SerializeField] private Button _upgradeDiamondButton;
+    [SerializeField] private Image _upgradeGoldButtonImage;
+    [SerializeField] private Image _upgradeDiamondButtonImage;
+    [SerializeField] private Color _upgradeOptionOffColor = Color.gray;
+    [SerializeField] private Color _upgradeOptionOnColor = Color.white;
     [SerializeField] private GemUpdate gemUpdate;
     [SerializeField] private Transform _upgradeFxSpawnPoint;
     [SerializeField] private GameObject _upgradeInProgressFxPrefab;
@@ -77,6 +83,11 @@ public class ChoosePet : MonoBehaviour
     private Coroutine _upgradeFlowCoroutine;
     private bool _selectPetPopupOpen = false;
     private bool _isUpgradeInProgress = false;
+    private bool _useUpgradeGoldProtection = false;
+    private bool _useUpgradeDiamondBoost = false;
+    private const int UpgradeGoldProtectionCost = 500;
+    private const int UpgradeDiamondBoostCost = 30;
+    private const float UpgradeDiamondBonusRate = 0.10f;
 
     public Button TrainingButton => _openPopupButton;
     public Button UpgradeButton => _upgradeButton;
@@ -93,6 +104,10 @@ public class ChoosePet : MonoBehaviour
             _changePetButton.onClick.AddListener(OpenSelectPetPopup);
         if (_upgradeButton != null)
             _upgradeButton.onClick.AddListener(OnUpgradeButtonClick);
+        if (_upgradeGoldButton != null)
+            _upgradeGoldButton.onClick.AddListener(ToggleUpgradeGoldProtection);
+        if (_upgradeDiamondButton != null)
+            _upgradeDiamondButton.onClick.AddListener(ToggleUpgradeDiamondBoost);
     }
 
     private void OnEnable()
@@ -298,6 +313,7 @@ public class ChoosePet : MonoBehaviour
             {
                 gemUpdate.SelectPet(elementId.ToString());
                 gemUpdate.SetCurrentPetLevel(currentLevel);
+                gemUpdate.BonusSuccessRate = _useUpgradeDiamondBoost ? UpgradeDiamondBonusRate : 0f;
                 gemUpdate.ForceClearSelectedGems();
             }
         }
@@ -449,6 +465,7 @@ public class ChoosePet : MonoBehaviour
         SetUpgradeInteractionLocked(true);
         if (currentPetId < 0)
         {
+            ResetUpgradeOptionsAfterAttempt();
             EndUpgradeFlow();
             yield break;
         }
@@ -459,6 +476,7 @@ public class ChoosePet : MonoBehaviour
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayUpgradePetFailedSound();
 
+            ResetUpgradeOptionsAfterAttempt();
             EndUpgradeFlow();
             yield break;
         }
@@ -469,6 +487,7 @@ public class ChoosePet : MonoBehaviour
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayUpgradePetFailedSound();
 
+            ResetUpgradeOptionsAfterAttempt();
             EndUpgradeFlow();
             yield break;
         }
@@ -479,11 +498,13 @@ public class ChoosePet : MonoBehaviour
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayUpgradePetFailedSound();
 
+            ResetUpgradeOptionsAfterAttempt();
             EndUpgradeFlow();
             yield break;
         }
 
         gemUpdate.SetCurrentPetLevel(currentLevel);
+        gemUpdate.BonusSuccessRate = _useUpgradeDiamondBoost ? UpgradeDiamondBonusRate : 0f;
 
         if (!gemUpdate.TryGetSelectedGems(out int elementId, out int[] selectedGemLevels))
         {
@@ -491,6 +512,29 @@ public class ChoosePet : MonoBehaviour
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayUpgradePetFailedSound();
 
+            ResetUpgradeOptionsAfterAttempt();
+            EndUpgradeFlow();
+            yield break;
+        }
+
+        if (_useUpgradeGoldProtection && !PlayerManager.Instance.TrySpendGold(UpgradeGoldProtectionCost))
+        {
+            ShowUpgradeResult(false, GetLocalizedText("pet_training_not_enough_gold", "Khong du 500 Gold."));
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayUpgradePetFailedSound();
+
+            ResetUpgradeOptionsAfterAttempt();
+            EndUpgradeFlow();
+            yield break;
+        }
+
+        if (_useUpgradeDiamondBoost && !PlayerManager.Instance.TrySpendDiamond(UpgradeDiamondBoostCost))
+        {
+            ShowUpgradeResult(false, GetLocalizedText("pet_training_not_enough_diamond", "Khong du 30 Diamond."));
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayUpgradePetFailedSound();
+
+            ResetUpgradeOptionsAfterAttempt();
             EndUpgradeFlow();
             yield break;
         }
@@ -501,6 +545,7 @@ public class ChoosePet : MonoBehaviour
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayUpgradePetFailedSound();
 
+            ResetUpgradeOptionsAfterAttempt();
             EndUpgradeFlow();
             yield break;
         }
@@ -531,7 +576,8 @@ public class ChoosePet : MonoBehaviour
         }
         else
         {
-            currentLevel = Mathf.Max(1, currentLevel - 1);
+            if (!_useUpgradeGoldProtection)
+                currentLevel = Mathf.Max(1, currentLevel - 1);
             ShowUpgradeResult(false, GetLocalizedText("pet_training_upgrade_fail", "Nang cap that bai!"));
 
             if (AudioManager.Instance != null)
@@ -552,6 +598,7 @@ public class ChoosePet : MonoBehaviour
 
         gemUpdate.ForceClearSelectedGems();
         gemUpdate.SetCurrentPetLevel(currentLevel);
+        gemUpdate.BonusSuccessRate = 0f;
 
         bool didReloadPrefab = false;
         if (ShouldReloadPrefabForLevelChange(previousLevel, currentLevel))
@@ -563,7 +610,40 @@ public class ChoosePet : MonoBehaviour
         if (_popupSelectPet != null)
             _popupSelectPet.RefreshSelectedPetItem(currentPetId);
 
+        ResetUpgradeOptionsAfterAttempt();
         EndUpgradeFlow();
+    }
+
+    private void ToggleUpgradeGoldProtection()
+    {
+        _useUpgradeGoldProtection = !_useUpgradeGoldProtection;
+        RefreshUpgradeOptionVisuals();
+    }
+
+    private void ToggleUpgradeDiamondBoost()
+    {
+        _useUpgradeDiamondBoost = !_useUpgradeDiamondBoost;
+        if (gemUpdate != null)
+            gemUpdate.BonusSuccessRate = _useUpgradeDiamondBoost ? UpgradeDiamondBonusRate : 0f;
+        RefreshUpgradeOptionVisuals();
+    }
+
+    private void ResetUpgradeOptionsAfterAttempt()
+    {
+        _useUpgradeGoldProtection = false;
+        _useUpgradeDiamondBoost = false;
+        if (gemUpdate != null)
+            gemUpdate.BonusSuccessRate = 0f;
+        RefreshUpgradeOptionVisuals();
+    }
+
+    private void RefreshUpgradeOptionVisuals()
+    {
+        if (_upgradeGoldButtonImage != null)
+            _upgradeGoldButtonImage.color = _useUpgradeGoldProtection ? _upgradeOptionOnColor : _upgradeOptionOffColor;
+
+        if (_upgradeDiamondButtonImage != null)
+            _upgradeDiamondButtonImage.color = _useUpgradeDiamondBoost ? _upgradeOptionOnColor : _upgradeOptionOffColor;
     }
 
     private void SetUpgradeInteractionLocked(bool isLocked)
@@ -575,6 +655,12 @@ public class ChoosePet : MonoBehaviour
 
         if (_changePetButton != null)
             _changePetButton.interactable = !isLocked;
+
+        if (_upgradeGoldButton != null)
+            _upgradeGoldButton.interactable = !isLocked;
+
+        if (_upgradeDiamondButton != null)
+            _upgradeDiamondButton.interactable = !isLocked;
 
         if (_openPopupButton != null)
             _openPopupButton.interactable = !isLocked;
@@ -765,5 +851,9 @@ public class ChoosePet : MonoBehaviour
         return true;
     }
 }
+
+
+
+
 
 

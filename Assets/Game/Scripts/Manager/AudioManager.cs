@@ -65,6 +65,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip soundBattleGainArmor;
     [SerializeField] private AudioClip soundBattleRain;
     [SerializeField] private List<AudioClip> listSoundMatch = new List<AudioClip>();
+    [SerializeField] private AudioClip soundBattleHit;
 
     [Header("Scene Music")]
     [SerializeField] private string battleSceneName = "SceneBattle";
@@ -307,6 +308,11 @@ public class AudioManager : MonoBehaviour
     public void PlayBattleRainSound()
     {
         PlaySound(soundBattleRain);
+    }
+
+    public void PlayBattleHitSound()
+    {
+        PlaySound(soundBattleHit);
     }
 
     public void PlayRandomMatchSound()

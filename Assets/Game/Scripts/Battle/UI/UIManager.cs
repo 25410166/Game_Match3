@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,6 +86,9 @@ public class UIManager : MonoBehaviour
     [Header("Player Skill UI Fx")]
     [SerializeField] private BattleCharacterSkillUIFx playerSkillUIFx;
 
+    [Header("Gem Stat Popup")]
+    [SerializeField] private BattleStatGainPopupPresenter statGainPopupPresenter;
+
     [Header("Turn Banner")]
     [SerializeField] private BattleTurnBannerUI turnBannerUI;
     [Header("Audition Mini Game")]
@@ -95,18 +98,27 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
-    {
-        InitializeStatSliders();
-
-        if (GameManager.Instance != null && turnBannerUI != null)
-            turnBannerUI.ShowTurn(GameManager.Instance.currentTurn);
-    }
-
+    
     public void PlayPlayerSkillUIFx()
     {
         playerSkillUIFx?.Play();
     }
+
+    public void PlayPlayerSkillUIFx(string skillName)
+    {
+        playerSkillUIFx?.Play(skillName);
+    }
+
+    
+    public void ShowPlayerStatGainPopup(PlayerStats player, string statType, int amount)
+    {
+        statGainPopupPresenter?.Show(player, statType, amount);
+    }
+
+    public void ShowAIStatGainPopup(AIStats ai, string statType, int amount)
+    {
+        statGainPopupPresenter?.Show(ai, statType, amount);
+    }
 
     public void InitializeStatSliders()
     {
@@ -138,7 +150,7 @@ public class UIManager : MonoBehaviour
             UpdateAllAIStats();
             HandlePlayerImmortalStateChanged(player != null && player.IsImmortalActive);
             HandleAIImmortalStateChanged(ai != null && ai.IsImmortalActive);
-            CheckSkillRequirements(); // Kiá»ƒm tra nÃºt skill ngay khi vÃ o tráº­n
+            CheckSkillRequirements(); // KiÃ¡Â»Æ’m tra nÃƒÂºt skill ngay khi vÃƒÂ o trÃ¡ÂºÂ­n
             // Update displayed pet names and elements (localized)
             UpdatePetNames();
             UpdateElementIcons(); // Display element icons for player and AI pets
@@ -442,7 +454,7 @@ public class UIManager : MonoBehaviour
             CanvasGroup cg = icon.GetComponent<CanvasGroup>();
             if (cg == null) cg = icon.AddComponent<CanvasGroup>();
 
-            // Chá»‰ hiá»ƒn thá»‹ visual, khÃ´ng xá»­ lÃ½ gameplay/effect táº¡i UI layer.
+            // ChÃ¡Â»â€° hiÃ¡Â»Æ’n thÃ¡Â»â€¹ visual, khÃƒÂ´ng xÃ¡Â»Â­ lÃƒÂ½ gameplay/effect tÃ¡ÂºÂ¡i UI layer.
             int id = keys[i];
             if (GameManager.Instance != null)
             {
@@ -503,7 +515,7 @@ public class UIManager : MonoBehaviour
                 yield return null;
             }
 
-            // Táº¯t hiá»‡u á»©ng khi item biáº¿n máº¥t
+            // TÃ¡ÂºÂ¯t hiÃ¡Â»â€¡u Ã¡Â»Â©ng khi item biÃ¡ÂºÂ¿n mÃ¡ÂºÂ¥t
             if (GameManager.Instance != null)
             {
                 if (GameManager.Instance.currentTurn == GameManager.Turn.Player)
@@ -582,7 +594,7 @@ public class UIManager : MonoBehaviour
     {
         if (time == null || imgTime == null || imgTime.Length < 10)
         {
-            Debug.LogWarning("ChÆ°a gÃ¡n time GameObject hoáº·c imgTime khÃ´ng Ä‘á»§ 10 sprite!");
+            Debug.LogWarning("ChÃ†Â°a gÃƒÂ¡n time GameObject hoÃ¡ÂºÂ·c imgTime khÃƒÂ´ng Ã„â€˜Ã¡Â»Â§ 10 sprite!");
             yield return new WaitForSeconds(duration);
             yield break;
         }
@@ -590,7 +602,7 @@ public class UIManager : MonoBehaviour
         Image timeImage = time.GetComponent<Image>();
         if (timeImage == null)
         {
-            Debug.LogWarning("GameObject time khÃ´ng cÃ³ Image component!");
+            Debug.LogWarning("GameObject time khÃƒÂ´ng cÃƒÂ³ Image component!");
             yield return new WaitForSeconds(duration);
             yield break;
         }
@@ -604,7 +616,7 @@ public class UIManager : MonoBehaviour
         time.SetActive(true);
         float timeLeft = duration;
 
-        // Giáº£ sá»­ imgTime[0] lÃ  sprite sá»‘ 9, imgTime[1] lÃ  sá»‘ 8, ..., imgTime[9] lÃ  sá»‘ 0
+        // GiÃ¡ÂºÂ£ sÃ¡Â»Â­ imgTime[0] lÃƒÂ  sprite sÃ¡Â»â€˜ 9, imgTime[1] lÃƒÂ  sÃ¡Â»â€˜ 8, ..., imgTime[9] lÃƒÂ  sÃ¡Â»â€˜ 0
         while (timeLeft > 0)
         {
             int spriteIndex = Mathf.Clamp(Mathf.CeilToInt(timeLeft) - 1, 0, 9);
@@ -631,7 +643,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Giáº£m HP cá»§a player (gÃ¢y sÃ¡t thÆ°Æ¡ng)
+    /// GiÃ¡ÂºÂ£m HP cÃ¡Â»Â§a player (gÃƒÂ¢y sÃƒÂ¡t thÃ†Â°Ã†Â¡ng)
     /// </summary>
     public void DecreasePlayerHP(int amount)
     {
@@ -643,7 +655,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// TÄƒng HP cá»§a player (há»“i mÃ¡u)
+    /// TÃ„Æ’ng HP cÃ¡Â»Â§a player (hÃ¡Â»â€œi mÃƒÂ¡u)
     /// </summary>
     public void IncreasePlayerHP(int amount)
     {
@@ -661,7 +673,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// TÄƒng Mana cá»§a player
+    /// TÃ„Æ’ng Mana cÃ¡Â»Â§a player
     /// </summary>
     public void IncreasePlayerMana(int amount)
     {
@@ -678,7 +690,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// TÄƒng Rage cá»§a player
+    /// TÃ„Æ’ng Rage cÃ¡Â»Â§a player
     /// </summary>
     public void IncreasePlayerRage(int amount)
     {
@@ -758,7 +770,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Giáº£m HP cá»§a AI (gÃ¢y sÃ¡t thÆ°Æ¡ng)
+    /// GiÃ¡ÂºÂ£m HP cÃ¡Â»Â§a AI (gÃƒÂ¢y sÃƒÂ¡t thÃ†Â°Ã†Â¡ng)
     /// </summary>
     public void DecreaseAIHP(int amount)
     {
@@ -770,7 +782,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// TÄƒng HP cá»§a AI (há»“i mÃ¡u)
+    /// TÃ„Æ’ng HP cÃ¡Â»Â§a AI (hÃ¡Â»â€œi mÃƒÂ¡u)
     /// </summary>
     public void IncreaseAIHP(int amount)
     {
@@ -782,7 +794,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// TÄƒng Mana cá»§a AI
+    /// TÃ„Æ’ng Mana cÃ¡Â»Â§a AI
     /// </summary>
     public void IncreaseAIMana(int amount)
     {
@@ -794,7 +806,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// TÄƒng Rage cá»§a AI
+    /// TÃ„Æ’ng Rage cÃ¡Â»Â§a AI
     /// </summary>
     public void IncreaseAIRage(int amount)
     {
@@ -971,4 +983,12 @@ public class UIManager : MonoBehaviour
         return -1;
     }
 }
+
+
+
+
+
+
+
+
 

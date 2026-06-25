@@ -1,4 +1,4 @@
-using Spine.Unity;
+﻿using Spine.Unity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +14,7 @@ public class StarterPetPopupUI : MonoBehaviour
     [SerializeField] private Transform[] previewSlots = new Transform[3];
     [SerializeField] private Button[] chooseButtons = new Button[3];
     [SerializeField] private TextMeshProUGUI[] petNameTexts = new TextMeshProUGUI[3];
+    [SerializeField] private ParticleSystem[] chooseButtonFx = new ParticleSystem[3];
     [SerializeField] private Button nextButton;
     [SerializeField] private TextMeshProUGUI errorText;
 
@@ -76,22 +77,26 @@ public class StarterPetPopupUI : MonoBehaviour
         bool needStarterPick = !PlayerManager.Instance.HasSelectedStarterPet;
         SetPopupVisible(needStarterPick);
 
-        if (!needStarterPick) return;
+        if (!needStarterPick)
+            return;
 
         selectedPetId = -1;
         selectedPetName = string.Empty;
         BuildPreviews();
         RefreshPetNameTexts();
+        StopAllChooseFx();
         ShowError(string.Empty);
     }
 
     private void BuildPreviews()
     {
-        if (petDatabase == null || previewSlots == null) return;
+        if (petDatabase == null || previewSlots == null)
+            return;
 
         for (int i = 0; i < previewSlots.Length; i++)
         {
-            if (previewSlots[i] == null) continue;
+            if (previewSlots[i] == null)
+                continue;
 
             if (spawnedPreviews != null && i < spawnedPreviews.Length && spawnedPreviews[i] != null)
             {
@@ -99,11 +104,13 @@ public class StarterPetPopupUI : MonoBehaviour
                 spawnedPreviews[i] = null;
             }
 
-            if (i >= starterPetIds.Length) continue;
+            if (i >= starterPetIds.Length)
+                continue;
 
             int petId = starterPetIds[i];
             PetDataAsset petData = petDatabase.GetPetById(petId);
-            if (petData == null || petData.prefab == null) continue;
+            if (petData == null || petData.prefab == null)
+                continue;
 
             GameObject preview = Instantiate(petData.prefab, previewSlots[i]);
             preview.transform.localPosition = Vector3.zero;
@@ -187,6 +194,7 @@ public class StarterPetPopupUI : MonoBehaviour
 
         selectedPetId = petId;
         selectedPetName = petData.petName;
+        PlayChooseFx(index);
 
         string localizedPetName = GetLocalizedPetName(selectedPetName);
         string selectionFormat = GetLocalizedText("c1", "Selected pet: $ . Press Continue to confirm.");
@@ -218,9 +226,52 @@ public class StarterPetPopupUI : MonoBehaviour
 
         if (TutorialProgressManager.Instance != null)
             TutorialProgressManager.Instance.NotifyStarterPetConfirmed();
+
         ClearSpawnedPreviews();
+        StopAllChooseFx();
         ShowError(string.Empty);
         SetPopupVisible(false);
+    }
+
+    private void PlayChooseFx(int selectedIndex)
+    {
+        if (chooseButtonFx == null || chooseButtonFx.Length == 0)
+            return;
+
+        for (int i = 0; i < chooseButtonFx.Length; i++)
+        {
+            ParticleSystem fx = chooseButtonFx[i];
+            if (fx == null)
+                continue;
+
+            if (i == selectedIndex)
+            {
+                if (!fx.gameObject.activeSelf)
+                    fx.gameObject.SetActive(true);
+
+                fx.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                fx.Play();
+            }
+            else
+            {
+                fx.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
+        }
+    }
+
+    private void StopAllChooseFx()
+    {
+        if (chooseButtonFx == null)
+            return;
+
+        for (int i = 0; i < chooseButtonFx.Length; i++)
+        {
+            ParticleSystem fx = chooseButtonFx[i];
+            if (fx == null)
+                continue;
+
+            fx.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
     }
 
     private void ForceIdle(GameObject go)
@@ -288,9 +339,3 @@ public class StarterPetPopupUI : MonoBehaviour
         return fallback;
     }
 }
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,6 +42,7 @@ public class GemUpdate : MonoBehaviour
     private int currentElementIndex = -1;
     private int activeSlotIndex = -1;
     private bool isInteractionLocked = false;
+    private float bonusSuccessRate = 0f;
 
     public Button FirstSlotButton => slotButton1;
     public Button FirstPopupGemButton => spawnedPopupItems != null && spawnedPopupItems.Count > 0 ? spawnedPopupItems[0].GetButton() : null;
@@ -52,6 +53,15 @@ public class GemUpdate : MonoBehaviour
     public event System.Action OnGemSelected;
 
     public bool HasUpgradeFxPrefab => upgradeFxPrefab != null;
+    public float BonusSuccessRate
+    {
+        get => bonusSuccessRate;
+        set
+        {
+            bonusSuccessRate = Mathf.Clamp01(value);
+            UpdatePercentDisplay();
+        }
+    }
     public float UpgradeFxSeconds => Mathf.Max(0f, upgradeFxSeconds);
     public bool IsInteractionLocked => isInteractionLocked;
 
@@ -198,7 +208,9 @@ public class GemUpdate : MonoBehaviour
             return false;
         }
 
-        bool result = ForceFirstTutorialUpgradeSuccess || PetUpgradeService.TryUpgrade(currentPetLevel, levels, out float successRate, out float roll);
+        float successRate = Mathf.Clamp01(PetUpgradeService.CalculateSuccessRate(currentPetLevel, levels) + bonusSuccessRate);
+        float roll = Random.value;
+        bool result = ForceFirstTutorialUpgradeSuccess || roll <= successRate;
         ForceFirstTutorialUpgradeSuccess = false;
 
         if (result)
@@ -401,7 +413,7 @@ public class GemUpdate : MonoBehaviour
             return;
         }
 
-        float successRate = PetUpgradeService.CalculateSuccessRate(currentPetLevel, levels);
+        float successRate = Mathf.Clamp01(PetUpgradeService.CalculateSuccessRate(currentPetLevel, levels) + bonusSuccessRate);
         txtPercent.text = $"{successRate * 100f:F0}%";
     }
 
@@ -500,6 +512,9 @@ public class GemUpdate : MonoBehaviour
             button.interactable = interactable;
     }
 }
+
+
+
 
 
 

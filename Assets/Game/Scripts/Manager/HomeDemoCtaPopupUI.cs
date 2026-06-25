@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,6 +12,7 @@ public class HomeDemoCtaPopupUI : MonoBehaviour
     [Header("Popup Buttons")]
     [SerializeField] private Button discordButton;
     [SerializeField] private Button steamButton;
+    [SerializeField] private Button googleFormButton;
     [SerializeField] private Button closeButton;
 
     [Header("Launcher Button")]
@@ -100,6 +101,12 @@ public class HomeDemoCtaPopupUI : MonoBehaviour
             steamButton.onClick.AddListener(OpenSteamUrl);
         }
 
+        if (googleFormButton != null)
+        {
+            googleFormButton.onClick.RemoveListener(OpenGoogleFormUrl);
+            googleFormButton.onClick.AddListener(OpenGoogleFormUrl);
+        }
+
         if (closeButton != null)
         {
             closeButton.onClick.RemoveListener(ClosePopup);
@@ -154,6 +161,13 @@ public class HomeDemoCtaPopupUI : MonoBehaviour
     private void OpenSteamUrl()
     {
         string url = PlayerManager.Instance != null ? PlayerManager.Instance.DemoSteamUrl : string.Empty;
+        if (!string.IsNullOrWhiteSpace(url))
+            Application.OpenURL(url);
+    }
+
+    private void OpenGoogleFormUrl()
+    {
+        string url = PlayerManager.Instance != null ? PlayerManager.Instance.DemoGoogleFormUrl : string.Empty;
         if (!string.IsNullOrWhiteSpace(url))
             Application.OpenURL(url);
     }

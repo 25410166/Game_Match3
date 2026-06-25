@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -855,7 +855,7 @@ public class GameManager : MonoBehaviour
         if (string.IsNullOrEmpty(elementName))
             elementName = "Gem";
 
-        // Localize element name v� level text
+        // Localize element name vï¿½ level text
         string localizedElement = LocalizationManager.Instance != null 
             ? LocalizationManager.Instance.GetText(elementName, elementName)
             : elementName;
@@ -1041,6 +1041,10 @@ public class GameManager : MonoBehaviour
         }
     }
 }
+
+
+
+
 
 
 

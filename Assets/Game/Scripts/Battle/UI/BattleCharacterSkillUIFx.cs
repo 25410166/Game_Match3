@@ -1,9 +1,11 @@
-using DG.Tweening;
+﻿using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class BattleCharacterSkillUIFx : MonoBehaviour
 {
     [SerializeField] private RectTransform targetRect;
+    [SerializeField] private TextMeshProUGUI skillNameText;
     [SerializeField] private float moveDistance = 180f;
     [SerializeField] private float moveDuration = 0.2f;
     [SerializeField] private float holdDuration = 1.5f;
@@ -34,8 +36,16 @@ public class BattleCharacterSkillUIFx : MonoBehaviour
 
     public void Play()
     {
+        Play(null);
+    }
+
+    public void Play(string skillName)
+    {
         if (targetRect == null)
             return;
+
+        if (skillNameText != null)
+            skillNameText.text = skillName ?? string.Empty;
 
         CacheInitialPosition();
         activeTween?.Kill();

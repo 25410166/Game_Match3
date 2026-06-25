@@ -11,7 +11,7 @@ public class PlayerStats : MonoBehaviour
     public string playerName;
     public GameObject player;
 
-    [Header("Pet Config (Tự động)")]
+    [Header("Pet Config (TÃ¡Â»Â± Ã„â€˜Ã¡Â»â„¢ng)")]
     public int petId = -1;
     public int level = 1;
     public int skillId = 0;
@@ -20,7 +20,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private GameObject damagePopupPrefab;
     [SerializeField] private Transform projectileSpawnPoint;
 
-[SerializeField] private Transform targetHitPoint;      // Nơi đối thủ bắn vào mình
+[SerializeField] private Transform targetHitPoint;      // NÃ†Â¡i Ã„â€˜Ã¡Â»â€˜i thÃ¡Â»Â§ bÃ¡ÂºÂ¯n vÃƒÂ o mÃƒÂ¬nh
 public Transform TargetHitPoint => targetHitPoint != null ? targetHitPoint : (skeletonAnim != null ? skeletonAnim.transform : transform);
  
     [Header("Base Stats")]
@@ -150,7 +150,7 @@ public bool ApplyBattleDataFromGameManager()
         critDamage = snapshot.critDamage;
         playerName = snapshot.petName;
         skillId = snapshot.skillId;
-        element = snapshot.element; // Load element từ snapshot để hiển thị icon
+        element = snapshot.element; // Load element tÃ¡Â»Â« snapshot Ã„â€˜Ã¡Â»Æ’ hiÃ¡Â»Æ’n thÃ¡Â»â€¹ icon
         
         return true;
     }
@@ -162,7 +162,7 @@ public bool ApplyBattleDataFromGameManager()
         var data = holder.GetLevelData(level);
         if (data == null)
         {
-            Debug.LogError($"<color=red>[PlayerStats] Pet ID {holder.petId} không có level {level}</color>");
+            Debug.LogError($"<color=red>[PlayerStats] Pet ID {holder.petId} khÃƒÂ´ng cÃƒÂ³ level {level}</color>");
             return;
         }
 
@@ -322,22 +322,31 @@ public float baseScale = 0.6f;
         queuedGemAttackSkill.boardEffectType = cardSkill.boardEffectType;
     }
 
-    public void Heal(int amount)
+    public int Heal(int amount)
     {
+        int before = HP;
         HP = StatSystem.AddClamped(HP, maxHP, amount);
+        int actualGain = Mathf.Max(0, HP - before);
         UpdateUI();
+        return actualGain;
     }
 
-    public void GainMana(int amount)
+    public int GainMana(int amount)
     {
+        int before = Mana;
         Mana = StatSystem.AddClamped(Mana, maxMana, amount);
+        int actualGain = Mathf.Max(0, Mana - before);
         UpdateUI();
+        return actualGain;
     }
 
-    public void GainRage(int amount)
+    public int GainRage(int amount)
     {
+        int before = Rage;
         Rage = StatSystem.AddClamped(Rage, maxRage, amount);
+        int actualGain = Mathf.Max(0, Rage - before);
         UpdateUI();
+        return actualGain;
     }
 
     public void GainShield(int amount)
@@ -586,8 +595,10 @@ public float baseScale = 0.6f;
             GameManager.Instance.ProcessImmediateBattleResultIfNeeded();
 
         if (actual > 0)
+        {
+            AudioManager.Instance?.PlayBattleHitSound();
             StartCoroutine(TakeDamageVisualFeedback(actual));
-
+        }
         return actual;
     }
 
@@ -607,6 +618,7 @@ public float baseScale = 0.6f;
         // Visual feedback for taking damage
         if (actualDamage > 0)
         {
+            AudioManager.Instance?.PlayBattleHitSound();
             StartCoroutine(TakeDamageVisualFeedback(actualDamage));
         }
     }
@@ -842,17 +854,17 @@ private Coroutine _hitShakeCoroutine;
 {
     AIStats targetAI = GameManager.Instance != null ? GameManager.Instance.ai : null;
     
-    // ĐIỂM QUAN TRỌNG: Lấy TargetHitPoint của đối thủ làm điểm đích
+    // Ã„ÂIÃ¡Â»â€šM QUAN TRÃ¡Â»Å’NG: LÃ¡ÂºÂ¥y TargetHitPoint cÃ¡Â»Â§a Ã„â€˜Ã¡Â»â€˜i thÃ¡Â»Â§ lÃƒÂ m Ã„â€˜iÃ¡Â»Æ’m Ã„â€˜ÃƒÂ­ch
     Transform hitTransform = (targetAI != null) ? targetAI.TargetHitPoint : null;
 
     return new SkillContext
     {
         AttackerTransform = skeletonAnim != null ? skeletonAnim.transform : transform,
         
-        // TargetTransform bây giờ là điểm Hit Point của đối thủ
+        // TargetTransform bÃƒÂ¢y giÃ¡Â»Â lÃƒÂ  Ã„â€˜iÃ¡Â»Æ’m Hit Point cÃ¡Â»Â§a Ã„â€˜Ã¡Â»â€˜i thÃ¡Â»Â§
         TargetTransform = hitTransform, 
         
-        // Điểm đạn bay ra từ mình
+        // Ã„ÂiÃ¡Â»Æ’m Ã„â€˜Ã¡ÂºÂ¡n bay ra tÃ¡Â»Â« mÃƒÂ¬nh
         ProjectileSpawnPoint = projectileSpawnPoint != null ? projectileSpawnPoint : transform,
         
         GetBaseAttack = () => baseAttack,
@@ -968,21 +980,21 @@ private Coroutine _hitShakeCoroutine;
         float currentX = skeletonAnim.transform.position.x;
         float direction = targetX - currentX;
 
-        // Nếu khoảng cách quá nhỏ thì không cần xoay
+        // NÃ¡ÂºÂ¿u khoÃ¡ÂºÂ£ng cÃƒÂ¡ch quÃƒÂ¡ nhÃ¡Â»Â thÃƒÂ¬ khÃƒÂ´ng cÃ¡ÂºÂ§n xoay
         if (Mathf.Abs(direction) < 0.01f) return;
 
         Vector3 s = originalScale;
 
-        // Nếu target nằm bên phải nhân vật
+        // NÃ¡ÂºÂ¿u target nÃ¡ÂºÂ±m bÃƒÂªn phÃ¡ÂºÂ£i nhÃƒÂ¢n vÃ¡ÂºÂ­t
         if (direction > 0)
         {
-            // Giữ nguyên scale gốc (giả định hướng gốc là nhìn bên phải)
+            // GiÃ¡Â»Â¯ nguyÃƒÂªn scale gÃ¡Â»â€˜c (giÃ¡ÂºÂ£ Ã„â€˜Ã¡Â»â€¹nh hÃ†Â°Ã¡Â»â€ºng gÃ¡Â»â€˜c lÃƒÂ  nhÃƒÂ¬n bÃƒÂªn phÃ¡ÂºÂ£i)
             s.x = Mathf.Abs(originalScale.x);
         }
-        // Nếu target nằm bên trái nhân vật
+        // NÃ¡ÂºÂ¿u target nÃ¡ÂºÂ±m bÃƒÂªn trÃƒÂ¡i nhÃƒÂ¢n vÃ¡ÂºÂ­t
         else
         {
-            // Đảo ngược scale x
+            // Ã„ÂÃ¡ÂºÂ£o ngÃ†Â°Ã¡Â»Â£c scale x
             s.x = -Mathf.Abs(originalScale.x);
         }
 
@@ -996,6 +1008,7 @@ private Coroutine _hitShakeCoroutine;
     }
     
 }
+
 
 
 

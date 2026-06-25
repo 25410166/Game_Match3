@@ -17,7 +17,7 @@ MonoBehaviour:
   mapName: Map_Name_11
   reqUserLevel: 5
   petIdSpawn: 102
-  petLevelSpawn: 2
+  petLevelSpawn: 3
   idGuadiant: 0
   levelGuadiant: 1
   rewardPetId: 101

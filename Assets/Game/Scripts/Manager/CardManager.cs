@@ -1,19 +1,19 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // nÃƒÂ¡Ã‚ÂºÃ‚Â¿u bÃƒÂ¡Ã‚ÂºÃ‚Â¡n dÃƒÆ’Ã‚Â¹ng TextMeshPro
+using TMPro; // nÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Â¿u bÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Â¡n dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¹ng TextMeshPro
 using Cysharp.Threading.Tasks;
 
 public class CardManager : MonoBehaviour
 {
     [Header("Database & Target")]
-    public PlayerStats playerStats;       // GÃƒÆ’Ã‚Â¡n PlayerStats hoÃƒÂ¡Ã‚ÂºÃ‚Â·c PlayerController
-    public AIStats aiStats;               // GÃƒÆ’Ã‚Â¡n AI target (nÃƒÂ¡Ã‚ÂºÃ‚Â¿u cÃƒÆ’Ã‚Â³)
+    public PlayerStats playerStats;       // GÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡n PlayerStats hoÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Â·c PlayerController
+    public AIStats aiStats;               // GÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡n AI target (nÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Â¿u cÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³)
 
     private CardDatabase database;
     private bool isCardAttackInProgress = false;
 
-    [Header("UI Buttons (4 thÃƒÂ¡Ã‚ÂºÃ‚Â» trÃƒÆ’Ã‚Âªn tay)")]
-    public CardSlotUI[] cardSlots = new CardSlotUI[4]; // 4 ÃƒÆ’Ã‚Â´ thÃƒÂ¡Ã‚ÂºÃ‚Â»
+    [Header("UI Buttons (4 thÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Â» trÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âªn tay)")]
+    public CardSlotUI[] cardSlots = new CardSlotUI[4]; // 4 ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â´ thÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Â»
 
     public void RefreshCardInteractables()
     {
@@ -30,7 +30,7 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
-        // TÃƒÂ¡Ã‚Â»Ã‚Â± Ãƒâ€žÃ¢â‚¬ËœÃƒÂ¡Ã‚Â»Ã¢â€žÂ¢ng lÃƒÂ¡Ã‚ÂºÃ‚Â¥y CardDatabase tÃƒÂ¡Ã‚Â»Ã‚Â« GameDataManager nÃƒÂ¡Ã‚ÂºÃ‚Â¿u chÃƒâ€ Ã‚Â°a gÃƒÆ’Ã‚Â¡n
+        // TÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚Â»Ãƒâ€šÃ‚Â± ÃƒÆ’Ã¢â‚¬Å¾ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“ÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚Â»ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ng lÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Â¥y CardDatabase tÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚Â»Ãƒâ€šÃ‚Â« GameDataManager nÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Â¿u chÃƒÆ’Ã¢â‚¬Â Ãƒâ€šÃ‚Â°a gÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡n
         if (database == null && GameDataManager.Instance != null)
         {
             database = GameDataManager.Instance.CardDatabaseObject as CardDatabase;
@@ -71,7 +71,7 @@ public class CardManager : MonoBehaviour
         ValidateSetup();
     }
 
-    // --- NÃƒÂ¡Ã‚ÂºÃ‚Â P THÃƒÂ¡Ã‚ÂºÃ‚Âº VÃƒÆ’Ã¢â€šÂ¬O 4 ÃƒÆ’Ã¢â‚¬Â ---
+    // --- NÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Â P THÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Âº VÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬O 4 ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ---
     public void LoadCardsToSlots()
     {
         if (database == null || cardSlots == null)
@@ -89,8 +89,8 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < cardSlots.Length; i++)
         {
-            var card = database.cards[i]; // hoÃƒÂ¡Ã‚ÂºÃ‚Â·c Random.Range(0, database.cards.Count)
-            int randomLevel = Random.Range(1, 4); // ngÃƒÂ¡Ã‚ÂºÃ‚Â«u nhiÃƒÆ’Ã‚Âªn cÃƒÂ¡Ã‚ÂºÃ‚Â¥p 1-3
+            var card = database.cards[i]; // hoÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Â·c Random.Range(0, database.cards.Count)
+            int randomLevel = Random.Range(1, 4); // ngÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Â«u nhiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âªn cÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Â¥p 1-3
 
             cardSlots[i].SetCard(card, randomLevel, this);
         }
@@ -131,7 +131,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    // --- THÃƒÂ¡Ã‚Â»Ã‚Â°C THI HIÃƒÂ¡Ã‚Â»Ã¢â‚¬Â U ÃƒÂ¡Ã‚Â»Ã‚Â¨NG THÃƒÂ¡Ã‚ÂºÃ‚Âº ---
+    // --- THÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚Â»Ãƒâ€šÃ‚Â°C THI HIÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚Â»ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â U ÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚Â»Ãƒâ€šÃ‚Â¨NG THÃƒÆ’Ã‚Â¡Ãƒâ€šÃ‚ÂºÃƒâ€šÃ‚Âº ---
     public void UseCard(CardDatabase.Card card, int level)
     {
         // Prevent using cards when the player cannot act
@@ -156,7 +156,12 @@ public class CardManager : MonoBehaviour
         if (card.type == CardDatabase.CardType.Attack)
         {
             AudioManager.Instance?.PlayBattleCharacterSkillSound();
-            UIManager.Instance?.PlayPlayerSkillUIFx();
+            string localizedSkillName = card != null
+                ? (LocalizationManager.Instance != null
+                    ? LocalizationManager.Instance.GetText(card.cardName, card.cardName ?? string.Empty)
+                    : card.cardName ?? string.Empty)
+                : string.Empty;
+            UIManager.Instance?.PlayPlayerSkillUIFx(localizedSkillName);
         }
         var lvData = card.GetLevel(level);
         if (lvData == null)
@@ -399,3 +404,4 @@ public class CardManager : MonoBehaviour
         return GameDataManager.Instance.GetSkillData(card.id);
     }
 }
+

@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -25,24 +25,15 @@ public static class DamagePopupFx
             text.color = Color.black;
         }
 
-        Transform t = popup.transform;
-        t.localScale = Vector3.one;
-
-        Sequence seq = DOTween.Sequence();
-        seq.Join(t.DOMoveY(t.position.y + 1.2f, 0.7f).SetEase(Ease.OutQuad));
-        seq.Join(t.DOPunchScale(new Vector3(0.2f, 0.2f, 0f), 0.28f, 8, 1f));
-
-        if (text != null)
-            seq.Join(text.DOFade(0f, 0.7f));
-
-        seq.OnComplete(() =>
-        {
-            if (popup != null)
-                Object.Destroy(popup);
-        });
+        PlayPopupTween(popup, text);
     }
 
     public static void ShowText(GameObject popupPrefab, Transform target, string message)
+    {
+        ShowText(popupPrefab, target, message, false, Color.white);
+    }
+
+    public static void ShowText(GameObject popupPrefab, Transform target, string message, bool overrideColor, Color textColor)
     {
         if (popupPrefab == null || target == null)
             return;
@@ -53,8 +44,17 @@ public static class DamagePopupFx
         if (text != null)
         {
             text.text = message ?? string.Empty;
-            text.color = Color.black;
+            if (overrideColor)
+                text.color = textColor;
         }
+
+        PlayPopupTween(popup, text);
+    }
+
+    private static void PlayPopupTween(GameObject popup, TextMeshProUGUI text)
+    {
+        if (popup == null)
+            return;
 
         Transform t = popup.transform;
         t.localScale = Vector3.one;

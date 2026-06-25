@@ -1,0 +1,182 @@
+﻿*** Begin Patch
+*** Add File: Assets/Game/Scripts/Battle/UI/BattleStatGainPopupPresenter.cs
++using TMPro;
++using UnityEngine;
++
++public class BattleStatGainPopupPresenter : MonoBehaviour
++{
++    [Header("Popup Prefabs")]
++    [SerializeField] private GameObject hpGainPopupPrefab;
++    [SerializeField] private GameObject manaGainPopupPrefab;
++    [SerializeField] private GameObject rageGainPopupPrefab;
++
++    [Header("Popup Position")]
++    [SerializeField] private Vector3 worldOffset = new Vector3(0f, 0.6f, 0f);
++
++    public void Show(GameManager.Turn actingTurn, GemEffectMatchEntry entry)
++    {
++        if (GameManager.Instance == null)
++            return;
++
++        if (actingTurn == GameManager.Turn.Player)
++        {
++            PlayerStats player = GameManager.Instance.player;
++            if (player == null)
++                return;
++
++            if (!GemEffectProcessor.TryGetPositivePopupPreview(entry, player, out string statType, out int amount) || amount <= 0)
++                return;
++
++            ShowPopup(ResolveAnchor(player.player, player.transform), ResolvePrefab(statType), amount);
++            return;
++        }
++
++        AIStats ai = GameManager.Instance.ai;
++        if (ai == null)
++            return;
++
++        if (!GemEffectProcessor.TryGetPositivePopupPreview(entry, ai, out string aiStatType, out int aiAmount) || aiAmount <= 0)
++            return;
++
++        ShowPopup(ResolveAnchor(ai.AI, ai.transform), ResolvePrefab(aiStatType), aiAmount);
++    }
++
++    private void ShowPopup(Transform anchor, GameObject prefab, int amount)
++    {
++        if (anchor == null || prefab == null)
++            return;
++
++        GameObject popup = Instantiate(prefab, anchor.position + worldOffset, Quaternion.identity);
++        TextMeshProUGUI text = popup.GetComponentInChildren<TextMeshProUGUI>(true);
++        if (text != null)
++            text.text = $"+{amount}";
++    }
++
++    private GameObject ResolvePrefab(string statType)
++    {
++        if (string.Equals(statType, "HP", System.StringComparison.OrdinalIgnoreCase))
++            return hpGainPopupPrefab;
++
++        if (string.Equals(statType, "Mana", System.StringComparison.OrdinalIgnoreCase))
++            return manaGainPopupPrefab;
++
++        if (string.Equals(statType, "Rage", System.StringComparison.OrdinalIgnoreCase))
++            return rageGainPopupPrefab;
++
++        return null;
++    }
++
++    private static Transform ResolveAnchor(GameObject actorRoot, Transform fallback)
++    {
++        if (actorRoot != null)
++            return actorRoot.transform;
++
++        return fallback;
++    }
++}
+*** Add File: Assets/Game/Scripts/Battle/UI/BattleStatGainPopupPresenter.cs.meta
++fileFormatVersion: 2
++guid: 5d8b741886c44411b2fb4fcb0127b44f
++MonoImporter:
++  externalObjects: {}
++  serializedVersion: 2
++  defaultReferences: []
++  executionOrder: 0
++  icon: {instanceID: 0}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+*** Update File: Assets/Game/Scripts/Battle/Systems/GemEffectProcessor.cs
+@@
+ public static class GemEffectProcessor
+ {
+@@
+     public const int AttackItemId = 4;
+     public const int DrainItemId = 5;
++
++    public static bool TryGetPositivePopupPreview(GemEffectMatchEntry entry, PlayerStats attacker, out string statType, out int amount)
++    {
++        statType = null;
++        amount = 0;
++
++        if (attacker == null)
++            return false;
++
++        return TryGetPositivePopupPreviewInternal(entry.GemType, entry.MatchCount, attacker.element, attacker.maxHP, out statType, out amount);
++    }
++
++    public static bool TryGetPositivePopupPreview(GemEffectMatchEntry entry, AIStats attacker, out string statType, out int amount)
++    {
++        statType = null;
++        amount = 0;
++
++        if (attacker == null)
++            return false;
++
++        return TryGetPositivePopupPreviewInternal(entry.GemType, entry.MatchCount, attacker.element, attacker.maxHealth, out statType, out amount);
++    }
+@@
+     private static float GetShieldPercentByMatchCount(int matchCount)
+     {
+         if (matchCount == 3) return 0.05f;
+         if (matchCount == 4) return 0.07f;
+         if (matchCount == 5) return 0.09f;
+         return 0.12f;
+     }
++
++    private static bool TryGetPositivePopupPreviewInternal(int gemType, int matchCount, string element, int maxHp, out string statType, out int amount)
++    {
++        statType = null;
++        amount = 0;
++
++        int safeMatchCount = Mathf.Max(1, matchCount);
++
++        switch (gemType)
++        {
++            case RageItemId:
++                statType = "Rage";
++                amount = Mathf.Max(0, safeMatchCount * ElementResourceGainConfig.GetRagePerGem(element));
++                return amount > 0;
++
++            case HealItemId:
++                statType = "HP";
++                amount = Mathf.Max(0, Mathf.RoundToInt(maxHp * 0.02f * safeMatchCount));
++                return amount > 0;
++
++            case ManaItemId:
++                statType = "Mana";
++                amount = Mathf.Max(0, safeMatchCount * ElementResourceGainConfig.GetManaPerGem(element));
++                return amount > 0;
++        }
++
++        return false;
++    }
+*** Update File: Assets/Game/Scripts/Battle/UI/UIManager.cs
+@@
+     [Header("Player Skill UI Fx")]
+     [SerializeField] private BattleCharacterSkillUIFx playerSkillUIFx;
++
++    [Header("Gem Stat Popup")]
++    [SerializeField] private BattleStatGainPopupPresenter statGainPopupPresenter;
+@@
+     public void PlayPlayerSkillUIFx()
+     {
+         playerSkillUIFx?.Play();
+     }
++
++    public void ShowGemStatGainPopup(GameManager.Turn actingTurn, GemEffectMatchEntry entry)
++    {
++        statGainPopupPresenter?.Show(actingTurn, entry);
++    }
+*** Update File: Assets/Game/Scripts/Manager/GameManager.cs
+@@
+         for (int i = 0; i < entries.Count; i++)
+         {
+             GemEffectMatchEntry entry = entries[i];
++
++            if (UIManager.Instance != null)
++                UIManager.Instance.ShowGemStatGainPopup(actingTurn, entry);
+ 
+             if (entry.GemType == GemEffectProcessor.AttackItemId)
+             {
+*** End Patch

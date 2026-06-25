@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -33,6 +33,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private bool demo = false;
     [SerializeField] private string demoDiscordUrl = "https://discord.gg/";
     [SerializeField] private string demoSteamUrl = "https://store.steampowered.com/";
+    [SerializeField] private string demoGoogleFormUrl = "https://forms.gle/";
     [SerializeField] private KeyCode testRewardHotkey = KeyCode.F;
 
     // Flag to prevent infinite loop during pet reward claiming
@@ -44,6 +45,7 @@ public class PlayerManager : MonoBehaviour
     public bool DemoEnabled => demo;
     public string DemoDiscordUrl => demoDiscordUrl;
     public string DemoSteamUrl => demoSteamUrl;
+    public string DemoGoogleFormUrl => demoGoogleFormUrl;
     public bool IsDemoCtaUnlocked => demoCtaUnlocked;
 
     public bool HasConfirmedPlayerName => playerData != null && playerData.hasConfirmedPlayerName && !string.IsNullOrWhiteSpace(playerData.playerName);
@@ -265,6 +267,38 @@ public class PlayerManager : MonoBehaviour
         NotifyDataChanged();
     }
 
+
+    public int GetGold()
+    {
+        return playerData != null ? Mathf.Max(0, playerData.gold) : 0;
+    }
+
+    public int GetDiamond()
+    {
+        return playerData != null ? Mathf.Max(0, playerData.diamond) : 0;
+    }
+
+    public bool TrySpendGold(int amount)
+    {
+        int cost = Mathf.Max(0, amount);
+        if (playerData == null || playerData.gold < cost)
+            return false;
+
+        playerData.gold = Mathf.Max(0, playerData.gold - cost);
+        NotifyDataChanged();
+        return true;
+    }
+
+    public bool TrySpendDiamond(int amount)
+    {
+        int cost = Mathf.Max(0, amount);
+        if (playerData == null || playerData.diamond < cost)
+            return false;
+
+        playerData.diamond = Mathf.Max(0, playerData.diamond - cost);
+        NotifyDataChanged();
+        return true;
+    }
     public void SetPlayerName(string newName)
     {
         if (!IsValidPlayerName(newName)) return;
@@ -1032,6 +1066,9 @@ public class OwnedGuardianData
     public int guardianId;
     public int level = 1;
 }
+
+
+
 
 
 

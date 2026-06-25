@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using Spine.Unity;
 using System.Collections;
@@ -17,8 +17,8 @@ public class AIStats : MonoBehaviour
     [Header("Skill Visual")]
     [SerializeField] private GameObject damagePopupPrefab;
     [SerializeField] private Transform projectileSpawnPoint;
-[SerializeField] private Transform targetHitPoint;      // Noi Player b?n v�o AI
-// Cung c?p thu?c t�nh d? Player c� th? truy c?p di?m d�ch c?a AI
+[SerializeField] private Transform targetHitPoint;      // Noi Player b?n vÃƒÂ o AI
+// Cung c?p thu?c tÃƒÂ­nh d? Player cÃƒÂ³ th? truy c?p di?m dÃƒÂ­ch c?a AI
 public Transform TargetHitPoint => targetHitPoint != null ? targetHitPoint : (skeletonAnim != null ? skeletonAnim.transform : transform);
     [Header("Max Stats")]
     public int maxHealth = 300;
@@ -164,7 +164,7 @@ public Transform TargetHitPoint => targetHitPoint != null ? targetHitPoint : (sk
         var data = holder.GetLevelData(level);
         if (data == null)
         {
-            Debug.LogError($"<color=red>[AIStats] Pet ID {holder.petId} kh�ng c� level {level}</color>");
+            Debug.LogError($"<color=red>[AIStats] Pet ID {holder.petId} khÃƒÂ´ng cÃƒÂ³ level {level}</color>");
             return;
         }
 
@@ -302,22 +302,31 @@ public float baseScale = 0.6f;
         Attack();
     }
 
-    public void Heal(int amount)
+    public int Heal(int amount)
     {
+        int before = Health;
         Health = StatSystem.AddClamped(Health, maxHealth, amount);
+        int actualGain = Mathf.Max(0, Health - before);
         UpdateUI();
+        return actualGain;
     }
 
-    public void GainMana(int amount)
+    public int GainMana(int amount)
     {
+        int before = Mana;
         Mana = StatSystem.AddClamped(Mana, maxMana, amount);
+        int actualGain = Mathf.Max(0, Mana - before);
         UpdateUI();
+        return actualGain;
     }
 
-    public void GainRage(int amount)
+    public int GainRage(int amount)
     {
+        int before = Rage;
         Rage = StatSystem.AddClamped(Rage, maxRage, amount);
+        int actualGain = Mathf.Max(0, Rage - before);
         UpdateUI();
+        return actualGain;
     }
 
     public void TakeDamage(int amount)
@@ -336,6 +345,7 @@ public float baseScale = 0.6f;
         // Visual feedback for taking damage
         if (finalDmg > 0)
         {
+            AudioManager.Instance?.PlayBattleHitSound();
             StartCoroutine(TakeDamageVisualFeedback(finalDmg));
         }
     }
@@ -651,8 +661,10 @@ public float baseScale = 0.6f;
             GameManager.Instance.ProcessImmediateBattleResultIfNeeded();
 
         if (actual > 0)
+        {
+            AudioManager.Instance?.PlayBattleHitSound();
             StartCoroutine(TakeDamageVisualFeedback(actual));
-
+        }
         return actual;
     }
 
@@ -848,17 +860,17 @@ public float baseScale = 0.6f;
 {
     PlayerStats targetPlayer = GameManager.Instance != null ? GameManager.Instance.player : null;
     
-    // �I?M QUAN TR?NG: L?y TargetHitPoint c?a Player l�m di?m d�ch
+    // ÃƒÂI?M QUAN TR?NG: L?y TargetHitPoint c?a Player lÃƒÂ m di?m dÃƒÂ­ch
     Transform hitTransform = (targetPlayer != null) ? targetPlayer.TargetHitPoint : null;
 
     return new SkillContext
     {
         AttackerTransform = skeletonAnim != null ? skeletonAnim.transform : transform,
         
-        // TargetTransform b�y gi? l� di?m Hit Point c?a Player
+        // TargetTransform bÃƒÂ¢y gi? lÃƒÂ  di?m Hit Point c?a Player
         TargetTransform = hitTransform,
         
-        // �i?m d?n bay ra t? AI
+        // ÃƒÂi?m d?n bay ra t? AI
         ProjectileSpawnPoint = projectileSpawnPoint != null ? projectileSpawnPoint : transform,
         
         GetBaseAttack = () => baseAttack,
@@ -971,8 +983,8 @@ public float baseScale = 0.6f;
         if (Mathf.Abs(direction) < 0.01f) return;
 
         Vector3 s = originalScale;
-        // N?u m?c ti�u ? b�n ph?i AI -> scale x duong (ho?c �m t�y asset)
-        // N?u m?c ti�u ? b�n tr�i AI -> scale x ngu?c l?i
+        // N?u m?c tiÃƒÂªu ? bÃƒÂªn ph?i AI -> scale x duong (ho?c ÃƒÂ¢m tÃƒÂ¹y asset)
+        // N?u m?c tiÃƒÂªu ? bÃƒÂªn trÃƒÂ¡i AI -> scale x ngu?c l?i
         s.x = (direction > 0) ? Mathf.Abs(originalScale.x) : -Mathf.Abs(originalScale.x);
         skeletonAnim.transform.localScale = s;
     }
@@ -991,6 +1003,7 @@ public float baseScale = 0.6f;
     }
 }
 }
+
 
 
 

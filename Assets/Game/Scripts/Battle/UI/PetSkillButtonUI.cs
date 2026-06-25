@@ -142,6 +142,8 @@ public class PetSkillButtonUI : MonoBehaviour
         if (GameManager.Instance.player.isAttacking)
             return;
 
+        AudioManager.Instance?.PlayBattleCharacterSkillSound();
+        UIManager.Instance?.PlayPlayerSkillUIFx(GetLocalizedSkillName());
         if (skillButton != null)
             skillButton.interactable = false;
 
@@ -157,6 +159,16 @@ public class PetSkillButtonUI : MonoBehaviour
             if (GameManager.Instance != null && GameManager.Instance.currentTurn == GameManager.Turn.Player)
                 GameManager.Instance.EndTurn(null);
         }
+    }
+
+    private string GetLocalizedSkillName()
+    {
+        if (skillData == null)
+            return string.Empty;
+
+        return LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.GetText(skillData.skillName, skillData.skillName ?? string.Empty)
+            : skillData.skillName ?? string.Empty;
     }
 
     private void CheckSkillRequirements()
@@ -230,6 +242,7 @@ public class PetSkillButtonUI : MonoBehaviour
         LocalizationManager.Instance.OnLocalizationLoaded -= UpdateSkillButtonText;
     }
 }
+
 
 
 
